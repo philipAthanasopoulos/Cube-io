@@ -5,8 +5,8 @@ public class CubeManager {
         this.cubeMatrix = cubeMatrix;
     }
     
-    public void createCubeMaxtrix(int numOfCubes) {
-        cubeMatrix = new CubeMatrix();
+    public void createCubeMaxtrix(int numOfCubesPerLine) {
+        cubeMatrix = new CubeMatrix(numOfCubesPerLine);
         
 
 
