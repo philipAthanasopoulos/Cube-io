@@ -54,4 +54,34 @@ public class CubeManager {
         return true;
     }
 
+    public void printCubeMatrix(){
+        this.cubeMatrix.printCubeMatrix();
+    }
+
+
+    public CubeMatrix getCubeMatrix() {
+        return this.cubeMatrix;
+    }
+
+    public void setCubeMatrix(CubeMatrix cubeMatrix) {
+        this.cubeMatrix = cubeMatrix;
+    }
+
+    public float getCost() {
+        return this.cost;
+    }
+
+    public void setCost(float cost) {
+        this.cost = cost;
+    }
+
+    public Scanner getInput() {
+        return this.input;
+    }
+
+    public void setInput(Scanner input) {
+        this.input = input;
+    }
+
+
 }
