@@ -28,7 +28,7 @@ public class CubeManager {
             createCubeMaxtrix(numOfCubesPerLine);
         } catch (NullPointerException | NumberFormatException | InputMismatchException e) {
             // TODO: handle exception
-            System.out.println(ANSI_RED + "You typed invalid character. Please try again." + ANSI_RESET);
+            System.out.println(ANSI_RED + "You typed an invalid character. Please try again." + ANSI_RESET);
             requestCubeMatrix();
         }
     }
