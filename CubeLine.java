@@ -1,7 +1,7 @@
 import java.util.List;
 
 public class CubeLine {
-    private List<Cube> cubes;
+    private Cube[] cubes;
 
     public boolean isInOrder() {
         return false;

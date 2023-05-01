@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class CubeManager {
     private CubeMatrix cubeMatrix;
-    private float cost;
+    private float cost = 0;
     private Scanner input;
     //ansi red color code
     public static final String ANSI_RED = "\u001B[31m";
@@ -45,7 +45,7 @@ public class CubeManager {
         this.cost += costToAdd;
     }
 
-    public boolean chechIfCubesAreInOrder(){
+    public boolean cubesAreInOrder(){
         for(CubeLine cubeLine : cubeMatrix.getCubeLines()){
             if(!cubeLine.isInOrder()){
                 return false;
@@ -57,8 +57,7 @@ public class CubeManager {
     public void printCubeMatrix(){
         this.cubeMatrix.printCubeMatrix();
     }
-
-
+    
     public CubeMatrix getCubeMatrix() {
         return this.cubeMatrix;
     }
