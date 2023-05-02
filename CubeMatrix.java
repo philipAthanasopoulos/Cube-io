@@ -1,10 +1,9 @@
-import java.util.List;
 
 public class CubeMatrix {
     public CubeMatrix(int numOfCubesPerLine) {
     }
 
-    private List<CubeLine> cubeLines;
+    private CubeLine[] cubeLines;
 
     public boolean isMoveable(Cube cube, int xNext, int yNext) {
         return false;
