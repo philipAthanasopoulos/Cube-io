@@ -20,6 +20,9 @@ public class Cube {
         System.out.println("└───┘");
     }
 
+    //print top of square depending on number length
+    
+
 
     
 }

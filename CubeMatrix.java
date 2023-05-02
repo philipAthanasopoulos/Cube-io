@@ -1,14 +1,23 @@
+import java.util.Collection;
+import java.util.Collections;
 
 public class CubeMatrix {
 
-    private CubeLine[] cubeLines;
+    private FixedSizeArrayList<CubeLine> cubeLines;
 
 
     public CubeMatrix(int numOfCubesPerLine) {
-        this.cubeLines = new CubeLine[3];
-        for (int i = 0; i < cubeLines.length; i++) {
-            cubeLines[i] = new CubeLine(numOfCubesPerLine);
+        this.cubeLines = new FixedSizeArrayList<CubeLine>(3);
+        int start = 1;
+        int end = numOfCubesPerLine;
+        for(int i = 0 ; i < 3 ; i++){
+            CubeLine newLine = new CubeLine(start , end);
+            Collections.shuffle(newLine.getCubes());
+            cubeLines.add(newLine);
+            start = end + 1;
+            end = start + numOfCubesPerLine - 1;
         }
+        Collections.shuffle(cubeLines);
     }
     
 
