@@ -13,7 +13,7 @@ public class Cube {
         this.cubeNumber = cubeNumber;
     }
 
-    //print ascii square with number 3
+    
     public void printCube() {
         System.out.println("┌───┐");
         System.out.println("│ " + this.cubeNumber + " │");
