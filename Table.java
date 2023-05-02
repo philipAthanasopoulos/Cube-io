@@ -39,8 +39,9 @@ public class Table{
         CubeManager cubeManager = new CubeManager();
         cubeManager.requestCubeMatrix();
         cubeManager.printCubeMatrix();
-        //move cube 1 to a free position
-        cubeManager.moveCube(cubeManager.getCube(1), 5, 2);
+        
+        //move cube 1 to free position
+        cubeManager.moveCube(cubeManager.getCube(1) , 4,2);
         cubeManager.printCubeMatrix();
 
         

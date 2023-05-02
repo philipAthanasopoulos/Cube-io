@@ -11,7 +11,7 @@ public class CubeMatrix {
         this.cubeLines = new ArrayList<CubeLine>();
         int start = 1;
         //create 3 CubeLines from 1 to 3*numOfCubesPerLine
-        for(int i = 0 ; i < numOfCubesPerLine ; i++){
+        for(int i = 0 ; i < 3 ; i++){
             cubeLines.add(new CubeLine(start , numOfCubesPerLine));
             start += numOfCubesPerLine;
         }
@@ -60,8 +60,8 @@ public class CubeMatrix {
     public void setPositionsForAllCubes() {
         for(CubeLine line : cubeLines){
             for(Cube cube : line.getCubes()){
-                cube.setXPos(cubeLines.indexOf(line));
-                cube.setYPos(line.getCubes().indexOf(cube));
+                cube.setYPos(cubeLines.indexOf(line));
+                cube.setXPos(line.getCubes().indexOf(cube));
             }
         }
     }
@@ -71,7 +71,6 @@ public class CubeMatrix {
     public void printCubeMatrix() {
         //TODO
         for(CubeLine cubeLine : cubeLines){
-            System.out.println("Line " + cubeLines.indexOf(cubeLine) + ":");
             cubeLine.printCubeLine();
         }
         System.out.println("================================================");
@@ -80,8 +79,7 @@ public class CubeMatrix {
     public static void main(String[] args) {
         CubeMatrix cubeMatrix = new CubeMatrix(3);
         cubeMatrix.printCubeMatrix();
-        cubeMatrix.moveCube(cubeMatrix.getCube(1), 4, 0);
-        cubeMatrix.printCubeMatrix();
+        System.out.println(cubeMatrix.getCube(1).getXPos());
         
         
         

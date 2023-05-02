@@ -44,7 +44,7 @@ public class CubeLine {
 
         //print top line
         for (Cube cube : cubes) {
-            if(cube.getCubeNumber() == 0) System.out.print("");
+            if(cube.getCubeNumber() == 0) System.out.print("     ");
             else System.out.print("┌───┐"); 
         }
         System.out.println();
@@ -53,7 +53,7 @@ public class CubeLine {
 
         //print middle parts
         for(Cube cube : cubes){
-            if(cube.getCubeNumber() == 0) System.out.print("");
+            if(cube.getCubeNumber() == 0) System.out.print("     ");
             else System.out.print("│ " + cube.getCubeNumber() + " │");
         }
         System.out.println();
@@ -62,7 +62,7 @@ public class CubeLine {
 
         //print bottom line
         for (Cube cube : cubes) {
-            if(cube.getCubeNumber() == 0) System.out.print("");
+            if(cube.getCubeNumber() == 0) System.out.print("     ");
             else System.out.print("└───┘");
         }
         System.out.println();
