@@ -14,7 +14,7 @@ public class CubeMatrix {
             CubeLine newLine = new CubeLine(start , end);
             cubeLines.add(newLine);
             start = end + 1;
-            end = start + numOfCubesPerLine - 1;
+            end += numOfCubesPerLine ;
         }
         Collections.shuffle(cubeLines);
         setPositionsForAllCubes();

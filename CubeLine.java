@@ -8,7 +8,7 @@ public class CubeLine {
     }
 
     public CubeLine(int start  , int numOfCubesPerLine) {
-        this.cubes = new FixedSizeArrayList<Cube>(4*numOfCubesPerLine);
+        this.cubes = new FixedSizeArrayList<Cube>(3*numOfCubesPerLine);
         for(int i = start ; i <= numOfCubesPerLine ; i++){
             this.cubes.add(new Cube(i));
         }
@@ -33,7 +33,7 @@ public class CubeLine {
 
         //print top line
         for (Cube cube : cubes) {
-            if(cube == null) System.out.print("     ");
+            if(cube == null) System.out.print("");
             else System.out.print("┌───┐"); 
         }
         System.out.println();
@@ -42,7 +42,7 @@ public class CubeLine {
 
         //print middle parts
         for(Cube cube : cubes){
-            if(cube == null) System.out.print("     ");
+            if(cube == null) System.out.print("");
             else System.out.print("│ " + cube.getCubeNumber() + " │");
         }
         System.out.println();
@@ -51,7 +51,7 @@ public class CubeLine {
 
         //print bottom line
         for (Cube cube : cubes) {
-            if(cube == null) System.out.print("     ");
+            if(cube == null) System.out.print("");
             else System.out.print("└───┘");
         }
         System.out.println();
@@ -68,12 +68,10 @@ public class CubeLine {
         return this.cubes;
     }
     public static void main(String[] args) {
-        CubeLine cubeLine = new CubeLine(1,3);
+        CubeLine cubeLine = new CubeLine(1,7);
         cubeLine.printCubeLine();
 
-        //move cube 1 to index 5
-        cubeLine.moveCube(0 , 5);
-        cubeLine.printCubeLine();
+        
         
         
         
