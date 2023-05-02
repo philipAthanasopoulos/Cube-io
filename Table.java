@@ -12,7 +12,6 @@ public class Table{
         final String ANSI_RESET = "\u001B[0m";
         //ansi green color code
         final String ANSI_GREEN = "\u001B[32m";
-        //e.g System.out.println(ANSI_GREEN + "This text is green!" + ANSI_RESET);
         System.out.println(ANSI_GREEN);
 
         System.out.println("      ___           ___                         ___                       ___     ");
@@ -26,6 +25,7 @@ public class Table{
         System.out.println("   \\  \\:\\/:/     \\  \\:\\/:/     \\  \\:\\/:/     \\  \\:\\/:/       /__/:/    \\  \\:\\/:/  ");
         System.out.println("    \\  \\::/       \\  \\::/       \\  \\::/       \\  \\::/        \\__\\/      \\  \\::/   ");
         System.out.println("     \\__\\/         \\__\\/         \\__\\/         \\__\\/                     \\__\\/    ");
+
         System.out.println(ANSI_RESET);
          
     }
