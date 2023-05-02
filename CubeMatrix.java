@@ -17,6 +17,7 @@ public class CubeMatrix {
             end = start + numOfCubesPerLine - 1;
         }
         Collections.shuffle(cubeLines);
+        setPositionsForAllCubes();
     }
     
 
@@ -29,15 +30,7 @@ public class CubeMatrix {
     }
 
     public void moveCube(Cube cube, int xNext, int yNext) {
-        //get the cube from the cubeLines
-        Cube cubeToMove = getCube(cube.getXPos(), cube.getYPos());
-        //set the cube to null
-        cubeLines.get(cube.getXPos()).getCubes().set(cube.getYPos(), null);
-        //set the cube to the new position
-        cubeLines.get(xNext).getCubes().set(yNext, cubeToMove);
-        //set the cube's position
-        cubeToMove.setXPos(xNext);
-        cubeToMove.setYPos(yNext);
+        
     }
 
     public CubeLine[] getCubeLines() {
@@ -79,14 +72,16 @@ public class CubeMatrix {
         for(CubeLine cubeLine : cubeLines){
             cubeLine.printCubeLine();
         }
+        System.out.println("================================================");
 
     }
     public static void main(String[] args) {
         CubeMatrix cubeMatrix = new CubeMatrix(3);
         cubeMatrix.printCubeMatrix();
+        
         //move cube 1 to a free position
-        cubeMatrix.moveCube(cubeMatrix.getCube(1), 1, 1);
-        cubeMatrix.printCubeMatrix();
+        cubeMatrix.moveCube(cubeMatrix.getCube(1) , 0 , 3);
+
         
     }
 }

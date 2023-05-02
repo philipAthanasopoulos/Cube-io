@@ -16,7 +16,7 @@ public class CubeLine {
         //shuffle the Cubes
         Collections.shuffle(this.cubes);
 
-        //initialize the rst as null
+        //initialize the rest as null
         for(int i = numOfCubesPerLine + 1 ; i <= 4*numOfCubesPerLine ; i++){
             this.cubes.add(null);
         }
@@ -33,8 +33,8 @@ public class CubeLine {
 
         //print top line
         for (Cube cube : cubes) {
-            if(cube == null) continue;
-            System.out.print("┌───┐"); 
+            if(cube == null) System.out.print("     ");
+            else System.out.print("┌───┐"); 
         }
         System.out.println();
 
@@ -42,20 +42,26 @@ public class CubeLine {
 
         //print middle parts
         for(Cube cube : cubes){
-            if(cube == null) continue;
-            System.out.print("│ " + cube.getCubeNumber() + " │");
+            if(cube == null) System.out.print("     ");
+            else System.out.print("│ " + cube.getCubeNumber() + " │");
         }
         System.out.println();
 
 
-        
+
         //print bottom line
         for (Cube cube : cubes) {
-            if(cube == null) continue;
-            System.out.print("└───┘");
+            if(cube == null) System.out.print("     ");
+            else System.out.print("└───┘");
         }
         System.out.println();
 
+    }
+
+    public void moveCube(int i, int j) {
+        Cube temp = this.cubes.get(i);
+        this.cubes.set(i, this.cubes.get(j));
+        this.cubes.set(j, temp);
     }
     
     public FixedSizeArrayList<Cube> getCubes() {
@@ -66,7 +72,9 @@ public class CubeLine {
         cubeLine.printCubeLine();
 
         //move cube 1 to index 5
-        cubeLine.getCubes().move(0, 4);
+        cubeLine.moveCube(0 , 5);
+        cubeLine.printCubeLine();
+        
         
         
 
