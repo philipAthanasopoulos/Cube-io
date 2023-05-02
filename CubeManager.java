@@ -35,12 +35,8 @@ public class CubeManager {
 
     public void moveCube(Cube cube , int xNext , int yNext){
         if(cubeMatrix.isMoveable(cube) && cubeMatrix.positionIsFree(xNext, yNext)){
-            int numberToMove = cube.getCubeNumber();
-            Cube cubeToMove = new Cube(numberToMove);
-            //add cube to new position
-            cubeMatrix.getCubeLine(yNext).getCubes().set(xNext, cubeToMove);
-            //remove cube from old position
-            cubeMatrix.getCubeLine(cube.getYPos()).getCubes().set(cube.getXPos(), null);
+            cubeMatrix.moveCube(cube, xNext, yNext);
+            cubeMatrix.setPositionsForAllCubes();
         }else{
             System.out.println(ANSI_RED + "You can't move the cube to that position. Please try again." + ANSI_RESET);
         }

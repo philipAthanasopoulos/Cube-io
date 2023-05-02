@@ -31,7 +31,13 @@ public class CubeLine {
 
 
     public boolean isInOrder() {
-        return false;
+        int lastCubeNumber = 0;
+        for(Cube cube : cubes){
+            if(cube.getCubeNumber() == 0) continue;
+            if(cube.getCubeNumber() < lastCubeNumber) return false;
+            lastCubeNumber = cube.getCubeNumber();
+        }
+        return true;
     }
 
     public void printCubeLine() {

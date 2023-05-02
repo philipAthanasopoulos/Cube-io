@@ -40,11 +40,8 @@ public class Table{
         cubeManager.requestCubeMatrix();
         cubeManager.printCubeMatrix();
         //move cube 1 to a free position
-        // cubeManager.moveCube(cubeManager.getCube(1), 5, 2);
-        for(CubeLine cubeLine : cubeManager.getCubeMatrix().getCubeLines()){
-            //print cube line size 
-            System.out.println("CubeLine size: " + cubeLine.getCubes().size());
-        }
+        cubeManager.moveCube(cubeManager.getCube(1), 5, 2);
+        cubeManager.printCubeMatrix();
 
         
     }

@@ -28,9 +28,11 @@ public class CubeMatrix {
         return getCube(xNext , yNext).getCubeNumber() == 0 ? true : false;
     }
 
-    // public void moveCube(Cube cube, int xNext, int yNext) {
-        
-    // }
+    public void moveCube(Cube cube, int xNext, int yNext) {
+        Cube targetCube = getCube(xNext , yNext);
+        targetCube.setCubeNumber(cube.getCubeNumber());
+        cube.setCubeNumber(0);
+    }
 
     public ArrayList<CubeLine> getCubeLines() {
         return this.cubeLines;
@@ -42,7 +44,7 @@ public class CubeMatrix {
     }
 
     public Cube getCube(int xPos, int yPos) {
-        return cubeLines.get(xPos).getCubes().get(yPos);
+        return cubeLines.get(yPos).getCubes().get(xPos);
     }
 
     public Cube getCube(int cubeNumber) {
@@ -58,7 +60,6 @@ public class CubeMatrix {
     public void setPositionsForAllCubes() {
         for(CubeLine line : cubeLines){
             for(Cube cube : line.getCubes()){
-                if(cube.getCubeNumber() == 0) continue;
                 cube.setXPos(cubeLines.indexOf(line));
                 cube.setYPos(line.getCubes().indexOf(cube));
             }
@@ -71,7 +72,7 @@ public class CubeMatrix {
         //TODO
         for(CubeLine cubeLine : cubeLines){
             System.out.println("Line " + cubeLines.indexOf(cubeLine) + ":");
-            cubeLine.printCubeLineWithInvisibleCubes();
+            cubeLine.printCubeLine();
         }
         System.out.println("================================================");
 
@@ -79,6 +80,9 @@ public class CubeMatrix {
     public static void main(String[] args) {
         CubeMatrix cubeMatrix = new CubeMatrix(3);
         cubeMatrix.printCubeMatrix();
+        cubeMatrix.moveCube(cubeMatrix.getCube(1), 4, 0);
+        cubeMatrix.printCubeMatrix();
+        
         
         
 
