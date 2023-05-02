@@ -15,5 +15,11 @@ public class FixedSizeArrayList<T> extends ArrayList<T> {
         }
         return super.add(element);
     }
+
+    public void move(int i, int j) {
+        T temp = get(i);
+        set(i, get(j));
+        set(j, temp);
+    }
 }
 

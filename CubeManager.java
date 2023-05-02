@@ -34,7 +34,7 @@ public class CubeManager {
     }
 
     public void moveCube(Cube cube , int xNext , int yNext){
-        if(cubeMatrix.isMoveable(cube, xNext, yNext)){
+        if(cubeMatrix.isMoveable(cube) && cubeMatrix.positionIsFree(xNext, yNext)){
             cubeMatrix.moveCube(cube, xNext, yNext);
         }else{
             System.out.println(ANSI_RED + "You can't move the cube to that position. Please try again." + ANSI_RESET);
