@@ -4,4 +4,7 @@ public class Cube {
     public Cube(int cubeNumber) {
         this.cubeNumber = cubeNumber;
     }
+
+
+    
 }

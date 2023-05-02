@@ -1,9 +1,12 @@
 
 public class CubeMatrix {
-    public CubeMatrix(int numOfCubesPerLine) {
-    }
 
     private CubeLine[] cubeLines;
+
+
+    public CubeMatrix(int numOfCubesPerLine) {
+    }
+    
 
     public boolean isMoveable(Cube cube, int xNext, int yNext) {
         return false;
@@ -17,5 +20,7 @@ public class CubeMatrix {
     }
 
     public void printCubeMatrix() {
+        //TODO
+
     }
 }

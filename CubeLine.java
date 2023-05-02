@@ -5,5 +5,12 @@ public class CubeLine {
     public boolean isInOrder() {
         return false;
     }
+
+    public void printCubeLine() {
+        //TODO
+    }
+
+    
+    
     
 }

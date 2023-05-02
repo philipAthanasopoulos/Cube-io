@@ -13,7 +13,28 @@ public class Table{
         //ansi green color code
         final String ANSI_GREEN = "\u001B[32m";
         //e.g System.out.println(ANSI_GREEN + "This text is green!" + ANSI_RESET);
+        System.out.println(ANSI_GREEN);
+
+        System.out.println("      ___           ___                         ___                       ___     ");
+        System.out.println("     /  /\\         /__/\\         _____         /  /\\        ___          /  /\\    ");
+        System.out.println("    /  /:/         \\  \\:\\       /  /::\\       /  /:/_      /  /\\        /  /::\\   ");
+        System.out.println("   /  /:/           \\  \\:\\     /  /:/\\:\\     /  /:/ /\\    /  /:/       /  /:/\\:\\  ");
+        System.out.println("  /  /:/  ___   ___  \\  \\:\\   /  /:/~/::\\   /  /:/ /:/_  /__/::\\      /  /:/  \\:\\");
+        System.out.println(" /__/:/  /  /\\ /__/\\  \\__\\:\\ /__/:/ /:/\\:| /__/:/ /:/ /\\ \\__\\/\\:\\__  /__/:/ \\__\\:\\");
+        System.out.println(" \\  \\:\\ /  /:/ \\  \\:\\ /  /:/ \\  \\:\\/:/~/:/ \\  \\:\\/:/ /:/    \\  \\:\\/\\ \\  \\:\\ /  /:/");
+        System.out.println("  \\  \\:\\  /:/   \\  \\:\\  /:/   \\  \\::/ /:/   \\  \\::/ /:/      \\__\\::/  \\  \\:\\  /:/ ");
+        System.out.println("   \\  \\:\\/:/     \\  \\:\\/:/     \\  \\:\\/:/     \\  \\:\\/:/       /__/:/    \\  \\:\\/:/  ");
+        System.out.println("    \\  \\::/       \\  \\::/       \\  \\::/       \\  \\::/        \\__\\/      \\  \\::/   ");
+        System.out.println("     \\__\\/         \\__\\/         \\__\\/         \\__\\/                     \\__\\/    ");
+        System.out.println(ANSI_RESET);
          
+    }
+
+
+    public static void main(String[] args) {
+        //TODO
+        Table table = new Table();
+        table.printStartScreen();
     }
 
 }
