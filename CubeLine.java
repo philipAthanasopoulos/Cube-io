@@ -1,24 +1,31 @@
+import java.util.ArrayList;
 import java.util.Collections;
 
 public class CubeLine {
-    private FixedSizeArrayList<Cube> cubes;
+    private ArrayList<Cube> cubes;
 
     public CubeLine(int numOfCubes) {
-        this.cubes = new FixedSizeArrayList<Cube>(numOfCubes);
+        this.cubes = new ArrayList<Cube>();
     }
 
     public CubeLine(int start  , int numOfCubesPerLine) {
-        this.cubes = new FixedSizeArrayList<Cube>(3*numOfCubesPerLine);
-        for(int i = start ; i <= numOfCubesPerLine ; i++){
-            this.cubes.add(new Cube(i));
+
+
+
+        int size = 4*(numOfCubesPerLine);
+        
+        this.cubes = new ArrayList<Cube>();
+
+        for(int i = 0 ; i < numOfCubesPerLine ; i++){
+            this.cubes.add(new Cube(i + start));
         }
 
         //shuffle the Cubes
         Collections.shuffle(this.cubes);
 
-        //initialize the rest as null
-        for(int i = numOfCubesPerLine + 1 ; i <= 4*numOfCubesPerLine ; i++){
-            this.cubes.add(null);
+        //initialize the rest as invisible cubes
+        for(int i = numOfCubesPerLine ; i < size ; i++){
+            this.cubes.add(new Cube(0));
         }
     }
 
@@ -28,12 +35,10 @@ public class CubeLine {
     }
 
     public void printCubeLine() {
-        
-
 
         //print top line
         for (Cube cube : cubes) {
-            if(cube == null) System.out.print("");
+            if(cube.getCubeNumber() == 0) System.out.print("");
             else System.out.print("┌───┐"); 
         }
         System.out.println();
@@ -42,7 +47,7 @@ public class CubeLine {
 
         //print middle parts
         for(Cube cube : cubes){
-            if(cube == null) System.out.print("");
+            if(cube.getCubeNumber() == 0) System.out.print("");
             else System.out.print("│ " + cube.getCubeNumber() + " │");
         }
         System.out.println();
@@ -51,10 +56,36 @@ public class CubeLine {
 
         //print bottom line
         for (Cube cube : cubes) {
-            if(cube == null) System.out.print("");
+            if(cube.getCubeNumber() == 0) System.out.print("");
             else System.out.print("└───┘");
         }
         System.out.println();
+
+    }
+
+
+    public void printCubeLineWithInvisibleCubes() {
+
+        //print top line
+        for (Cube cube : cubes) {
+            System.out.print("┌───┐");
+        }
+        System.out.println();
+        //print middle parts
+        for(Cube cube : cubes){
+             System.out.print("│ " + cube.getCubeNumber() + " │");
+        }
+        System.out.println();
+
+
+
+        //print bottom line
+        for (Cube cube : cubes) {
+             System.out.print("└───┘");
+        }
+        System.out.println();
+
+
 
     }
 
@@ -64,22 +95,16 @@ public class CubeLine {
         this.cubes.set(j, temp);
     }
     
-    public FixedSizeArrayList<Cube> getCubes() {
+    public ArrayList<Cube> getCubes() {
         return this.cubes;
     }
     public static void main(String[] args) {
-        CubeLine cubeLine = new CubeLine(1,7);
-        cubeLine.printCubeLine();
-
-        
-        
-        
-        
+        CubeLine cubeLine = new CubeLine(1,3);
+        cubeLine.printCubeLineWithInvisibleCubes();
+        //print cubeline size
+        System.out.println(cubeLine.getCubes().size());
 
     }
 
-
-
-    
-    
+ 
 }

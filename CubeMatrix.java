@@ -1,20 +1,19 @@
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
 public class CubeMatrix {
 
-    private FixedSizeArrayList<CubeLine> cubeLines;
+    private ArrayList<CubeLine> cubeLines;
 
 
     public CubeMatrix(int numOfCubesPerLine) {
-        this.cubeLines = new FixedSizeArrayList<CubeLine>(3);
+        this.cubeLines = new ArrayList<CubeLine>();
         int start = 1;
-        int end = numOfCubesPerLine;
-        for(int i = 0 ; i < 3 ; i++){
-            CubeLine newLine = new CubeLine(start , end);
-            cubeLines.add(newLine);
-            start = end + 1;
-            end += numOfCubesPerLine ;
+        //create 3 CubeLines from 1 to 3*numOfCubesPerLine
+        for(int i = 0 ; i < numOfCubesPerLine ; i++){
+            cubeLines.add(new CubeLine(start , numOfCubesPerLine));
+            start += numOfCubesPerLine;
         }
         Collections.shuffle(cubeLines);
         setPositionsForAllCubes();
@@ -22,23 +21,24 @@ public class CubeMatrix {
     
 
     public boolean isMoveable(Cube cube) {
-        return getAboveCube(cube) == null ? true : false;
+        return getAboveCube(cube).getCubeNumber() == 0 ? true : false;
     }
 
     public boolean positionIsFree(int xNext, int yNext) {
-        return getCube(xNext , yNext) == null ? true : false;
+        return getCube(xNext , yNext).getCubeNumber() == 0 ? true : false;
     }
 
-    public void moveCube(Cube cube, int xNext, int yNext) {
+    // public void moveCube(Cube cube, int xNext, int yNext) {
         
-    }
+    // }
 
-    public CubeLine[] getCubeLines() {
-        return null;
+    public ArrayList<CubeLine> getCubeLines() {
+        return this.cubeLines;
     }
 
     public Cube getAboveCube(Cube cube) {
-        return cubeLines.get(cube.getXPos() - 1).getCubes().get(cube.getYPos());
+        if(cube.getYPos() == 0) return new Cube(0);
+        return cubeLines.get(cube.getYPos() -1).getCubes().get(cube.getXPos());
     }
 
     public Cube getCube(int xPos, int yPos) {
@@ -58,7 +58,7 @@ public class CubeMatrix {
     public void setPositionsForAllCubes() {
         for(CubeLine line : cubeLines){
             for(Cube cube : line.getCubes()){
-                if(cube == null) continue;
+                if(cube.getCubeNumber() == 0) continue;
                 cube.setXPos(cubeLines.indexOf(line));
                 cube.setYPos(line.getCubes().indexOf(cube));
             }
@@ -70,7 +70,8 @@ public class CubeMatrix {
     public void printCubeMatrix() {
         //TODO
         for(CubeLine cubeLine : cubeLines){
-            cubeLine.printCubeLine();
+            System.out.println("Line " + cubeLines.indexOf(cubeLine) + ":");
+            cubeLine.printCubeLineWithInvisibleCubes();
         }
         System.out.println("================================================");
 
@@ -79,9 +80,13 @@ public class CubeMatrix {
         CubeMatrix cubeMatrix = new CubeMatrix(3);
         cubeMatrix.printCubeMatrix();
         
-        //move cube 1 to a free position
-        cubeMatrix.moveCube(cubeMatrix.getCube(1) , 0 , 3);
+        
 
         
+    }
+
+
+    public CubeLine getCubeLine(int yNext) {
+        return cubeLines.get(yNext);   
     }
 }
