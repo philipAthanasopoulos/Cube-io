@@ -5,6 +5,10 @@ public class CubeMatrix {
 
 
     public CubeMatrix(int numOfCubesPerLine) {
+        this.cubeLines = new CubeLine[3];
+        for (int i = 0; i < cubeLines.length; i++) {
+            cubeLines[i] = new CubeLine(numOfCubesPerLine);
+        }
     }
     
 
@@ -21,6 +25,15 @@ public class CubeMatrix {
 
     public void printCubeMatrix() {
         //TODO
+        for(CubeLine cubeLine : cubeLines){
+            cubeLine.printCubeLine();
+        }
 
+    }
+
+
+    public static void main(String[] args) {
+        CubeMatrix cubeMatrix = new CubeMatrix(3);
+        cubeMatrix.printCubeMatrix();
     }
 }

@@ -32,9 +32,14 @@ public class Table{
 
 
     public static void main(String[] args) {
-        //TODO
+        
         Table table = new Table();
         table.printStartScreen();
+
+        CubeManager cubeManager = new CubeManager();
+        cubeManager.requestCubeMatrix();
+        cubeManager.printCubeMatrix();
+        
     }
 
 }
