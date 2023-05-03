@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class CubeManager {
     private CubeMatrix cubeMatrix;
-    private float cost = 0;
+    private double cost = 0;
     private Scanner input;
     //ansi red color code
     public static final String ANSI_RED = "\u001B[31m";
@@ -15,7 +15,7 @@ public class CubeManager {
         
     }
     
-    public void createCubeMaxtrix(int numOfCubesPerLine) {
+    public void createCubeMatrix(int numOfCubesPerLine) {
         this.cubeMatrix = new CubeMatrix(numOfCubesPerLine);
     }
 
@@ -25,7 +25,7 @@ public class CubeManager {
         try {
             System.out.println("Enter the number of cubes : ");
             int numOfCubesPerLine = input.nextInt();
-            createCubeMaxtrix(numOfCubesPerLine);
+            createCubeMatrix(numOfCubesPerLine);
         } catch (NullPointerException | NumberFormatException | InputMismatchException e) {
             // TODO: handle exception
             System.out.println(ANSI_RED + "You typed an invalid character. Please try again." + ANSI_RESET);
@@ -45,7 +45,13 @@ public class CubeManager {
     public void increaseCost(float costToAdd){
         this.cost += costToAdd;
     }
+    public void calculationOfMove(int curY, int nextY){
+        
+            if(nextY > curY) cost =  (nextY - curY);
+            else if (nextY < curY) cost =  0.5*(curY - nextY);
+            else cost = 0.75;
 
+    }
     public boolean cubesAreInOrder(){
         for(CubeLine cubeLine : cubeMatrix.getCubeLines()){
             if(!cubeLine.isInOrder()){
@@ -67,7 +73,7 @@ public class CubeManager {
         this.cubeMatrix = cubeMatrix;
     }
 
-    public float getCost() {
+    public double getCost() {
         return this.cost;
     }
 

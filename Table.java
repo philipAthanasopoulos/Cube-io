@@ -42,18 +42,18 @@ public class Table{
         cubeManager.printCubeMatrix();
 
         Botaki botaki = new Botaki();
-        while(cubeManager.getCubeMatrix().isInOrder() == false){
+        /*while(cubeManager.getCubeMatrix().isInOrder() == false){
             botaki.moveCube();
             cubeManager.printCubeMatrix();
         }
         
-        System.out.println(ANSI_GREEN + "Congratulations! You have solved the puzzle!" + ANSI_RESET);
+        System.out.println(ANSI_GREEN + "Congratulations! You have solved the puzzle!" + ANSI_RESET);*/
 
         
         
-        //move cube 1 to free position
-        // cubeManager.moveCube(cubeManager.getCube(1) , 4,2);
-        // cubeManager.printCubeMatrix();
+       // move cube 1 to free position
+        cubeManager.moveCube(cubeManager.getCube(1) , 4,2);
+         cubeManager.printCubeMatrix();
 
         
     }

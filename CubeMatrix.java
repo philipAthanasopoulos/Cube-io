@@ -64,6 +64,7 @@ public class CubeMatrix {
             }
         }
     }
+    
 
     public boolean isInOrder(){ 
 
