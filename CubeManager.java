@@ -99,5 +99,15 @@ public class CubeManager {
         return null;
     }
 
+    public static void main(String[] args) {
+        CubeManager cubeManager = new CubeManager();
+        cubeManager.createCubeMatrix(3);
+        cubeManager.printCubeMatrix();
+        cubeManager.moveCube(cubeManager.getCube(1), 4, 2);
+        cubeManager.printCubeMatrix();
+
+
+    }
+
 
 }
