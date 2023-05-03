@@ -6,6 +6,9 @@ public class Botaki {
         //TODO
     }
 
+    public void moveCube() {
+    }
+
 
     
 }

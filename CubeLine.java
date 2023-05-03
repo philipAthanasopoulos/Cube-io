@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class CubeLine {
+    
     private ArrayList<Cube> cubes;
 
     public CubeLine(int numOfCubes) {
@@ -29,6 +30,9 @@ public class CubeLine {
         }
     }
 
+
+    public CubeLine() {
+    }
 
     public boolean isInOrder() {
         int lastCubeNumber = 0;
@@ -111,6 +115,7 @@ public class CubeLine {
         System.out.println(cubeLine.getCubes().size());
 
     }
+
 
  
 }

@@ -66,6 +66,22 @@ public class CubeMatrix {
         }
     }
 
+    public boolean isInOrder(){ 
+
+        //put all cubes in a line form buttom to top , check if line is in order
+        CubeLine lineToCheck = new CubeLine(0);
+
+        for(int i = cubeLines.size() - 1 ; i >= 0 ; i--){
+            CubeLine line = cubeLines.get(i);
+            for(Cube cube : line.getCubes()){
+                if(cube.getCubeNumber() == 0) continue;
+                lineToCheck.getCubes().add(cube);
+            }
+        }
+
+        return lineToCheck.isInOrder();
+    }
+
     
 
     public void printCubeMatrix() {
@@ -77,14 +93,10 @@ public class CubeMatrix {
 
     }
     public static void main(String[] args) {
-        CubeMatrix cubeMatrix = new CubeMatrix(3);
+        CubeMatrix cubeMatrix = new CubeMatrix(2);
         cubeMatrix.printCubeMatrix();
-        System.out.println(cubeMatrix.getCube(1).getXPos());
-        
-        
-        
-
-        
+        System.out.println(cubeMatrix.isInOrder());
+         
     }
 
 
