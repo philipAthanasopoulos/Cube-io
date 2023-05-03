@@ -47,7 +47,7 @@ public class CubeLine {
    
 
 
-    /*public void printCubeLineWithInvisibleCubes() {
+    public void printCubeLineWithInvisibleCubes() {
 
         //print top line
         for (Cube cube : cubes) {
@@ -68,45 +68,73 @@ public class CubeLine {
         }
         System.out.println();
 
+    }
 
 
-    }*/
-    public void printCubeLine() {
+    public void printCubeLine(){
         //print top line
         for (Cube cube : cubes) {
-            if (cube.getCubeNumber() == 0) {
-                System.out.print("          ");
-            } else {
-                System.out.print("┌────────┐");
-            }
+            if(cube.getCubeNumber() == 0) System.out.print("     ");
+            else System.out.print("┌───┐");
         }
         System.out.println();
-    
         //print middle parts
-        for (Cube cube : cubes) {
-            if (cube.getCubeNumber() == 0) {
-                System.out.print("    ");
-            } else {
-                int cubeNumber = cube.getCubeNumber();
-                if (cubeNumber < 10) {
-                    System.out.print("│   " + cubeNumber + "    │");
-                } else {
-                    System.out.print("│   " + cubeNumber + "   │");
-                }
-            }
+        for(Cube cube : cubes){
+             if(cube.getCubeNumber() == 0) System.out.print("     ");
+
+             else System.out.print("│ " + cube.getCubeNumber() + " │");
         }
         System.out.println();
-    
+
+
+
         //print bottom line
         for (Cube cube : cubes) {
-            if (cube.getCubeNumber() == 0) {
-                System.out.print("          ");
-            } else {
-                System.out.print("└────────┘");
-            }
+            if(cube.getCubeNumber() == 0) System.out.print("     ");
+
+             else System.out.print("└───┘");
         }
         System.out.println();
+
     }
+
+
+    // public void printCubeLine() {
+    //     //print top line
+    //     for (Cube cube : cubes) {
+    //         if (cube.getCubeNumber() == 0) {
+    //             System.out.print("          ");
+    //         } else {
+    //             System.out.print("┌────────┐");
+    //         }
+    //     }
+    //     System.out.println();
+    
+    //     //print middle parts
+    //     for (Cube cube : cubes) {
+    //         if (cube.getCubeNumber() == 0) {
+    //             System.out.print("    ");
+    //         } else {
+    //             int cubeNumber = cube.getCubeNumber();
+    //             if (cubeNumber < 10) {
+    //                 System.out.print("│   " + cubeNumber + "    │");
+    //             } else {
+    //                 System.out.print("│   " + cubeNumber + "   │");
+    //             }
+    //         }
+    //     }
+    //     System.out.println();
+    
+    //     //print bottom line
+    //     for (Cube cube : cubes) {
+    //         if (cube.getCubeNumber() == 0) {
+    //             System.out.print("          ");
+    //         } else {
+    //             System.out.print("└────────┘");
+    //         }
+    //     }
+    //     System.out.println();
+    // }
     
     
 

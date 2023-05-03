@@ -82,6 +82,9 @@ public class CubeMatrix {
         return lineToCheck.isInOrder();
     }
 
+    public CubeLine getCubeLine(int yNext) {
+        return cubeLines.get(yNext);   
+    }
     
 
     public void printCubeMatrix() {
@@ -95,12 +98,10 @@ public class CubeMatrix {
     public static void main(String[] args) {
         CubeMatrix cubeMatrix = new CubeMatrix(2);
         cubeMatrix.printCubeMatrix();
-        System.out.println(cubeMatrix.isInOrder());
-         
+        //move cube 1 to pos 4,0
+        cubeMatrix.moveCube(cubeMatrix.getCube(1) , 4 , 2);   
+        cubeMatrix.printCubeMatrix();      
     }
 
 
-    public CubeLine getCubeLine(int yNext) {
-        return cubeLines.get(yNext);   
-    }
 }
