@@ -9,12 +9,9 @@ public class CubeLine {
         this.cubes = new ArrayList<Cube>();
     }
 
-    public CubeLine(int start  , int numOfCubesPerLine) {
+    public CubeLine(int start  , int numOfCubesPerLine , int size) {
 
 
-
-        int size = 4*(numOfCubesPerLine);
-        
         this.cubes = new ArrayList<Cube>();
 
         for(int i = 0 ; i < numOfCubesPerLine ; i++){
@@ -148,7 +145,7 @@ public class CubeLine {
         return this.cubes;
     }
     public static void main(String[] args) {
-        CubeLine cubeLine = new CubeLine(1,3);
+        CubeLine cubeLine = new CubeLine(1,3 ,5);
         cubeLine.printCubeLineWithInvisibleCubes();
         //print cubeline size
         System.out.println(cubeLine.getCubes().size());

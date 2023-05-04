@@ -99,6 +99,10 @@ public class CubeManager {
         return null;
     }
 
+    public void printCubeLinesWithInvisibleCubes(){
+        this.cubeMatrix.printCubeLinesWithInvisibleCubes();
+    }
+
     public static void main(String[] args) {
         CubeManager cubeManager = new CubeManager();
         cubeManager.createCubeMatrix(4);
