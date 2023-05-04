@@ -101,7 +101,7 @@ public class CubeManager {
 
     public static void main(String[] args) {
         CubeManager cubeManager = new CubeManager();
-        cubeManager.createCubeMatrix(3);
+        cubeManager.createCubeMatrix(4);
         cubeManager.printCubeMatrix();
         cubeManager.moveCube(cubeManager.getCube(1), 4, 2);
         cubeManager.printCubeMatrix();

@@ -48,21 +48,23 @@ public class Node {
     }
 
     public void printTree() {
-        printTreeHelper(this, "", "");
+        printTreeHelper(this, "", true);
     }
     
-    private void printTreeHelper(Node node, String prefix, String childPrefix) {
-        // Print the current node
-        System.out.println(prefix + childPrefix + " Node (cost=" + node.getCost() + ")");
-    
-        // Recursively print the children
+    private void printTreeHelper(Node node, String prefix, boolean isLast) {
+        System.out.print(prefix);
+        System.out.print(isLast ? "└── " : "├── ");
+        System.out.println("Node (cost=" + node.getCost() + ")");
+        
         for (int i = 0; i < node.getChildren().size(); i++) {
             Node child = node.getChildren().get(i);
-            String newPrefix = prefix + childPrefix.replaceAll("[^|]", " ") + " ";
-            String newChildPrefix = i == node.getChildren().size() - 1 ? "└── " : "├── ";
-            printTreeHelper(child, newPrefix, newChildPrefix);
+            boolean childIsLast = i == node.getChildren().size() - 1;
+            String newPrefix = prefix + (isLast ? "    " : "│   ");
+            printTreeHelper(child, newPrefix, childIsLast);
         }
     }
+    
+    
     
     
 
@@ -81,6 +83,12 @@ public class Node {
 
     child1.addChild(child3);
     child2.addChild(child3);
+
+    child2.addChild(child3);
+    child2.addChild(child3);
+    child2.addChild(child3);
+    child2.addChild(child3);
+
 
     root.printTree();
 
