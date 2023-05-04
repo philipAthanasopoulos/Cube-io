@@ -10,7 +10,7 @@ public class CubeMatrix {
         this.cubeLines = new ArrayList<CubeLine>();
         int start = 1;
         //create 3 CubeLines from 1 to 3*numOfCubesPerLine
-        CubeLine cubeLine1 = new CubeLine(start , numOfCubesPerLine , numOfCubesPerLine * 4);
+        CubeLine cubeLine1 = new CubeLine(start , numOfCubesPerLine , numOfCubesPerLine);
         CubeLine cubeLine2 = new CubeLine(start + numOfCubesPerLine , numOfCubesPerLine , numOfCubesPerLine);
         CubeLine cubeLine3 = new CubeLine(start + 2*numOfCubesPerLine , numOfCubesPerLine , numOfCubesPerLine);
 
@@ -20,6 +20,11 @@ public class CubeMatrix {
         cubeLines.add(cubeLine3);
 
         Collections.shuffle(cubeLines);
+        //add 3*k free posiotions on line with index 2
+        for(int i = 0 ; i < 3*numOfCubesPerLine ; i++){
+            cubeLines.get(2).getCubes().add(new Cube(0));
+        }
+
         setPositionsForAllCubes();
     }
     
@@ -32,13 +37,15 @@ public class CubeMatrix {
         return getCube(xNext , yNext).getCubeNumber() == 0 ? true : false;
     }
 
-    public void findFreePosition(){
-        for(CubeLine cubeLine : cubeLines){
-            for(Cube cube : cubeLine.getCubes()){
-                if(cube.getCubeNumber() == 0) return;
-            }
+    public Cube findFreePosition(){
+        for(Cube cube : getCubeLines().get(2).getCubes()){
+            if(cube.getCubeNumber() == 0) return cube;
         }
+        //will never happen
+        return null;
     }
+
+    
 
     public void moveCube(Cube cube, int xNext, int yNext) {
         Cube targetCube = getCube(xNext , yNext);
@@ -116,11 +123,17 @@ public class CubeMatrix {
 
     }
     public static void main(String[] args) {
-        CubeMatrix cubeMatrix = new CubeMatrix(2);
-        cubeMatrix.printCubeMatrix();
+        CubeMatrix cubeMatrix = new CubeMatrix(3);
+        cubeMatrix.printCubeLinesWithInvisibleCubes();
+
+
+        cubeMatrix.moveCube(cubeMatrix.getCube(1) , 3 , 2);   
+        cubeMatrix.printCubeMatrix();   
+        
+        
+        Cube freePosition = cubeMatrix.findFreePosition();
+        System.out.println(freePosition.getXPos() + " " + freePosition.getYPos());
         //move cube 1 to pos 4,0
-        cubeMatrix.moveCube(cubeMatrix.getCube(1) , 4 , 2);   
-        cubeMatrix.printCubeMatrix();      
     }
 
 
