@@ -5,12 +5,20 @@ public class Node {
     private ArrayList<Node> children;
     private Node parent;
     private int cost;
+    private CubeMatrix cubeMatrix;
     
 
     public Node() {
         this.children = new ArrayList<Node>();
         this.parent = null;
         this.cost = 0;
+    }
+
+    public Node(CubeMatrix cubeMatrix) {
+        this.children = new ArrayList<Node>();
+        this.parent = null;
+        this.cost = 0;
+        this.cubeMatrix = cubeMatrix;
     }
 
     public Node(Node parent) {
@@ -42,8 +50,32 @@ public class Node {
         this.children.add(child);
     }
 
+    public void removeChild(Node child) {
+        this.children.remove(child);
+    }
+
+
+    public void setChildren(ArrayList<Node> children) {
+        this.children = children;
+    }
+    public void setParent(Node parent) {
+        this.parent = parent;
+    }
+
+    public CubeMatrix getCubeMatrix() {
+        return this.cubeMatrix;
+    }
+
+    public void setCubeMatrix(CubeMatrix cubeMatrix) {
+        this.cubeMatrix = cubeMatrix;
+    }
+
+
 
     public void createTree(){
+        //TODO
+        Cube cubeToMove = this.cubeMatrix.findSmallestMovableCube();
+
 
     }
 
@@ -70,27 +102,11 @@ public class Node {
 
 
    public static void main(String[] args) {
+
+    CubeMatrix cubeMatrix = new CubeMatrix(4);
+
     
-    Node root = new Node();
-    Node child1 = new Node(root);
-    Node child2 = new Node(root);
-    Node child3 = new Node(root);
-
-
-    root.addChild(child1);
-    root.addChild(child2);
-    root.addChild(child3);
-
-    child1.addChild(child3);
-    child2.addChild(child3);
-
-    child2.addChild(child3);
-    child2.addChild(child3);
-    child2.addChild(child3);
-    child2.addChild(child3);
-
-
-    root.printTree();
+    Node root = new Node(cubeMatrix);
 
 
    }

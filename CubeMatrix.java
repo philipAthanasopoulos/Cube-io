@@ -33,6 +33,18 @@ public class CubeMatrix {
         return getAboveCube(cube).getCubeNumber() == 0 ? true : false;
     }
 
+    public Cube findSmallestMovableCube(){
+        Cube result = new Cube(Integer.MAX_VALUE);
+        for(CubeLine cubeLine : cubeLines){
+            for(Cube cube : cubeLine.getCubes()){
+                if(cube.getCubeNumber() == 0) continue;
+                if(isMoveable(cube) && cube.getCubeNumber() < result.getCubeNumber()) result = cube;
+            }
+        }
+        //will never happen
+        return result;
+    }
+
     public boolean positionIsFree(int xNext, int yNext) {
         return getCube(xNext , yNext).getCubeNumber() == 0 ? true : false;
     }
@@ -127,13 +139,7 @@ public class CubeMatrix {
         cubeMatrix.printCubeLinesWithInvisibleCubes();
 
 
-        cubeMatrix.moveCube(cubeMatrix.getCube(1) , 3 , 2);   
-        cubeMatrix.printCubeMatrix();   
-        
-        
-        Cube freePosition = cubeMatrix.findFreePosition();
-        System.out.println(freePosition.getXPos() + " " + freePosition.getYPos());
-        //move cube 1 to pos 4,0
+        cubeMatrix.findSmallestMovableCube().printCube();
     }
 
 

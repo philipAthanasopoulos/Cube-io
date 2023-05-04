@@ -17,9 +17,9 @@ public class Cube {
 
     
     public void printCube() {
-        System.out.println("┌─────┐");
+        System.out.println("┌───┐");
         System.out.println("│ " + this.cubeNumber + " │");
-        System.out.println("└─────┘");
+        System.out.println("└───┘");
     }
 
 
