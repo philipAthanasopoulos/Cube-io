@@ -74,7 +74,7 @@ public class Node {
 
     public void createTree(){
         //TODO
-        Cube cubeToMove = this.cubeMatrix.findSmallestMovableCube();
+        // Cube cubeToMove = this.cubeMatrix.findSmallestMovableCube();
 
 
     }

@@ -53,7 +53,7 @@ public class Table{
         
        // move cube 1 to free position
         cubeManager.moveCube(cubeManager.getCube(1) , 4,2);
-         cubeManager.printCubeLinesWithInvisibleCubes();
+         cubeManager.printCubeMatrix();
 
         
     }
