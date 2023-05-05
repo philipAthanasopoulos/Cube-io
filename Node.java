@@ -74,8 +74,7 @@ public class Node {
 
     public void createTree(){
         //TODO
-        // Cube cubeToMove = this.cubeMatrix.findSmallestMovableCube();
-
+        
 
     }
 
@@ -95,6 +94,8 @@ public class Node {
             printTreeHelper(child, newPrefix, childIsLast);
         }
     }
+
+    
     
     
     
@@ -103,11 +104,24 @@ public class Node {
 
    public static void main(String[] args) {
 
-    CubeMatrix cubeMatrix = new CubeMatrix(4);
 
+    Node root = new Node();
+
+    Node child1 = new Node();
+    Node child2 = new Node();
+    Node child3 = new Node();
+    Node child4 = new Node();
     
-    Node root = new Node(cubeMatrix);
+    root.addChild(child1);
+    root.addChild(child2);
+    root.addChild(child3);
+    root.addChild(child4);
 
+    child1.addChild(child2);
+    child1.addChild(child4);
+
+
+    root.printTree();
 
    }
 

@@ -25,8 +25,9 @@ public class CubeManager {
         try {
             System.out.println("Enter the number of cubes : ");
             int numOfCubesPerLine = input.nextInt();
+            if(numOfCubesPerLine < 1) throw new NullPointerException();
             createCubeMatrix(numOfCubesPerLine);
-        } catch (NullPointerException | NumberFormatException | InputMismatchException e) {
+        } catch (NullPointerException | NumberFormatException | InputMismatchException e ) {
             // TODO: handle exception
             System.out.println(ANSI_RED + "You typed an invalid character. Please try again." + ANSI_RESET);
             requestCubeMatrix();
