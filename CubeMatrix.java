@@ -41,7 +41,6 @@ public class CubeMatrix {
                 if(isMoveable(cube) && cube.getCubeNumber() < result.getCubeNumber()) result = cube;
             }
         }
-        //will never happen
         return result;
     }
 
