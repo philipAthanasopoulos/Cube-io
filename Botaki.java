@@ -1,12 +1,24 @@
 import java.util.ArrayList;
 
 public class Botaki {
-   private CubeMatrix cubeMatrix;
-
+    private CubeMatrix cubeMatrix;
     
-
     public Botaki(){
         //TODO
+    }
+    
+    
+    public int calculateCost(Cube cube , Cube target) {
+        int cost = 0;
+        int yNext = target.getYPos();
+    
+        if(cube.getYPos() == yNext) cost += 0.75;
+        //if cube goes on a line of higher index cost is 0.5*(curY - nextY)
+        else if(cube.getYPos() < yNext) cost += 0.5*(yNext - cube.getYPos());
+        //if cube goes on a line of lower index cost is (nextY - curY)
+        else cost += (cube.getYPos() - yNext);
+    
+        return cost;
     }
 
     public Node calculateAllPossibleMovesForCube(Cube cube){
@@ -36,18 +48,6 @@ public class Botaki {
         
     }
 
-    public int calculateCost(Cube cube , Cube target) {
-        int cost = 0;
-        int yNext = target.getYPos();
-
-        if(cube.getYPos() == yNext) cost += 0.75;
-        //if cube goes on a line of higher index cost is 0.5*(curY - nextY)
-        else if(cube.getYPos() < yNext) cost += 0.5*(yNext - cube.getYPos());
-        //if cube goes on a line of lower index cost is (nextY - curY)
-        else cost += (cube.getYPos() - yNext);
-
-        return cost;
-    }
 
 
     public CubeMatrix getCubeMatrix() {

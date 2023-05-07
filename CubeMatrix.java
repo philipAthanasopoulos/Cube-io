@@ -82,23 +82,24 @@ public class CubeMatrix {
     }
 
     public Cube getAboveCube(Cube cube) {
-        if(cube.getYPos() == 0) return new Cube(0);
+        if(cube.getYPos() == 0) return new Cube(-1);
         try {
-            return cubeLines.get(cube.getYPos() -1).getCubes().get(cube.getXPos());
+            return cubeLines.get(cube.getYPos() - 1).getCubes().get(cube.getXPos());
         } catch (Exception e) {
-            return new Cube(0);
+            return new Cube(-1);
         }
     }
 
     
 
     public Cube getBelowCube(Cube cube) {
-        if(cube.getYPos() == cubeLines.size() - 1) return new Cube(0);
+        if(cube.getYPos() == 2) return new Cube(-1);
         try {
             return cubeLines.get(cube.getYPos() + 1).getCubes().get(cube.getXPos());
         } catch (Exception e) {
-            return new Cube(0);
+            return new Cube(-1);
         }
+        
     }
 
     public Cube getCube(int xPos, int yPos) {
