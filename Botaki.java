@@ -38,11 +38,29 @@ public class Botaki {
             newNode.setCost(calculateCost(cube , cubeToMoveTo));
             newNode.setParent(result);
             result.addChild(newNode);
-            newNode.setCubeMatrix(cubeMatrix);
+            newNode.setCubeMatrix(cubeMatrix.copy());
         }
 
         return result;
 
+    }
+
+
+    public Node createTreeWithAllMoves(CubeMatrix cubeMatrix){
+        Node result = new Node();
+
+        System.out.println("Creating tree with all possible moves");
+
+        for(CubeLine line : cubeMatrix.getCubeLines()){
+            for(Cube cube : line.getCubes()){
+                Node newNode = calculateAllPossibleMovesForCube(cube);
+                result.addChild(newNode);
+                CubeMatrix matrixOfChild = newNode.getCubeMatrix();
+                if(newNode.getCost() != 0) createTreeWithAllMoves(matrixOfChild);
+            }
+        }
+
+        return result;
     }
 
     public void moveCube() {
@@ -69,7 +87,7 @@ public class Botaki {
         Cube cube = cubeManager.getCube(1);
         
         cubeManager.printCubeLinesWithInvisibleCubes();
-        Node result = botaki.calculateAllPossibleMovesForCube(cube);
+        Node result = botaki.createTreeWithAllMoves(botaki.getCubeMatrix());
         result.printTree();
         
     }
