@@ -36,11 +36,22 @@ public class CubeManager {
 
     public void moveCube(Cube cube , int xNext , int yNext){
         if(cubeMatrix.isMoveable(cube) && cubeMatrix.positionIsFree(xNext, yNext)){
+            calculateAndIncreaseCost(cube , xNext , yNext);
             cubeMatrix.moveCube(cube, xNext, yNext);
             cubeMatrix.setPositionsForAllCubes();
+            //increase cost
         }else{
             System.out.println(ANSI_RED + "You can't move the cube to that position. Please try again." + ANSI_RESET);
         }
+    }
+
+    private void calculateAndIncreaseCost(Cube cube, int xNext, int yNext) {
+        //if cube moves on the same line cost is 0.75
+        if(cube.getYPos() == yNext) cost += 0.75;
+        //if cube goes on a line of higher index cost is 0.5*(curY - nextY)
+        else if(cube.getYPos() < yNext) cost += 0.5*(yNext - cube.getYPos());
+        //if cube goes on a line of lower index cost is (nextY - curY)
+        else cost += (cube.getYPos() - yNext);
     }
 
     public void increaseCost(float costToAdd){
@@ -106,10 +117,15 @@ public class CubeManager {
 
     public static void main(String[] args) {
         CubeManager cubeManager = new CubeManager();
-        cubeManager.createCubeMatrix(4);
+        cubeManager.createCubeMatrix(1);
         cubeManager.printCubeMatrix();
-        cubeManager.moveCube(cubeManager.getCube(1), 4, 2);
-        cubeManager.printCubeMatrix();
+        cubeManager.moveCube(cubeManager.getCube(1), 3, 2);
+        cubeManager.printCubeLinesWithInvisibleCubes();
+
+        cubeManager.moveCube(cubeManager.getCube(1), 0, 0);
+        cubeManager.printCubeLinesWithInvisibleCubes();
+        //print cost
+        System.out.println(cubeManager.getCost());
 
 
     }

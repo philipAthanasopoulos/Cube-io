@@ -48,6 +48,19 @@ public class CubeMatrix {
         return getCube(xNext , yNext).getCubeNumber() == 0 ? true : false;
     }
 
+    public boolean positionIsFree(Cube cube){
+        return cube.getCubeNumber() == 0 ? true : false;
+    }
+
+    public boolean positionBelowIsFree(Cube cube){
+        return getBelowCube(cube).getCubeNumber() == 0 ? true : false;
+    }
+
+    public boolean positionIsFreeToMoveTo(Cube cube) {
+        return positionIsFree(cube) && !positionBelowIsFree(cube) ? true : false;
+        
+    }
+
     public Cube findFreePosition(){
         for(Cube cube : getCubeLines().get(2).getCubes()){
             if(cube.getCubeNumber() == 0) return cube;
@@ -70,7 +83,22 @@ public class CubeMatrix {
 
     public Cube getAboveCube(Cube cube) {
         if(cube.getYPos() == 0) return new Cube(0);
-        return cubeLines.get(cube.getYPos() -1).getCubes().get(cube.getXPos());
+        try {
+            return cubeLines.get(cube.getYPos() -1).getCubes().get(cube.getXPos());
+        } catch (Exception e) {
+            return new Cube(0);
+        }
+    }
+
+    
+
+    public Cube getBelowCube(Cube cube) {
+        if(cube.getYPos() == cubeLines.size() - 1) return new Cube(0);
+        try {
+            return cubeLines.get(cube.getYPos() + 1).getCubes().get(cube.getXPos());
+        } catch (Exception e) {
+            return new Cube(0);
+        }
     }
 
     public Cube getCube(int xPos, int yPos) {

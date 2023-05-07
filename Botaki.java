@@ -1,6 +1,7 @@
+import java.util.ArrayList;
 
 public class Botaki {
-   
+   private CubeMatrix cubeMatrix;
 
     
 
@@ -8,9 +9,70 @@ public class Botaki {
         //TODO
     }
 
+    public Node calculateAllPossibleMovesForCube(Cube cube){
+        //TODO
+        //find all free positions to move to
+        ArrayList<Cube> possibleMoves = new ArrayList<Cube>();
+        for(CubeLine line : cubeMatrix.getCubeLines()){
+            for(Cube cubeToCheck : line.getCubes()){
+                if(cubeMatrix.positionIsFreeToMoveTo(cubeToCheck)) possibleMoves.add(cubeToCheck);
+            }
+        }
+
+        //create a new Node for each possible move
+        Node result = new Node();
+        for(Cube cubeToMoveTo : possibleMoves){
+            Node newNode = new Node();
+            newNode.setCost(calculateCost(cube , cubeToMoveTo));
+            newNode.setParent(result);
+            result.addChild(newNode);
+        }
+
+        return result;
+
+    }
+
     public void moveCube() {
         
     }
+
+    public int calculateCost(Cube cube , Cube target) {
+        int cost = 0;
+        int yNext = target.getYPos();
+
+        if(cube.getYPos() == yNext) cost += 0.75;
+        //if cube goes on a line of higher index cost is 0.5*(curY - nextY)
+        else if(cube.getYPos() < yNext) cost += 0.5*(yNext - cube.getYPos());
+        //if cube goes on a line of lower index cost is (nextY - curY)
+        else cost += (cube.getYPos() - yNext);
+
+        return cost;
+    }
+
+
+    public CubeMatrix getCubeMatrix() {
+        return this.cubeMatrix;
+    }
+
+    public void setCubeMatrix(CubeMatrix cubeMatrix) {
+        this.cubeMatrix = cubeMatrix;
+    }
+
+    public static void main(String[] args) {
+        //TODO
+        Botaki botaki = new Botaki();
+        CubeManager cubeManager = new CubeManager();
+        cubeManager.requestCubeMatrix();
+        botaki.setCubeMatrix(cubeManager.getCubeMatrix());
+        //get cube number 1
+        Cube cube = cubeManager.getCube(1);
+        
+        cubeManager.printCubeLinesWithInvisibleCubes();
+        Node result = botaki.calculateAllPossibleMovesForCube(cube);
+        result.printTree();
+        
+    }
+
 
 
     
