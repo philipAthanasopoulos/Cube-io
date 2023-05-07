@@ -47,37 +47,56 @@ public class Botaki {
     }
 
 
-    public Node createTreeWithAllMoves(CubeMatrix cubeMatrix , Node parent ,Cube cubeToSort){
+    // public Node createTreeWithAllMoves(CubeMatrix cubeMatrix , Node parent ,Cube cubeToSort){
         
 
-        System.out.println("Creating tree with all possible moves");
+    //     System.out.println("Creating tree with all possible moves");
 
-        for(CubeLine line : cubeMatrix.getCubeLines()){
+    //     for(CubeLine line : cubeMatrix.getCubeLines()){
+    //         for(Cube cube : line.getCubes()){
+    //             Node newNode = calculateAllPossibleMovesForCube(cube ,parent);
+    //             parent.addChild(newNode);
+    //         }
+    //     }
+        
+    //     int lowestCost = Integer.MAX_VALUE;
+    //     Node lowestCostNode = null;
+    //     for(Node child : parent.getChildren()){
+    //         if(cubeMatrix.cubeIsInFinalPosition(cubeToSort)) return parent;
+    //         else if (child.getCost() < lowestCost) {
+    //             lowestCost = child.getTotalCost();
+    //             lowestCostNode = child;
+    //         }
+    //     }
+
+    //     createTreeWithAllMoves(lowestCostNode.getCubeMatrix() , lowestCostNode , cubeToSort);
+
+    //     return parent;
+    // }
+
+    
+
+    public void expandNode(Node node){
+        //TODO
+        for(CubeLine line : node.getCubeMatrix().getCubeLines()){
             for(Cube cube : line.getCubes()){
-                Node newNode = calculateAllPossibleMovesForCube(cube ,parent);
-                parent.addChild(newNode);
+                Node newNode = calculateAllPossibleMovesForCube(cube ,node);
+                node.addChild(newNode);
             }
-        }
-        
-        int lowestCost = Integer.MAX_VALUE;
-        Node lowestCostNode = null;
-        for(Node child : parent.getChildren()){
-            if(cubeMatrix.cubeIsInFinalPosition(cubeToSort)) return parent;
-            else if (child.getCost() < lowestCost) {
-                lowestCost = child.getTotalCost();
-                lowestCostNode = child;
-            }
-        }
-
-        createTreeWithAllMoves(lowestCostNode.getCubeMatrix() , lowestCostNode , cubeToSort);
-
-        return parent;
+        }   
     }
 
-    public void UCS(Node root){
+    public void expandTreeWithBFS(ArrayList<Node> nodesToExpand){
         //TODO
-
-
+        
+        ArrayList<Node> newNodesToExpand = new ArrayList<Node>();
+        for(Node node : nodesToExpand){
+            expandNode(node);
+            for(Node child : node.getChildren()){
+                newNodesToExpand.add(child);
+            }
+        }
+        
     }
 
 
@@ -100,10 +119,17 @@ public class Botaki {
         Cube cube = cubeManager.getCube(1);
         
         cubeManager.printCubeLinesWithInvisibleCubes();
-        Node result  = new Node();
-        result.setCubeMatrix(botaki.getCubeMatrix());
-        result = botaki.createTreeWithAllMoves(botaki.getCubeMatrix() , result , botaki.getCubeMatrix().getCube(1));
+        Node result  = new Node(cubeManager.getCubeMatrix());
+
+        ArrayList<Node> nodesToExpand = new ArrayList<Node>();
+        nodesToExpand.add(result);
+        result.printTree();
+
+        botaki.expandTreeWithBFS(nodesToExpand);
+        result.printTree();
         
+
+       
         
     }
 
