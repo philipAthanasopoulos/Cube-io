@@ -8,8 +8,8 @@ public class Botaki {
     }
     
     
-    public int calculateCost(Cube cube , Cube target) {
-        int cost = 0;
+    public double calculateCost(Cube cube , Cube target) {
+        double cost = 0;
         int yNext = target.getYPos();
     
         if(cube.getYPos() == yNext) cost += 0.75;
@@ -96,7 +96,10 @@ public class Botaki {
                 newNodesToExpand.add(child);
             }
         }
-        
+
+        nodesToExpand.clear();
+        nodesToExpand.addAll(newNodesToExpand);
+
     }
 
 
@@ -123,10 +126,16 @@ public class Botaki {
 
         ArrayList<Node> nodesToExpand = new ArrayList<Node>();
         nodesToExpand.add(result);
-        result.printTree();
 
-        botaki.expandTreeWithBFS(nodesToExpand);
         result.printTree();
+        botaki.expandTreeWithBFS(nodesToExpand);
+        botaki.expandTreeWithBFS(nodesToExpand);
+        
+        
+       
+
+        
+
         
 
        

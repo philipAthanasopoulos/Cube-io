@@ -4,8 +4,8 @@ public class Node {
     
     private ArrayList<Node> children;
     private Node parent;
-    private int cost;
-    private int totalCost;
+    private double cost;
+    private double totalCost;
     private CubeMatrix cubeMatrix;
     
 
@@ -44,11 +44,11 @@ public class Node {
     }
 
 
-    public int getCost() {
+    public double getCost() {
         return this.cost;
     }
 
-    public void setCost(int cost) {
+    public void setCost(double cost) {
         this.cost = cost;
     }
 
@@ -78,13 +78,15 @@ public class Node {
 
 
 
-    public int getTotalCost() {
+    public double getTotalCost() {
         return this.totalCost;
     }
 
-    public void setTotalCost(int totalCost) {
+    public void setTotalCost(double totalCost) {
         this.totalCost = totalCost;
     }
+
+    
 
 
 
@@ -102,7 +104,7 @@ public class Node {
     private void printTreeHelper(Node node, String prefix, boolean isLast) {
         System.out.print(prefix);
         System.out.print(isLast ? "└── " : "├── ");
-        System.out.println("Node (cost=" + node.getCost() + ")");
+        System.out.println(node.getCost());
         
         for (int i = 0; i < node.getChildren().size(); i++) {
             Node child = node.getChildren().get(i);
