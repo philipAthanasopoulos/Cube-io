@@ -5,6 +5,7 @@ public class Node {
     private ArrayList<Node> children;
     private Node parent;
     private int cost;
+    private int totalCost;
     private CubeMatrix cubeMatrix;
     
 
@@ -12,6 +13,7 @@ public class Node {
         this.children = new ArrayList<Node>();
         this.parent = null;
         this.cost = 0;
+        this.totalCost = 0;
     }
 
     public Node(CubeMatrix cubeMatrix) {
@@ -19,12 +21,16 @@ public class Node {
         this.parent = null;
         this.cost = 0;
         this.cubeMatrix = cubeMatrix;
+        this.totalCost = 0;
+
     }
 
     public Node(Node parent) {
         this.children = new ArrayList<Node>();
         this.parent = parent;
         this.cost = 0;
+        this.totalCost = 0;
+
     }
 
 
@@ -68,6 +74,16 @@ public class Node {
 
     public void setCubeMatrix(CubeMatrix cubeMatrix) {
         this.cubeMatrix = cubeMatrix;
+    }
+
+
+
+    public int getTotalCost() {
+        return this.totalCost;
+    }
+
+    public void setTotalCost(int totalCost) {
+        this.totalCost = totalCost;
     }
 
 

@@ -126,6 +126,7 @@ public class CubeManager {
         cubeManager.printCubeLinesWithInvisibleCubes();
         //print cost
         System.out.println(cubeManager.getCost());
+        System.out.println(cubeManager.getCubeMatrix().cubeIsInFinalPosition(cubeManager.getCube(2)));
 
 
     }

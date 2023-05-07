@@ -4,10 +4,12 @@ import java.util.Collections;
 public class CubeMatrix {
 
     private ArrayList<CubeLine> cubeLines;
+    private int numOfCubesPerLine;
 
 
     public CubeMatrix(int numOfCubesPerLine) {
         this.cubeLines = new ArrayList<CubeLine>();
+        this.numOfCubesPerLine = numOfCubesPerLine;
         int start = 1;
         //create 3 CubeLines from 1 to 3*numOfCubesPerLine
         CubeLine cubeLine1 = new CubeLine(start , numOfCubesPerLine , numOfCubesPerLine);
@@ -151,6 +153,18 @@ public class CubeMatrix {
     public CubeLine getCubeLine(int yNext) {
         return cubeLines.get(yNext);   
     }
+    public void setCubeLines(ArrayList<CubeLine> cubeLines) {
+        this.cubeLines = cubeLines;
+    }
+
+    public int getNumOfCubesPerLine() {
+        return this.numOfCubesPerLine;
+    }
+
+    public void setNumOfCubesPerLine(int numOfCubesPerLine) {
+        this.numOfCubesPerLine = numOfCubesPerLine;
+    }
+
     
 
     public void printCubeMatrix() {
@@ -162,12 +176,18 @@ public class CubeMatrix {
 
     }
 
+
+
     public CubeMatrix copy() {
         CubeMatrix copy = new CubeMatrix(0);
         for(CubeLine cubeLine : cubeLines){
             copy.getCubeLines().add(cubeLine.copy());
         }
         return copy;
+    }
+    public boolean cubeIsInFinalPosition(Cube cube) {
+        int finalPosition = (cube.getYPos())*numOfCubesPerLine + cube.getXPos() + 1;
+        return cube.getCubeNumber() == finalPosition ? true : false;
     }
 
 

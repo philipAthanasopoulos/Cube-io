@@ -152,6 +152,8 @@ public class CubeLine {
 
     }
 
+
+
     public CubeLine copy() {
         CubeLine copy = new CubeLine();
         copy.cubes = new ArrayList<Cube>();
