@@ -21,7 +21,7 @@ public class Botaki {
         return cost;
     }
 
-    public Node calculateAllPossibleMovesForCube(Cube cube , Node parent){
+    public void calculateAllPossibleMovesForCube(Cube cube , Node parent){
         //TODO
         //find all free positions to move to
         ArrayList<Cube> possibleMoves = new ArrayList<Cube>();
@@ -42,7 +42,6 @@ public class Botaki {
             newNode.setTotalCost(parent.getTotalCost() + newNode.getCost());
         }
 
-        return parent;
 
     }
 
@@ -80,8 +79,7 @@ public class Botaki {
         //TODO
         for(CubeLine line : node.getCubeMatrix().getCubeLines()){
             for(Cube cube : line.getCubes()){
-                Node newNode = calculateAllPossibleMovesForCube(cube ,node);
-                node.addChild(newNode);
+                calculateAllPossibleMovesForCube(cube ,node);
             }
         }   
     }
@@ -130,6 +128,12 @@ public class Botaki {
         result.printTree();
         botaki.expandTreeWithBFS(nodesToExpand);
         botaki.expandTreeWithBFS(nodesToExpand);
+
+
+        result.printTree();
+        
+
+        
         
         
        
