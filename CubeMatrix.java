@@ -90,7 +90,6 @@ public class CubeMatrix {
         }
     }
 
-    
 
     public Cube getBelowCube(Cube cube) {
         if(cube.getYPos() == 2) return new Cube(-1);
