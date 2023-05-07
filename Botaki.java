@@ -46,7 +46,7 @@ public class Botaki {
             Cube cubeToMove = newCubeMatrix.getCube(cube.getCubeNumber());
             //move the cube
             System.out.println("Can move cube " + cubeToMove.getCubeNumber() + " to position :" + cubeToMoveTo.getXPos() + " , " + cubeToMoveTo.getYPos());
-            newCubeMatrix.moveCube(cubeToMove , cubeToMoveTo);
+            newCubeMatrix.moveCube(cubeToMove , cubeToMoveTo.getXPos() , cubeToMoveTo.getYPos() );
             
 
 
@@ -138,14 +138,14 @@ public class Botaki {
         ArrayList<Node> nodesToExpand = new ArrayList<Node>();
         nodesToExpand.add(result);
 
-        result.printTree();
         botaki.expandTreeWithBFS(nodesToExpand);
 
         for(Node child : result.getChildren()){
             child.getCubeMatrix().printCubeLinesWithInvisibleCubes();
         }
-        
-
+        // result.printTree();
+        // botaki.expandTreeWithBFS(nodesToExpand);
+        // result.printTree();
 
         
 
