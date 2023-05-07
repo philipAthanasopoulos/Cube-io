@@ -112,7 +112,7 @@ public class CubeMatrix {
     }
 
     public Cube getCube(int xPos, int yPos) {
-        return cubeLines.get(yPos).getCubes().get(xPos);
+        return this.cubeLines.get(yPos).getCubes().get(xPos);
     }
 
     public Cube getCube(int cubeNumber) {
@@ -200,8 +200,10 @@ public class CubeMatrix {
 
 
     public static void main(String[] args) {
-        CubeMatrix cubeMatrix = new CubeMatrix(3);
+        CubeMatrix cubeMatrix = new CubeMatrix(1);
         cubeMatrix.printCubeLinesWithInvisibleCubes();
+
+        cubeMatrix.getCube(1,2).printCube();
         
 
         

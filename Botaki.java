@@ -41,9 +41,11 @@ public class Botaki {
             parent.addChild(newNode);
 
             //create a new cubeMatrix for each possible move
-            CubeMatrix newCubeMatrix = cubeMatrix.copy();
+            CubeMatrix newCubeMatrix = parentCubeMatrix.copy();
+            
             //get the cube that is to be moved
             Cube cubeToMove = newCubeMatrix.getCube(cube.getCubeNumber());
+            
             //move the cube
             System.out.println("Can move cube " + cubeToMove.getCubeNumber() + " to position :" + cubeToMoveTo.getXPos() + " , " + cubeToMoveTo.getYPos());
             newCubeMatrix.moveCube(cubeToMove , cubeToMoveTo.getXPos() , cubeToMoveTo.getYPos() );
