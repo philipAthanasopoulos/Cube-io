@@ -77,6 +77,13 @@ public class CubeMatrix {
         Cube targetCube = getCube(xNext , yNext);
         targetCube.setCubeNumber(cube.getCubeNumber());
         cube.setCubeNumber(0);
+        setPositionsForAllCubes();
+    }
+
+    public void moveCube(Cube cube, Cube targetCube) {
+        int temp = cube.getCubeNumber();
+        targetCube.setCubeNumber(temp);
+        cube.setCubeNumber(0);
     }
 
     public ArrayList<CubeLine> getCubeLines() {
@@ -194,9 +201,9 @@ public class CubeMatrix {
     public static void main(String[] args) {
         CubeMatrix cubeMatrix = new CubeMatrix(3);
         cubeMatrix.printCubeLinesWithInvisibleCubes();
+        
 
-
-        cubeMatrix.findSmallestMovableCube().printCube();
+        
     }
 
 
