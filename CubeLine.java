@@ -152,6 +152,15 @@ public class CubeLine {
 
     }
 
+    public CubeLine copy() {
+        CubeLine copy = new CubeLine();
+        copy.cubes = new ArrayList<Cube>();
+        for(Cube cube : this.cubes){
+            copy.cubes.add(cube.copy());
+        }
+        return copy;
+    }
+
 
  
 }

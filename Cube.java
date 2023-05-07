@@ -39,6 +39,10 @@ public class Cube {
         this.yPos = yPos;
     }
 
+    public Cube copy() {
+        return new Cube(this.cubeNumber);
+    }
+
 
     //print top of square depending on number length
 

@@ -161,6 +161,16 @@ public class CubeMatrix {
         System.out.println("================================================");
 
     }
+
+    public CubeMatrix copy() {
+        CubeMatrix copy = new CubeMatrix(0);
+        for(CubeLine cubeLine : cubeLines){
+            copy.getCubeLines().add(cubeLine.copy());
+        }
+        return copy;
+    }
+
+
     public static void main(String[] args) {
         CubeMatrix cubeMatrix = new CubeMatrix(3);
         cubeMatrix.printCubeLinesWithInvisibleCubes();

@@ -38,6 +38,7 @@ public class Botaki {
             newNode.setCost(calculateCost(cube , cubeToMoveTo));
             newNode.setParent(result);
             result.addChild(newNode);
+            newNode.setCubeMatrix(cubeMatrix);
         }
 
         return result;
