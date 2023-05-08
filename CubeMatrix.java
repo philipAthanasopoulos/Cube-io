@@ -148,19 +148,13 @@ public class CubeMatrix {
     
 
     public boolean isInOrder(){ 
-
-        //put all cubes in a line form buttom to top , check if line is in order
-        CubeLine lineToCheck = new CubeLine(0);
-
-        for(int i = cubeLines.size() - 1 ; i >= 0 ; i--){
-            CubeLine line = cubeLines.get(i);
+        for(CubeLine line : cubeLines){
             for(Cube cube : line.getCubes()){
                 if(cube.getCubeNumber() == 0) continue;
-                lineToCheck.getCubes().add(cube);
+                if(!cubeIsInFinalPosition(cube)) return false;
             }
         }
-
-        return lineToCheck.isInOrder();
+        return true;
     }
 
     public CubeLine getCubeLine(int yNext) {

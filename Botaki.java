@@ -141,8 +141,20 @@ public class Botaki {
 
     public void sortCubesWithUCS(Node root){
         //TODO
-        for(Cube cube : root.getCubeMatrix().getCubes()){
-            if(cube.getCubeNumber() != 0) UCS(root , cube);
+        //find smallest cube that is not in final position and sort it with ucs
+        CubeMatrix matrix = root.getCubeMatrix();
+
+        //
+
+        for(int i = 1 ; i < matrix.getCubes().size() ; i++){
+            ArrayList<Cube> cubesToSort = matrix.getCubes();
+            Cube smallestCubeToSort = new Cube(Integer.MAX_VALUE);
+            for(Cube cube : cubesToSort){
+                if(cube.getCubeNumber() < smallestCubeToSort.getCubeNumber() && !matrix.cubeIsInFinalPosition(cube)) smallestCubeToSort = cube;
+            }
+            System.out.println("Smallest cube to sort is " + smallestCubeToSort.getCubeNumber());
+            UCS(root , smallestCubeToSort);
+            cubesToSort.remove(smallestCubeToSort);
         }
 
     }
@@ -169,7 +181,7 @@ public class Botaki {
         
         cubeManager.printCubeLinesWithInvisibleCubes();
         Node result  = new Node(cubeManager.getCubeMatrix());
-        Cube cubeToSort = cubeManager.getCube(3);
+        Cube cubeToSort = cubeManager.getCube(2);
         
 
         botaki.UCS(result, cubeToSort);
