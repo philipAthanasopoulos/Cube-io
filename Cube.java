@@ -40,7 +40,10 @@ public class Cube {
     }
 
     public Cube copy() {
-        return new Cube(this.cubeNumber);
+        Cube newCube  = new Cube(this.cubeNumber);
+        newCube.setXPos(this.xPos);
+        newCube.setYPos(this.yPos);
+        return newCube;
     }
 
 

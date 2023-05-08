@@ -197,7 +197,7 @@ public class Botaki {
         
         cubeManager.printCubeLinesWithInvisibleCubes();
         Node result  = new Node(cubeManager.getCubeMatrix());
-        Cube cubeToSort = cubeManager.getCube(3);
+        Cube cubeToSort = cubeManager.getCube(1);
         
 
         botaki.UCS(result, cubeToSort);

@@ -238,6 +238,8 @@ public class CubeMatrix {
 
         //check if cube 1 is in final position
         System.out.println(cubeMatrix.cubeIsInFinalPosition(5));
+        //print cube xpos and ypos
+        System.out.println(cubeMatrix.getCube(5).getXPos() + " " + cubeMatrix.getCube(5).getYPos());
         
 
         
