@@ -86,6 +86,18 @@ public class Node {
         this.totalCost = totalCost;
     }
 
+    public ArrayList<Node> getDeepestChildren() {
+        ArrayList<Node> deepestChildren = new ArrayList<Node>();
+        for (Node child : this.children) {
+            if (child.getChildren().size() == 0) {
+                deepestChildren.add(child);
+            } else {
+                deepestChildren.addAll(child.getDeepestChildren());
+            }
+        }
+        return deepestChildren;
+    }
+
     
 
 
@@ -99,7 +111,7 @@ public class Node {
     private void printTreeHelper(Node node, String prefix, boolean isLast) {
         System.out.print(prefix);
         System.out.print(isLast ? "└── " : "├── ");
-        System.out.println(node.getCost());
+        System.out.println(node.getTotalCost());
         
         for (int i = 0; i < node.getChildren().size(); i++) {
             Node child = node.getChildren().get(i);
@@ -133,6 +145,10 @@ public class Node {
 
     child1.addChild(child2);
     child1.addChild(child4);
+
+    for(Node child : root.getDeepestChildren()) {
+        child.setTotalCost(9);
+    }
 
 
     root.printTree();

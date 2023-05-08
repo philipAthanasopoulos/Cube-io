@@ -31,6 +31,11 @@ public class CubeMatrix {
     }
     
 
+    public CubeMatrix() {
+        this.cubeLines = new ArrayList<CubeLine>();
+    }
+
+
     public boolean isMoveable(Cube cube) {
         return getAboveCube(cube).getCubeNumber() == 0 ? true : false;
     }
@@ -59,13 +64,13 @@ public class CubeMatrix {
     }
 
     public boolean positionIsFreeToMoveTo(Cube cube) {
-        return positionIsFree(cube) && !positionBelowIsFree(cube) ? true : false;
+        return positionIsFree(cube) && !positionBelowIsFree(cube)  ? true : false;
         
     }
 
     public Cube findFreePosition(){
         for(Cube cube : getCubeLines().get(2).getCubes()){
-            if(cube.getCubeNumber() == 0) return cube;
+            if(this.positionIsFree(cube)) return cube;
         }
         //will never happen
         return null;
@@ -92,11 +97,11 @@ public class CubeMatrix {
     }
 
     public Cube getAboveCube(Cube cube) {
-        if(cube.getYPos() == 0) return new Cube(-1);
+        if(cube.getYPos() == 0) return new Cube(0);
         try {
             return cubeLines.get(cube.getYPos() - 1).getCubes().get(cube.getXPos());
-        } catch (Exception e) {
-            return new Cube(-1);
+        } catch (IndexOutOfBoundsException e) {
+            return new Cube(0);
         }
     }
 
@@ -105,7 +110,7 @@ public class CubeMatrix {
         if(cube.getYPos() == 2) return new Cube(-1);
         try {
             return cubeLines.get(cube.getYPos() + 1).getCubes().get(cube.getXPos());
-        } catch (Exception e) {
+        } catch (IndexOutOfBoundsException e) {
             return new Cube(-1);
         }
         
@@ -187,13 +192,20 @@ public class CubeMatrix {
 
 
     public CubeMatrix copy() {
-        CubeMatrix copy = new CubeMatrix(0);
+        CubeMatrix copy = new CubeMatrix();
         for(CubeLine cubeLine : cubeLines){
             copy.getCubeLines().add(cubeLine.copy());
         }
+        copy.setPositionsForAllCubes();
         return copy;
     }
     public boolean cubeIsInFinalPosition(Cube cube) {
+        int finalPosition = (cube.getYPos())*numOfCubesPerLine + cube.getXPos() + 1;
+        return cube.getCubeNumber() == finalPosition ? true : false;
+    }
+
+    public boolean cubeIsInFinalPosition(int cubeNumber) {
+        Cube cube = getCube(cubeNumber);
         int finalPosition = (cube.getYPos())*numOfCubesPerLine + cube.getXPos() + 1;
         return cube.getCubeNumber() == finalPosition ? true : false;
     }
@@ -203,7 +215,9 @@ public class CubeMatrix {
         CubeMatrix cubeMatrix = new CubeMatrix(1);
         cubeMatrix.printCubeLinesWithInvisibleCubes();
 
-        cubeMatrix.getCube(1,2).printCube();
+        cubeMatrix.getCube(0,0).setCubeNumber(0);
+        cubeMatrix.printCubeLinesWithInvisibleCubes();
+        System.err.println(cubeMatrix.positionIsFreeToMoveTo(cubeMatrix.getCube(0, 0)));
         
 
         
