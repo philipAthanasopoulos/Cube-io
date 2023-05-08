@@ -199,9 +199,9 @@ public class CubeMatrix {
         copy.setPositionsForAllCubes();
         return copy;
     }
-    public boolean cubeIsInFinalPosition(Cube cube) {
-        int correctNumber = (2-cube.getYPos()) * 3 + cube.getXPos() + 1;
-        return cube.getCubeNumber() == correctNumber ? true : false;
+     public boolean cubeIsInFinalPosition(Cube cube) {
+    //     int correctNumber = (2-cube.getYPos()) * 3 + cube.getXPos() + 1;
+    //     return cube.getCubeNumber() == correctNumber ? true : false;
         // Cube correctCube = getCube(cube.getCubeNumber());
         // int counter = 0;
         // for(int lineIndex = 2 ; lineIndex > -1 ; lineIndex--){
@@ -217,27 +217,27 @@ public class CubeMatrix {
         
         // return cube == correctCube ? true : false;
 
+        int counter = 0;
+        int correctXPos = 0;
+        int correctYPos = 0;
 
+        for(int lineIndex = 2; lineIndex > -1 ; lineIndex--){
+            for(int cubeIndex = 0 ; cubeIndex < getNumOfCubesPerLine(); cubeIndex++){
+                counter++;
+                if(counter == cube.getCubeNumber()){
+                    correctXPos = cubeIndex;
+                    correctYPos = lineIndex;
+                    break;
+                }
+            }
+        }
+
+        return cube.getXPos() == correctXPos && cube.getYPos() == correctYPos ? true : false;
     }
 
     public boolean cubeIsInFinalPosition(int cubeNumber) {
-        int correctNumber = (2-getCube(cubeNumber).getYPos()) * 3 + getCube(cubeNumber).getXPos() + 1;
-        return cubeNumber == correctNumber ? true : false;
-        // Cube cube = getCube(cubeNumber);
-        // Cube correctCube = getCube(cubeNumber);
-        // int counter = 0;
-        // for(int lineIndex = 2 ; lineIndex > -1 ; lineIndex--){
-        //     for(Cube cubeInLinCube : cubeLines.get(lineIndex).getCubes()){
-        //         if(cubeInLinCube.getCubeNumber() == 0) continue;
-        //         counter++;
-        //         if(counter == cubeNumber) {
-        //             correctCube = cubeInLinCube;
-        //             break;
-        //         }
-        //     }
-        // }
-        
-        // return cube == correctCube ? true : false;
+        Cube cube = getCube(cubeNumber);
+        return cubeIsInFinalPosition(cube);
     }
 
 
@@ -250,6 +250,17 @@ public class CubeMatrix {
         
 
         
+    }
+
+
+    public ArrayList<Cube> getCubes() {
+        ArrayList<Cube> cubes = new ArrayList<>();
+        for(CubeLine cubeLine : cubeLines){
+            for(Cube cube : cubeLine.getCubes()){
+                cubes.add(cube);
+            }
+        }
+        return cubes;
     }
 
 
