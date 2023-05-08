@@ -96,6 +96,11 @@ public class Botaki {
 
     public void UCS(Node root , Cube cubeToSort){
         //TODO
+        //if cube is in correct position return
+        if(root.getCubeMatrix().cubeIsInFinalPosition(cubeToSort.getCubeNumber())){
+            System.out.println("Cube " + cubeToSort.getCubeNumber() + " is in final position");
+            return;
+        }
         expandTreeWithBFS(root);
 
         int numOfCubeToSort = cubeToSort.getCubeNumber();
@@ -190,7 +195,7 @@ public class Botaki {
         
         cubeManager.printCubeLinesWithInvisibleCubes();
         Node result  = new Node(cubeManager.getCubeMatrix());
-        Cube cubeToSort = cubeManager.getCube(2);
+        Cube cubeToSort = cubeManager.getCube(1);
         
 
         botaki.UCS(result, cubeToSort);
