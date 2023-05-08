@@ -236,11 +236,11 @@ public class CubeMatrix {
 
 
     public static void main(String[] args) {
-        CubeMatrix cubeMatrix = new CubeMatrix(1);
+        CubeMatrix cubeMatrix = new CubeMatrix(3);
         cubeMatrix.printCubeLinesWithInvisibleCubes();
 
         //check if cube 1 is in final position
-        System.out.println(cubeMatrix.cubeIsInFinalPosition(2));
+        System.out.println(cubeMatrix.cubeIsInFinalPosition(5));
         
 
         
