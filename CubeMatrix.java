@@ -184,6 +184,7 @@ public class CubeMatrix {
 
     public CubeMatrix copy() {
         CubeMatrix copy = new CubeMatrix();
+        copy.setNumOfCubesPerLine(this.numOfCubesPerLine);
         for(CubeLine cubeLine : cubeLines){
             copy.getCubeLines().add(cubeLine.copy());
         }
@@ -222,7 +223,7 @@ public class CubeMatrix {
                 }
             }
         }
-
+        System.err.println("correctXPos: " + correctXPos + " correctYPos: " + correctYPos);
         return cube.getXPos() == correctXPos && cube.getYPos() == correctYPos ? true : false;
     }
 

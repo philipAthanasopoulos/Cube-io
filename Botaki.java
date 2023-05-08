@@ -154,7 +154,7 @@ public class Botaki {
         //
         int iterations = matrix.getCubes().size();
 
-        for(int i = 0 ; i < iterations ; i++){
+        while(!matrix.isInOrder()){
             //ask user to press enter to continue
             System.out.println("Press enter to continue");
             try{
@@ -197,10 +197,11 @@ public class Botaki {
         
         cubeManager.printCubeLinesWithInvisibleCubes();
         Node result  = new Node(cubeManager.getCubeMatrix());
-        Cube cubeToSort = cubeManager.getCube(1);
+        Cube cubeToSort = cubeManager.getCube(3);
         
 
-        botaki.UCS(result, cubeToSort);
+        // botaki.sortCubesWithUCS(result);
+        botaki.UCS(result , cubeToSort);
 
 
 
