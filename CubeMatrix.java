@@ -190,22 +190,7 @@ public class CubeMatrix {
         return copy;
     }
      public boolean cubeIsInFinalPosition(Cube cube) {
-    //     int correctNumber = (2-cube.getYPos()) * 3 + cube.getXPos() + 1;
-    //     return cube.getCubeNumber() == correctNumber ? true : false;
-        // Cube correctCube = getCube(cube.getCubeNumber());
-        // int counter = 0;
-        // for(int lineIndex = 2 ; lineIndex > -1 ; lineIndex--){
-        //     for(Cube cubeInLinCube : cubeLines.get(lineIndex).getCubes()){
-        //         if(cubeInLinCube.getCubeNumber() == 0) continue;
-        //         counter++;
-        //         if(counter == cube.getCubeNumber()) {
-        //             correctCube = cubeInLinCube;
-        //             break;
-        //         }
-        //     }
-        // }
-        
-        // return cube == correctCube ? true : false;
+    
 
         int counter = 0;
         int correctXPos = 0;
@@ -221,7 +206,6 @@ public class CubeMatrix {
                 }
             }
         }
-        System.err.println("correctXPos: " + correctXPos + " correctYPos: " + correctYPos);
         return cube.getXPos() == correctXPos && cube.getYPos() == correctYPos ? true : false;
     }
 
@@ -229,22 +213,7 @@ public class CubeMatrix {
         Cube cube = getCube(cubeNumber);
         return cubeIsInFinalPosition(cube);
     }
-
-
-    public static void main(String[] args) {
-        CubeMatrix cubeMatrix = new CubeMatrix(3);
-        cubeMatrix.printCubeLinesWithInvisibleCubes();
-
-        //check if cube 1 is in final position
-        System.out.println(cubeMatrix.cubeIsInFinalPosition(5));
-        //print cube xpos and ypos
-        System.out.println(cubeMatrix.getCube(5).getXPos() + " " + cubeMatrix.getCube(5).getYPos());
-        
-
-        
-    }
-
-
+    
     public ArrayList<Cube> getCubes() {
         ArrayList<Cube> cubes = new ArrayList<>();
         for(CubeLine cubeLine : cubeLines){
@@ -254,6 +223,28 @@ public class CubeMatrix {
         }
         return cubes;
     }
+
+    public ArrayList<Cube> getNonZeroCubes() {
+        ArrayList<Cube> cubes = new ArrayList<>();
+        for(CubeLine cubeLine : cubeLines){
+            for(Cube cube : cubeLine.getCubes()){
+                if(cube.getCubeNumber() == 0) continue;
+                cubes.add(cube);
+            }
+        }
+        return cubes;
+    }
+
+    public static void main(String[] args) {
+        CubeMatrix cubeMatrix = new CubeMatrix(1);
+        cubeMatrix.printCubeLinesWithInvisibleCubes();
+        System.err.println(cubeMatrix.isInOrder());
+
+        
+        
+    }
+
+
 
 
 }

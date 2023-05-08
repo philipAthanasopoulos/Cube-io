@@ -54,10 +54,6 @@ public class Botaki {
             //move the cube
             System.out.println("Can move cube " + cubeToMove.getCubeNumber() + " to position :" + cubeToMoveTo.getXPos() + " , " + cubeToMoveTo.getYPos());
             newCubeMatrix.moveCube(cubeToMove , cubeToMoveTo.getXPos() , cubeToMoveTo.getYPos() );
-            
-            
-
-
             newNode.setCubeMatrix(newCubeMatrix);
             newNode.setTotalCost(parent.getTotalCost() + newNode.getCost());
 
@@ -105,11 +101,6 @@ public class Botaki {
 
         int numOfCubeToSort = cubeToSort.getCubeNumber();
         while(true){
-            //ask user to press enter to continue
-            System.out.println("Press enter to continue");
-            
-
-
             double minTotalCost = Double.MAX_VALUE;
             ArrayList<Node> nodesToExpand = new ArrayList<Node>();
 
@@ -118,20 +109,14 @@ public class Botaki {
             for(Node child : root.getDeepestChildren()){
                 if(child.getTotalCost() < minTotalCost) minTotalCost = child.getTotalCost();
             }
-            System.err.println("Min total cost is " + minTotalCost);
 
             //find all nodes with the smallest total cost and add them to the nodesToExpand list
             for(Node child : root.getDeepestChildren()){
                 if(child.getCubeMatrix().cubeIsInFinalPosition(numOfCubeToSort)){
-                    System.out.println("Cube " + numOfCubeToSort + " is in final position");
-                    //print cube xpos and ypos
-                    System.out.println("Cube " + numOfCubeToSort + " is in position " + child.getCubeMatrix().getCube(numOfCubeToSort).getXPos() + " , " + child.getCubeMatrix().getCube(numOfCubeToSort).getYPos());
-
-                    System.err.println("This is the final cube matrix");
-                    child.getCubeMatrix().printCubeLinesWithInvisibleCubes();
                     //change roots cube matrix to the final cube matrix
+                    root.printPathToChildNode(child);
                     root.setCubeMatrix(child.getCubeMatrix());
-                    root.setTotalCost(minTotalCost);
+                    root.setTotalCost(root.getTotalCost() + minTotalCost);
                     //clear the children of the root
                     root.getChildren().clear();
                     return;
@@ -144,12 +129,11 @@ public class Botaki {
 
     public void sortCubesWithUCS(Node root){
         //TODO
-        //find smallest cube that is not in final position and sort it with ucs
         CubeMatrix matrix = root.getCubeMatrix();
 
-        //
         int cubeToSort = 1;
-        while(true){
+        while(cubeToSort <= matrix.getNonZeroCubes().size()){
+            System.out.println("Sorting cube " + cubeToSort);
             //ask user to press enter to continue
             System.out.println("Press enter to continue");
             try{
@@ -163,7 +147,12 @@ public class Botaki {
             cubeToSort++;
             //print total cost
             System.out.println("Total cost is " + root.getTotalCost());
+            
+            
         }
+
+        System.out.println("All cubes are in order");
+        matrix.printCubeMatrix();
 
     }
 
@@ -191,25 +180,6 @@ public class Botaki {
         Node result  = new Node(cubeManager.getCubeMatrix());
 
         botaki.sortCubesWithUCS(result);
-        
-
-
-
-        
-
-
-        
-
-        
-        
-        
-       
-
-        
-
-        
-
-       
         
     }
 

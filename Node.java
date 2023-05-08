@@ -1,4 +1,7 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 public class Node {
     
@@ -74,6 +77,7 @@ public class Node {
 
     public void setCubeMatrix(CubeMatrix cubeMatrix) {
         this.cubeMatrix = cubeMatrix;
+        this.cubeMatrix.setPositionsForAllCubes();
     }
 
 
@@ -121,14 +125,29 @@ public class Node {
         }
     }
 
-    
-    
-    
+    public ArrayList<Node> findPathToChildNode(Node child){
+        ArrayList<Node> path = new ArrayList<Node>();
+        //backtrack from child to parent
+        while(child.getParent() != null){
+            path.add(child);
+            child = child.getParent();
+        }
+        return path;
+    }
+
+    public void printPathToChildNode(Node child){
+        ArrayList<Node> path = findPathToChildNode(child);
+        Collections.reverse(path);
+        System.out.println("Path to child node: ");
+        for(Node move : path){
+            System.out.println("Cost of move : " + move.getCost());
+            move.getCubeMatrix().printCubeMatrix();
+        }
+    }
     
     
 
-
-   public static void main(String[] args) {
+public static void main(String[] args) {
 
 
     Node root = new Node();
