@@ -86,10 +86,7 @@ public class CubeMatrix {
     }
 
     public void moveCube(Cube cube, Cube targetCube) {
-        int temp = cube.getCubeNumber();
-        targetCube.setCubeNumber(temp);
-        cube.setCubeNumber(0);
-        setPositionsForAllCubes();
+        moveCube(cube, targetCube.getXPos(), targetCube.getYPos());
     }
 
     public ArrayList<CubeLine> getCubeLines() {

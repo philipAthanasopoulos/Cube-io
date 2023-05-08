@@ -129,8 +129,11 @@ public class Botaki {
             for(Node child : root.getDeepestChildren()){
                 if(child.getCubeMatrix().cubeIsInFinalPosition(numOfCubeToSort)){
                     System.out.println("Cube " + numOfCubeToSort + " is in final position");
+                    //print cube xpos and ypos
+                    System.out.println("Cube " + numOfCubeToSort + " is in position " + child.getCubeMatrix().getCube(numOfCubeToSort).getXPos() + " , " + child.getCubeMatrix().getCube(numOfCubeToSort).getYPos());
+
                     System.err.println("This is the final cube matrix");
-                    child.getCubeMatrix().printCubeMatrix();
+                    child.getCubeMatrix().printCubeLinesWithInvisibleCubes();
                     //change roots cube matrix to the final cube matrix
                     root.setCubeMatrix(child.getCubeMatrix());
                     //clear the children of the root
@@ -139,7 +142,6 @@ public class Botaki {
                 }
                 if(child.getTotalCost() == minTotalCost) nodesToExpand.add(child);
             }
-            
             expandTreeWithBFS(nodesToExpand);
         }
     }
@@ -195,7 +197,7 @@ public class Botaki {
         
         cubeManager.printCubeLinesWithInvisibleCubes();
         Node result  = new Node(cubeManager.getCubeMatrix());
-        Cube cubeToSort = cubeManager.getCube(1);
+        Cube cubeToSort = cubeManager.getCube(3);
         
 
         botaki.UCS(result, cubeToSort);
