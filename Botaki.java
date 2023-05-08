@@ -81,9 +81,9 @@ public class Botaki {
 
     public void expandTreeWithBFS(Node root){
         //TODO
-        if(root.getDeepestChildren().size() == 0) expandNode(root);
+        if(root.getChildren().size() == 0) expandNode(root);
 
-        else for(Node node : root.getChildren()) expandNode(node);  
+        else for(Node node : root.getDeepestChildren()) expandNode(node);  
     }
 
     public void expandTreeWithBFS(ArrayList<Node> nodesToExpand){
@@ -97,22 +97,23 @@ public class Botaki {
     public void UCS(Node root , Cube cubeToSort){
         //TODO
         expandTreeWithBFS(root);
-        root.printTree();
 
         int numOfCubeToSort = cubeToSort.getCubeNumber();
         while(true){
             //ask user to press enter to continue
             System.out.println("Press enter to continue");
-            try{
-                System.in.read();
-            }  
-            catch(Exception e){
-                System.out.println(e);
-            }
+            // try{
+            //     System.in.read();
+            // }  
+            // catch(Exception e){
+            //     System.out.println(e);
+            // }
 
 
             double minTotalCost = Double.MAX_VALUE;
             ArrayList<Node> nodesToExpand = new ArrayList<Node>();
+
+
             //find the value of the smallest total cost
             for(Node child : root.getDeepestChildren()){
                 if(child.getTotalCost() < minTotalCost) minTotalCost = child.getTotalCost();
@@ -123,6 +124,7 @@ public class Botaki {
             for(Node child : root.getDeepestChildren()){
                 if(child.getCubeMatrix().cubeIsInFinalPosition(numOfCubeToSort)){
                     System.out.println("Cube " + numOfCubeToSort + " is in final position");
+                    System.err.println("This is the final cube matrix");
                     child.getCubeMatrix().printCubeMatrix();
                     return;
                 }
@@ -130,7 +132,7 @@ public class Botaki {
             }
             
             expandTreeWithBFS(nodesToExpand);
-            root.printTree();
+            // root.printTree();
 
         }
     }
@@ -158,26 +160,20 @@ public class Botaki {
         Node result  = new Node(cubeManager.getCubeMatrix());
         Cube cubeToSort = cubeManager.getCube(1);
         botaki.UCS(result , cubeToSort);
-        result.printTree();
-        
+        // result.printTree();        
 
         // ArrayList<Node> nodesToExpand = new ArrayList<Node>();
         // nodesToExpand.add(result);
 
-        // botaki.expandTreeWithBFS(nodesToExpand);
 
-        // botaki.expandTreeWithBFS(nodesToExpand);
+        // botaki.expandTreeWithBFS(result);
+        // botaki.expandTreeWithBFS(result.getDeepestChildren());
+        // botaki.expandTreeWithBFS(result.getDeepestChildren());
+        // botaki.expandTreeWithBFS(result.getDeepestChildren());
+        // botaki.expandTreeWithBFS(result.getDeepestChildren());
 
-        // botaki.expandTreeWithBFS(nodesToExpand);
 
-        // Node child1 = result.getChildren().get(0);
-        // for(Node grandchild : child1.getChildren()){
-        //     grandchild.getCubeMatrix().printCubeMatrix();;
-        // }
 
-        // System.out.println(nodesToExpand.size());
-
-        // result.printTree();
         
 
 

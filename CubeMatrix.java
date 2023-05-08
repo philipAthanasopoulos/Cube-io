@@ -200,14 +200,44 @@ public class CubeMatrix {
         return copy;
     }
     public boolean cubeIsInFinalPosition(Cube cube) {
-        int finalPosition = (cube.getYPos())*numOfCubesPerLine + cube.getXPos() + 1;
-        return cube.getCubeNumber() == finalPosition ? true : false;
+        int correctNumber = (2-cube.getYPos()) * 3 + cube.getXPos() + 1;
+        return cube.getCubeNumber() == correctNumber ? true : false;
+        // Cube correctCube = getCube(cube.getCubeNumber());
+        // int counter = 0;
+        // for(int lineIndex = 2 ; lineIndex > -1 ; lineIndex--){
+        //     for(Cube cubeInLinCube : cubeLines.get(lineIndex).getCubes()){
+        //         if(cubeInLinCube.getCubeNumber() == 0) continue;
+        //         counter++;
+        //         if(counter == cube.getCubeNumber()) {
+        //             correctCube = cubeInLinCube;
+        //             break;
+        //         }
+        //     }
+        // }
+        
+        // return cube == correctCube ? true : false;
+
+
     }
 
     public boolean cubeIsInFinalPosition(int cubeNumber) {
-        Cube cube = getCube(cubeNumber);
-        int finalPosition = (2-cube.getYPos())*numOfCubesPerLine + cube.getXPos() + 1;
-        return cube.getCubeNumber() == finalPosition ? true : false;
+        int correctNumber = (2-getCube(cubeNumber).getYPos()) * 3 + getCube(cubeNumber).getXPos() + 1;
+        return cubeNumber == correctNumber ? true : false;
+        // Cube cube = getCube(cubeNumber);
+        // Cube correctCube = getCube(cubeNumber);
+        // int counter = 0;
+        // for(int lineIndex = 2 ; lineIndex > -1 ; lineIndex--){
+        //     for(Cube cubeInLinCube : cubeLines.get(lineIndex).getCubes()){
+        //         if(cubeInLinCube.getCubeNumber() == 0) continue;
+        //         counter++;
+        //         if(counter == cubeNumber) {
+        //             correctCube = cubeInLinCube;
+        //             break;
+        //         }
+        //     }
+        // }
+        
+        // return cube == correctCube ? true : false;
     }
 
 
