@@ -107,12 +107,7 @@ public class Botaki {
         while(true){
             //ask user to press enter to continue
             System.out.println("Press enter to continue");
-            try{
-                System.in.read();
-            }  
-            catch(Exception e){
-                System.out.println(e);
-            }
+            
 
 
             double minTotalCost = Double.MAX_VALUE;
@@ -136,6 +131,7 @@ public class Botaki {
                     child.getCubeMatrix().printCubeLinesWithInvisibleCubes();
                     //change roots cube matrix to the final cube matrix
                     root.setCubeMatrix(child.getCubeMatrix());
+                    root.setTotalCost(minTotalCost);
                     //clear the children of the root
                     root.getChildren().clear();
                     return;
@@ -152,9 +148,8 @@ public class Botaki {
         CubeMatrix matrix = root.getCubeMatrix();
 
         //
-        int iterations = matrix.getCubes().size();
-
-        while(!matrix.isInOrder()){
+        int cubeToSort = 1;
+        while(true){
             //ask user to press enter to continue
             System.out.println("Press enter to continue");
             try{
@@ -163,14 +158,11 @@ public class Botaki {
             catch(Exception e){
                 System.out.println(e);
             }
-            ArrayList<Cube> cubesToSort = matrix.getCubes();
-            Cube smallestCubeToSort = new Cube(Integer.MAX_VALUE);
-            for(Cube cube : cubesToSort){
-                if(cube.getCubeNumber() < smallestCubeToSort.getCubeNumber() && !matrix.cubeIsInFinalPosition(cube)) smallestCubeToSort = cube;
-            }
-            System.out.println("Smallest cube to sort is " + smallestCubeToSort.getCubeNumber());
-            UCS(root , smallestCubeToSort);
-            cubesToSort.remove(smallestCubeToSort);
+
+            UCS(root, matrix.getCube(cubeToSort));
+            cubeToSort++;
+            //print total cost
+            System.out.println("Total cost is " + root.getTotalCost());
         }
 
     }
@@ -197,11 +189,9 @@ public class Botaki {
         
         cubeManager.printCubeLinesWithInvisibleCubes();
         Node result  = new Node(cubeManager.getCubeMatrix());
-        Cube cubeToSort = cubeManager.getCube(3);
-        
 
-        // botaki.sortCubesWithUCS(result);
-        botaki.UCS(result , cubeToSort);
+        botaki.sortCubesWithUCS(result);
+        
 
 
 

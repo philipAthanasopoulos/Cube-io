@@ -145,11 +145,9 @@ public class CubeMatrix {
     
 
     public boolean isInOrder(){ 
-        for(CubeLine line : cubeLines){
-            for(Cube cube : line.getCubes()){
-                if(cube.getCubeNumber() == 0) continue;
-                if(!cubeIsInFinalPosition(cube)) return false;
-            }
+        for(Cube cube : getCubes()){
+            if(cube.getCubeNumber() == 0) continue;
+            if (!cubeIsInFinalPosition(cube)) return false;
         }
         return true;
     }
