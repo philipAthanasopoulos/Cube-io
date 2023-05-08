@@ -206,7 +206,7 @@ public class CubeMatrix {
 
     public boolean cubeIsInFinalPosition(int cubeNumber) {
         Cube cube = getCube(cubeNumber);
-        int finalPosition = (cube.getYPos())*numOfCubesPerLine + cube.getXPos() + 1;
+        int finalPosition = (2-cube.getYPos())*numOfCubesPerLine + cube.getXPos() + 1;
         return cube.getCubeNumber() == finalPosition ? true : false;
     }
 
@@ -216,7 +216,7 @@ public class CubeMatrix {
         cubeMatrix.printCubeLinesWithInvisibleCubes();
 
         //check if cube 1 is in final position
-        System.out.println(cubeMatrix.cubeIsInFinalPosition(1));
+        System.out.println(cubeMatrix.cubeIsInFinalPosition(2));
         
 
         

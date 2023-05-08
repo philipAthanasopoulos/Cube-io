@@ -133,11 +133,6 @@ public class Botaki {
             root.printTree();
 
         }
-
-        
-
-        
-
     }
 
 

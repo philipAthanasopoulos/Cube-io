@@ -143,8 +143,6 @@ public class Node {
     root.addChild(child3);
     root.addChild(child4);
 
-    child1.addChild(child2);
-    child1.addChild(child4);
 
     for(Node child : root.getDeepestChildren()) {
         child.setTotalCost(9);
