@@ -215,9 +215,8 @@ public class CubeMatrix {
         CubeMatrix cubeMatrix = new CubeMatrix(1);
         cubeMatrix.printCubeLinesWithInvisibleCubes();
 
-        cubeMatrix.getCube(0,0).setCubeNumber(0);
-        cubeMatrix.printCubeLinesWithInvisibleCubes();
-        System.err.println(cubeMatrix.positionIsFreeToMoveTo(cubeMatrix.getCube(0, 0)));
+        //check if cube 1 is in final position
+        System.out.println(cubeMatrix.cubeIsInFinalPosition(1));
         
 
         

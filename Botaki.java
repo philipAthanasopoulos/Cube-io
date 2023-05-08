@@ -81,17 +81,16 @@ public class Botaki {
 
     public void expandTreeWithBFS(Node root){
         //TODO
+        if(root.getDeepestChildren().size() == 0) expandNode(root);
 
-        for(Node node : root.getChildren()){
-            expandNode(node);   
-        }
+        else for(Node node : root.getChildren()) expandNode(node);  
     }
 
     public void expandTreeWithBFS(ArrayList<Node> nodesToExpand){
         //TODO
+
         for(Node node : nodesToExpand){
-            expandNode(node);
-            
+            expandNode(node); 
         }
     }
 
@@ -101,7 +100,7 @@ public class Botaki {
         root.printTree();
 
         int numOfCubeToSort = cubeToSort.getCubeNumber();
-        for(;;){
+        while(true){
             //ask user to press enter to continue
             System.out.println("Press enter to continue");
             try{
@@ -118,18 +117,16 @@ public class Botaki {
             for(Node child : root.getDeepestChildren()){
                 if(child.getTotalCost() < minTotalCost) minTotalCost = child.getTotalCost();
             }
+            System.err.println("Min total cost is " + minTotalCost);
 
             //find all nodes with the smallest total cost and add them to the nodesToExpand list
             for(Node child : root.getDeepestChildren()){
-                if(child.getTotalCost() == minTotalCost) nodesToExpand.add(child);
-            }
-
-            for(Node child : nodesToExpand){
                 if(child.getCubeMatrix().cubeIsInFinalPosition(numOfCubeToSort)){
                     System.out.println("Cube " + numOfCubeToSort + " is in final position");
                     child.getCubeMatrix().printCubeMatrix();
                     return;
                 }
+                if(child.getTotalCost() == minTotalCost) nodesToExpand.add(child);
             }
             
             expandTreeWithBFS(nodesToExpand);
@@ -166,6 +163,7 @@ public class Botaki {
         Node result  = new Node(cubeManager.getCubeMatrix());
         Cube cubeToSort = cubeManager.getCube(1);
         botaki.UCS(result , cubeToSort);
+        result.printTree();
         
 
         // ArrayList<Node> nodesToExpand = new ArrayList<Node>();
