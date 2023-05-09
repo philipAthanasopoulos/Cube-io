@@ -1,4 +1,3 @@
-import java.sql.Array;
 import java.util.ArrayList;
 
 public class Botaki {
@@ -169,8 +168,6 @@ public class Botaki {
         CubeManager cubeManager = new CubeManager();
         cubeManager.requestCubeMatrix();
         botaki.setCubeMatrix(cubeManager.getCubeMatrix());
-        //get cube number 1
-        Cube cube = cubeManager.getCube(1);
         
         cubeManager.printCubeLinesWithInvisibleCubes();
         Node result  = new Node(cubeManager.getCubeMatrix());

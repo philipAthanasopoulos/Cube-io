@@ -75,11 +75,7 @@ public class CubeManager {
 
     public void printCubeMatrix(){
         
-        System.out.println("\u001B[33m");
-
         this.cubeMatrix.printCubeMatrix();
-
-        System.out.println("\u001B[0m");
     }
     
     public CubeMatrix getCubeMatrix() {
