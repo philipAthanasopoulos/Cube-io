@@ -23,7 +23,7 @@ public class CubeManager {
         this.input = new Scanner(System.in);
 
         try {
-            System.out.println("Enter the number of cubes : ");
+            System.out.println("Enter the number of cubes per line : ");
             int numOfCubesPerLine = input.nextInt();
             if(numOfCubesPerLine < 1) throw new NullPointerException();
             createCubeMatrix(numOfCubesPerLine);

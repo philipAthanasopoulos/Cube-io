@@ -74,17 +74,26 @@ public class CubeLine {
 
 
     public void printCubeLine(){
+        //ansi yellow color
+        final String ANSI_YELLOW = "\u001B[33m";
+        final String ANSI_RESET = "\u001B[0m";
+        // ansi bold code
+        final String ANSI_BOLD = "\u001B[3m";
+        
+    
+
         //print top line
         for (Cube cube : cubes) {
             if(cube.getCubeNumber() == 0) System.out.print("     ");
             else System.out.print("┌───┐");
         }
         System.out.println();
+
         //print middle parts
         for(Cube cube : cubes){
              if(cube.getCubeNumber() == 0) System.out.print("     ");
 
-             else System.out.print("│ " + cube.getCubeNumber() + " │");
+             else System.out.print("│ " + ANSI_YELLOW + ANSI_BOLD + cube.getCubeNumber() + ANSI_RESET + " │");
         }
         System.out.println();
 
@@ -111,7 +120,7 @@ public class CubeLine {
     }
     public static void main(String[] args) {
         CubeLine cubeLine = new CubeLine(1,3 ,5);
-        cubeLine.printCubeLineWithInvisibleCubes();
+        cubeLine.printCubeLine();
         //print cubeline size
         System.out.println(cubeLine.getCubes().size());
 
