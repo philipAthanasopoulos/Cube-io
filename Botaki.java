@@ -52,7 +52,7 @@ public class Botaki {
             
             
             //move the cube
-            System.out.println("Can move cube " + cubeToMove.getCubeNumber() + " to position :" + cubeToMoveTo.getXPos() + " , " + cubeToMoveTo.getYPos());
+            // System.out.println("Can move cube " + cubeToMove.getCubeNumber() + " to position :" + cubeToMoveTo.getXPos() + " , " + cubeToMoveTo.getYPos());
             newCubeMatrix.moveCube(cubeToMove , cubeToMoveTo.getXPos() , cubeToMoveTo.getYPos() );
             newNode.setCubeMatrix(newCubeMatrix);
             newNode.setTotalCost(parent.getTotalCost() + newNode.getCost());
@@ -135,7 +135,7 @@ public class Botaki {
         while(cubeToSort <= matrix.getNonZeroCubes().size()){
             System.out.println("Sorting cube " + cubeToSort);
             //ask user to press enter to continue
-            System.out.println("Press enter to continue");
+            System.out.println("Press enter to sort the next cube");
             try{
                 System.in.read();
             }
@@ -147,13 +147,9 @@ public class Botaki {
             cubeToSort++;
             //print total cost
             System.out.println("Total cost is " + root.getTotalCost());
-            
-            
         }
 
         System.out.println("All cubes are in order");
-        matrix.printCubeMatrix();
-
     }
 
 

@@ -140,6 +140,13 @@ public class Node {
         Collections.reverse(path);
         System.out.println("Path to child node: ");
         for(Node move : path){
+            System.out.println("Press enter to check the next move:");
+            try{
+                System.in.read();
+            }  
+            catch(Exception e){
+                System.out.println(e);
+            }
             System.out.println("Cost of move : " + move.getCost());
             move.getCubeMatrix().printCubeMatrix();
         }
