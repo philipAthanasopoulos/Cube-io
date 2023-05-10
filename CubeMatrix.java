@@ -189,9 +189,9 @@ public class CubeMatrix {
         copy.setPositionsForAllCubes();
         return copy;
     }
-     public boolean cubeIsInFinalPosition(Cube cube) {
-    
 
+    public ArrayList<Integer> getFinalPositionOfCube(Cube cube){
+        ArrayList<Integer> result = new ArrayList<>();
         int counter = 0;
         int correctXPos = 0;
         int correctYPos = 0;
@@ -206,14 +206,27 @@ public class CubeMatrix {
                 }
             }
         }
-        return cube.getXPos() == correctXPos && cube.getYPos() == correctYPos ? true : false;
+        result.add(correctXPos);
+        result.add(correctYPos);
+        return result;
     }
+
+
+
+    public boolean cubeIsInFinalPosition(Cube cube) {
+        
+        ArrayList<Integer> finalPosition = getFinalPositionOfCube(cube);
+        return cube.getXPos() == finalPosition.get(0) && cube.getYPos() == finalPosition.get(1) ? true : false;
+
+    }
+
 
     public boolean cubeIsInFinalPosition(int cubeNumber) {
         Cube cube = getCube(cubeNumber);
         return cubeIsInFinalPosition(cube);
     }
     
+
     public ArrayList<Cube> getCubes() {
         ArrayList<Cube> cubes = new ArrayList<>();
         for(CubeLine cubeLine : cubeLines){
@@ -235,12 +248,23 @@ public class CubeMatrix {
         return cubes;
     }
 
-    public static void main(String[] args) {
-        CubeMatrix cubeMatrix = new CubeMatrix(1);
-        cubeMatrix.printCubeLinesWithInvisibleCubes();
-        System.err.println(cubeMatrix.isInOrder());
+    public int findDistanceFromFinalPosition(Cube cube){
+        ArrayList<Integer> finalPosition = getFinalPositionOfCube(cube);
+        int xPos = cube.getXPos();
+        int yPos = cube.getYPos();
 
-        
+        int xDistance = Math.abs(xPos - finalPosition.get(0));
+        int yDistance = Math.abs(yPos - finalPosition.get(1));
+
+        return xDistance + yDistance;
+
+    }
+
+
+    public static void main(String[] args) {
+        CubeMatrix cubeMatrix = new CubeMatrix(3);
+        cubeMatrix.printCubeLinesWithInvisibleCubes();
+        System.out.println(cubeMatrix.findDistanceFromFinalPosition(cubeMatrix.getCube(1)));      
         
     }
 
