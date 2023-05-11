@@ -237,9 +237,6 @@ public class Botaki {
 
         //return sum of costs
         return costToFreeCube + costToFreeFinalPosition;
-        
-
-
     }
 
     
