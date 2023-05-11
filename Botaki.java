@@ -35,7 +35,6 @@ public class Botaki {
         }
 
         //create a new Node for each possible move
-        
         for(Cube cubeToMoveTo : possibleMoves){
             Node newNode = new Node();
             newNode.setCost(calculateCost(cube , cubeToMoveTo));
@@ -48,17 +47,11 @@ public class Botaki {
             //get the cube that is to be moved
             Cube cubeToMove = newCubeMatrix.getCube(cube.getCubeNumber());
 
-            
-            
             //move the cube
-            // System.out.println("Can move cube " + cubeToMove.getCubeNumber() + " to position :" + cubeToMoveTo.getXPos() + " , " + cubeToMoveTo.getYPos());
             newCubeMatrix.moveCube(cubeToMove , cubeToMoveTo.getXPos() , cubeToMoveTo.getYPos() );
             newNode.setCubeMatrix(newCubeMatrix);
             newNode.setTotalCost(parent.getTotalCost() + newNode.getCost());
-
         }
-
-
     }
 
 
@@ -69,7 +62,6 @@ public class Botaki {
             for(Cube cube : line.getCubes()){
                 // if(matrix.cubeIsInFinalPosition(cube)) continue;
                 if(cube.getCubeNumber() != 0 && matrix.isMoveable(cube)) calculateAllPossibleMovesForCube(cube ,node);
-                
             }
         }   
     }
@@ -83,7 +75,6 @@ public class Botaki {
 
     public void expandTreeWithBFS(ArrayList<Node> nodesToExpand){
         //TODO
-
         for(Node node : nodesToExpand){
             expandNode(node); 
         }
@@ -91,6 +82,7 @@ public class Botaki {
 
     public void UCS(Node root , Cube cubeToSort){
         //TODO
+
         //if cube is in correct position return
         if(root.getCubeMatrix().cubeIsInFinalPosition(cubeToSort.getCubeNumber())){
             System.out.println("Cube " + cubeToSort.getCubeNumber() + " is in final position");
@@ -100,11 +92,10 @@ public class Botaki {
 
         int numOfCubeToSort = cubeToSort.getCubeNumber();
         while(true){
-            double minTotalCost = Double.MAX_VALUE;
-            ArrayList<Node> nodesToExpand = new ArrayList<Node>();
-
 
             //find the value of the smallest total cost
+            double minTotalCost = Double.MAX_VALUE;
+            ArrayList<Node> nodesToExpand = new ArrayList<Node>();
             for(Node child : root.getDeepestChildren()){
                 if(child.getTotalCost() < minTotalCost) minTotalCost = child.getTotalCost();
             }
@@ -154,6 +145,14 @@ public class Botaki {
 
     public void AStar(Node root , Cube cubeToSort){
         //TODO
+
+        //if cube is in correct position return
+        if(root.getCubeMatrix().cubeIsInFinalPosition(cubeToSort.getCubeNumber())){
+            System.out.println("Cube " + cubeToSort.getCubeNumber() + " is in final position");
+            return;
+        }
+
+        expandTreeWithBFS(root);
 
     }
 
