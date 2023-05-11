@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Objects;
 
 public class Botaki {
     private CubeMatrix cubeMatrix;
@@ -174,6 +173,7 @@ public class Botaki {
         double costToFreeFinalPosition = 0;
 
         if(cubeMatrix.isMoveable(cube)) costToFreeCube = 0;
+        //calculate cost to free cube
         else{
             //find all cubes above the cube
             ArrayList<Cube> cubesAbove = new ArrayList<Cube>();
@@ -203,6 +203,27 @@ public class Botaki {
 
             }
         }
+
+        //calculate cost to free final position
+
+        //find all cubes on and above the final position
+        ArrayList<Cube> cubesAboveFinalPosition = new ArrayList<Cube>();
+        ArrayList<Integer> finalPositionCordinates = cubeMatrix.getFinalPositionOfCube(cube);
+        Cube pivot = cubeMatrix.getCube(finalPositionCordinates.get(0), finalPositionCordinates.get(1));
+        while(pivot.getCubeNumber() != 0){
+            cubesAboveFinalPosition.add(pivot);
+            pivot = cubeMatrix.getAboveCube(pivot);
+        }
+
+        //get all free positions to move to and remove positions on same y axis as cube
+        ArrayList<Cube> freePositions = cubeMatrix.getFreePositionsToMoveTo();
+        for(Cube freePosition : freePositions){
+            if(freePosition.getYPos() == cubeMatrix.getFinalPositionOfCube(cube).get(1)) freePositions.remove(freePosition);
+        }
+        
+
+
+
     }
 
     
