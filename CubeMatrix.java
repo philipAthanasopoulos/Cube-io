@@ -68,6 +68,15 @@ public class CubeMatrix {
         
     }
 
+    public ArrayList<Cube> getFreePositionsToMoveTo(){
+        ArrayList<Cube> result = new ArrayList<Cube>();
+        for(Cube cube : getCubeLines().get(2).getCubes()){
+            if(positionIsFreeToMoveTo(cube)) result.add(cube);
+        }
+        return result;
+        
+    }
+
     public Cube findFreePosition(){
         for(Cube cube : getCubeLines().get(2).getCubes()){
             if(this.positionIsFree(cube)) return cube;
@@ -259,6 +268,7 @@ public class CubeMatrix {
         return xDistance + yDistance;
 
     }
+
 
 
     public static void main(String[] args) {
