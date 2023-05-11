@@ -218,10 +218,26 @@ public class Botaki {
         //get all free positions to move to and remove positions on same y axis as cube
         ArrayList<Cube> freePositions = cubeMatrix.getFreePositionsToMoveTo();
         for(Cube freePosition : freePositions){
-            if(freePosition.getYPos() == cubeMatrix.getFinalPositionOfCube(cube).get(1)) freePositions.remove(freePosition);
+            if(freePosition.getYPos() == cube.getYPos()) freePositions.remove(freePosition);
         }
-        
 
+        //reverse cubesAboveFinalPosition list (to work from bottom to top)
+        Collections.reverse(cubesAboveFinalPosition);
+
+        for(Cube cubeAbove : cubesAboveFinalPosition){
+            //get a free position to move to
+            Cube freePosition = freePositions.get(0);
+            //move cube on that position
+            cubeMatrix.moveCube(cubeAbove, freePosition);
+            //add cost of move 
+            costToFreeFinalPosition += calculateCost(cubeAbove, freePosition);
+            //pop free position from list
+            freePositions.remove(0);
+        }
+
+        //return sum of costs
+        return costToFreeCube + costToFreeFinalPosition;
+        
 
 
     }
