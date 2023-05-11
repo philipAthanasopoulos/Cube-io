@@ -106,7 +106,6 @@ public class Botaki {
                     //change roots cube matrix to the final cube matrix
                     root.printPathToChildNode(child);
                     root.setCubeMatrix(child.getCubeMatrix());
-                    root.setTotalCost(root.getTotalCost() + minTotalCost);
                     //clear the children of the root
                     root.getChildren().clear();
                     return;
@@ -136,7 +135,14 @@ public class Botaki {
             UCS(root, matrix.getCube(cubeToSort));
             cubeToSort++;
             //print total cost
-            System.out.println("Total cost is " + root.getTotalCost());
+            double finalCost = Double.MAX_VALUE;
+            if(root.getChildren().size() == 0) finalCost = root.getTotalCost();
+            else{
+                for(Node child : root.getDeepestChildren()){
+                    if(child.getTotalCost() < finalCost) finalCost = child.getTotalCost();
+                }
+            }
+            System.out.println("Total cost is " + finalCost);
         }
 
         System.out.println("All cubes are in order");
@@ -145,7 +151,6 @@ public class Botaki {
 
     public void AStar(Node root , Cube cubeToSort){
         //TODO
-
         //if cube is in correct position return
         if(root.getCubeMatrix().cubeIsInFinalPosition(cubeToSort.getCubeNumber())){
             System.out.println("Cube " + cubeToSort.getCubeNumber() + " is in final position");
@@ -157,15 +162,15 @@ public class Botaki {
     }
 
 
-
-
     public CubeMatrix getCubeMatrix() {
         return this.cubeMatrix;
     }
 
+
     public void setCubeMatrix(CubeMatrix cubeMatrix) {
         this.cubeMatrix = cubeMatrix;
     }
+
 
     public static void main(String[] args) {
         //TODO
@@ -177,11 +182,6 @@ public class Botaki {
         cubeManager.printCubeLinesWithInvisibleCubes();
         Node result  = new Node(cubeManager.getCubeMatrix());
 
-        botaki.sortCubesWithUCS(result);
-        
-    }
-
-
-
-    
+        botaki.sortCubesWithUCS(result);        
+    }    
 }
