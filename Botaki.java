@@ -51,6 +51,7 @@ public class Botaki {
             //move the cube
             newCubeMatrix.moveCube(cubeToMove , cubeToMoveTo.getXPos() , cubeToMoveTo.getYPos() );
             newNode.setCubeMatrix(newCubeMatrix);
+            newNode.setDistanceFromFinalPosition(newCubeMatrix.getManhatamDistanceFromFinalPosition(cubeToMove));
             newNode.setTotalCost(parent.getTotalCost() + newNode.getCost());
         }
     }
@@ -85,6 +86,8 @@ public class Botaki {
     public void UCS(Node root , Cube cubeToSort){
         //TODO
 
+        
+
         //if cube is in correct position return
         if(root.getCubeMatrix().cubeIsInFinalPosition(cubeToSort.getCubeNumber())){
             System.out.println("Cube " + cubeToSort.getCubeNumber() + " is in final position");
@@ -95,6 +98,7 @@ public class Botaki {
 
         int numOfCubeToSort = cubeToSort.getCubeNumber();
         while(true){
+            root.cleanTree();
 
             //find the value of the smallest total cost
             double minTotalCost = Double.MAX_VALUE;
@@ -159,18 +163,82 @@ public class Botaki {
         //if cube is in correct position return
         if(root.getCubeMatrix().cubeIsInFinalPosition(cubeToSort.getCubeNumber())){
             System.out.println("Cube " + cubeToSort.getCubeNumber() + " is in final position");
+            System.out.println("Total cost is " + root.getTotalCost());
             return;
         }
 
         expandTreeWithBFS(root);
 
+
+        int numOfCubeToSort = cubeToSort.getCubeNumber();
+        while(true){
+
+            //find the value of the smallest distance from final position
+            int minDistance = Integer.MAX_VALUE;
+            ArrayList<Node> nodesToExpand = new ArrayList<Node>();
+            for(Node child : root.getDeepestChildren()){
+                if(child.getDistanceFromFinalPosition() < minDistance) minDistance = child.getDistanceFromFinalPosition();
+            }
+
+            //find all nodes with the smallest total distance and add them to the nodesToExpand list
+            for(Node child : root.getDeepestChildren()){
+                if(child.getCubeMatrix().cubeIsInFinalPosition(numOfCubeToSort)){
+                    //change roots cube matrix to the final cube matrix
+                    root.printPathToChildNode(child);
+                    root.setCubeMatrix(child.getCubeMatrix());
+                    //clear the children of the root
+                    root.getChildren().clear();
+                    return;
+                }
+                if(child.getDistanceFromFinalPosition() == minDistance) nodesToExpand.add(child);
+            }
+            expandTreeWithBFS(nodesToExpand);
+        }
+
+
     }
+
+
+    public void sortCubesWithAStar(Node root){
+        //TODO
+        CubeMatrix matrix = root.getCubeMatrix();
+
+        int cubeToSort = 1;
+        while(cubeToSort <= matrix.getNonZeroCubes().size()){
+            System.out.println("Sorting cube " + cubeToSort);
+            //ask user to press enter to continue
+            System.out.println("Press enter to sort the next cube");
+            try{
+                System.in.read();
+            }
+            catch(Exception e){
+                System.out.println(e);
+            }
+
+            AStar(root, matrix.getCube(cubeToSort));
+            cubeToSort++;
+            //print total cost
+            double finalCost = Double.MAX_VALUE;
+            if(root.getChildren().size() == 0) finalCost = root.getTotalCost();
+            else{
+                for(Node child : root.getDeepestChildren()){
+                    if(child.getTotalCost() < finalCost) finalCost = child.getTotalCost();
+                }
+            }
+        }
+
+        System.out.println("All cubes are in order");
+        System.out.println("Total cost is " + root.getTotalCost());
+    }
+
+
 
     public double calculateHeuristicCost(Cube cube , CubeMatrix cubeMatrix){
         //TODO
         //Find cost to free cube and cost to free its final position
         double costToFreeCube = 0;
         double costToFreeFinalPosition = 0;
+        double totalCost = 0;
 
         if(cubeMatrix.isMoveable(cube)) costToFreeCube = 0;
         //calculate cost to free cube
@@ -200,7 +268,6 @@ public class Botaki {
                 costToFreeCube += calculateCost(cubeAbove, freePosition);
                 //pop free position from list
                 freePositions.remove(0);
-
             }
         }
 
@@ -236,10 +303,13 @@ public class Botaki {
         }
 
         //return sum of costs
-        return costToFreeCube + costToFreeFinalPosition;
+        totalCost = costToFreeCube + costToFreeFinalPosition;
+        Node result  = new Node(cubeMatrix.copy());
+        result.setTotalCost(totalCost);
+        return totalCost;
+
     }
 
-    
 
 
     public CubeMatrix getCubeMatrix() {
@@ -273,6 +343,6 @@ public class Botaki {
         cubeManager.printCubeLinesWithInvisibleCubes();
         Node result  = new Node(cubeManager.getCubeMatrix());
 
-        botaki.sortCubesWithUCS(result);        
+        botaki.sortCubesWithAStar(result);        
     }    
 }

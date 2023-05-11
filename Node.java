@@ -8,6 +8,8 @@ public class Node {
     private double cost;
     private double totalCost;
     private CubeMatrix cubeMatrix;
+    private ArrayList<CubeMatrix> historyOfMoves;
+    private int distanceFromFinalPosition;
     
 
     public Node() {
@@ -45,6 +47,16 @@ public class Node {
     }
 
 
+    public int getDistanceFromFinalPosition() {
+        return this.distanceFromFinalPosition;
+    }
+
+    public void setDistanceFromFinalPosition(int distanceFromFinalPosition) {
+        this.distanceFromFinalPosition = distanceFromFinalPosition;
+    }
+
+
+
     public double getCost() {
         return this.cost;
     }
@@ -77,6 +89,46 @@ public class Node {
         this.cubeMatrix = cubeMatrix;
         this.cubeMatrix.setPositionsForAllCubes();
     }
+
+
+    public ArrayList<CubeMatrix> getHistoryOfMoves() {
+        return this.historyOfMoves;
+    }
+
+    public void setHistoryOfMoves(ArrayList<CubeMatrix> historyOfMoves) {
+        this.historyOfMoves = historyOfMoves;
+    }
+
+    public void addMoveToHistory(CubeMatrix cubeMatrix) {
+        this.historyOfMoves.add(cubeMatrix);
+    }
+
+    public void removeMoveFromHistory(CubeMatrix cubeMatrix) {
+        this.historyOfMoves.remove(cubeMatrix);
+    }
+
+    public void printHistoryOfMoves() {
+        //reverse the history of moves
+        Collections.reverse(this.historyOfMoves);
+
+        for (CubeMatrix cubeMatrix : this.historyOfMoves) {
+            cubeMatrix.printCubeMatrix();
+        }
+    }
+
+
+    public void cleanTree() {
+        //set all children to null except the deepest ones
+        ArrayList<Node> deepestChildren = this.getDeepestChildren();
+        for (Node child : this.children) {
+            if (!deepestChildren.contains(child)) {
+                child = null;
+            }
+            
+        }
+
+    }
+
 
 
 

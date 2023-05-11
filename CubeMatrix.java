@@ -257,7 +257,7 @@ public class CubeMatrix {
         return cubes;
     }
 
-    public int findDistanceFromFinalPosition(Cube cube){
+    public int getManhatamDistanceFromFinalPosition(Cube cube){
         ArrayList<Integer> finalPosition = getFinalPositionOfCube(cube);
         int xPos = cube.getXPos();
         int yPos = cube.getYPos();
@@ -274,7 +274,6 @@ public class CubeMatrix {
     public static void main(String[] args) {
         CubeMatrix cubeMatrix = new CubeMatrix(3);
         cubeMatrix.printCubeLinesWithInvisibleCubes();
-        System.out.println(cubeMatrix.findDistanceFromFinalPosition(cubeMatrix.getCube(1)));      
         
     }
 
