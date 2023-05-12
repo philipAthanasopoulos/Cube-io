@@ -220,6 +220,9 @@ public class CubeMatrix {
         return result;
     }
 
+   
+    
+
 
 
     public boolean cubeIsInFinalPosition(Cube cube) {
@@ -274,6 +277,10 @@ public class CubeMatrix {
     public static void main(String[] args) {
         CubeMatrix cubeMatrix = new CubeMatrix(3);
         cubeMatrix.printCubeLinesWithInvisibleCubes();
+        //print cordinates of free positions to move
+        for(Cube freePosition : cubeMatrix.getFreePositionsToMoveTo()){
+            System.out.println(freePosition.getXPos() + " " + freePosition.getYPos());
+        }
         
     }
 

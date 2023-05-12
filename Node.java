@@ -9,8 +9,7 @@ public class Node {
     private double totalCost;
     private CubeMatrix cubeMatrix;
     private ArrayList<CubeMatrix> historyOfMoves;
-    private int distanceFromFinalPosition;
-    
+    private double heuristicCost;    
 
     public Node() {
         this.children = new ArrayList<Node>();
@@ -47,13 +46,15 @@ public class Node {
     }
 
 
-    public int getDistanceFromFinalPosition() {
-        return this.distanceFromFinalPosition;
+
+    public double getHeuristicCost() {
+        return this.heuristicCost;
     }
 
-    public void setDistanceFromFinalPosition(int distanceFromFinalPosition) {
-        this.distanceFromFinalPosition = distanceFromFinalPosition;
+    public void setHeuristicCost(double heuristicCost) {
+        this.heuristicCost = heuristicCost;
     }
+    
 
 
 
