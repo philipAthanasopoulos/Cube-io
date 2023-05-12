@@ -253,6 +253,15 @@ public class Botaki {
                 cubesAbove.add(pivot);
                 pivot = cubeMatrix.getAboveCube(pivot);
             }
+            System.out.println("Cubes above cube " + cube.getCubeNumber() + " are " + cubesAbove);
+            //askk player to press enter to continue 
+            System.out.println("Press enter to continue");
+            try{
+                System.in.read();
+            }
+            catch(Exception e){
+                System.out.println(e);
+            }
 
             //get all free positions to move to and remove positions on same y axis as cube
             ArrayList<Cube> freePositions = cubeMatrix.getFreePositionsToMoveTo();
