@@ -275,7 +275,7 @@ public class CubeMatrix {
         return cubes;
     }
 
-    public int getManhatamDistanceFromFinalPosition(Cube cube){
+    public int getManhattanDistanceFromFinalPosition(Cube cube){
         ArrayList<Integer> finalPosition = getFinalPositionOfCube(cube);
         int xPos = cube.getXPos();
         int yPos = cube.getYPos();
@@ -308,6 +308,16 @@ public class CubeMatrix {
         for(Cube cubeAbove : cubesAbove){
             if(cubeAbove.getCubeNumber() == 0) continue;
             if(!cubeIsInFinalPosition(cubeAbove)) result.add(cubeAbove);
+        }
+        return result;
+    }
+
+
+    public int getNumOfCubesInFinalPosition() {
+        int result = 0;
+        for(Cube cube : getCubes()){
+            if(cube.getCubeNumber() == 0) continue;
+            if(cubeIsInFinalPosition(cube)) result++;
         }
         return result;
     }
