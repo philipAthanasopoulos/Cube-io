@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 
 public class CubeMatrix {
@@ -111,6 +112,16 @@ public class CubeMatrix {
         }
     }
 
+    public ArrayList<Cube> getCubesAbove(Cube cube){
+        ArrayList<Cube> result = new ArrayList<Cube>();
+        Cube pivot = getAboveCube(cube);
+        while(pivot.getCubeNumber() != 0){
+            result.add(pivot);
+            pivot = getAboveCube(pivot);
+        }
+        return result;
+    }
+
 
     public Cube getBelowCube(Cube cube) {
         if(cube.getYPos() == 2) return new Cube(-1);
@@ -134,6 +145,10 @@ public class CubeMatrix {
             }
         }
         return null;
+    }
+
+    public Cube getCube(Cube cube){
+        return getCube(cube.getXPos() , cube.getYPos());
     }
 
     public void setPositionsForAllCubes() {
@@ -282,6 +297,19 @@ public class CubeMatrix {
             System.out.println(freePosition.getXPos() + " " + freePosition.getYPos());
         }
         
+    }
+
+
+    public ArrayList<Cube> getCubesThatBlockFinalPosition(Cube cube) {
+        ArrayList<Cube> result = new ArrayList<>();
+        Cube cubeOnFinalPositon = getCube(getFinalPositionOfCube(cube).get(0), getFinalPositionOfCube(cube).get(1));
+        result.add(cubeOnFinalPositon);
+        ArrayList<Cube> cubesAbove = getCubesAbove(cube);
+        for(Cube cubeAbove : cubesAbove){
+            if(cubeAbove.getCubeNumber() == 0) continue;
+            if(!cubeIsInFinalPosition(cubeAbove)) result.add(cubeAbove);
+        }
+        return result;
     }
 
 

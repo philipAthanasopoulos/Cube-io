@@ -9,7 +9,10 @@ public class Node {
     private double totalCost;
     private CubeMatrix cubeMatrix;
     private ArrayList<CubeMatrix> historyOfMoves;
-    private double heuristicCost;    
+    private double heuristicCost;
+
+    private static final String ANSI_GREEN = "\u001B[32m";
+    private static final String ANSI_RESET = "\u001B[0m";
 
     public Node() {
         this.children = new ArrayList<Node>();
@@ -189,17 +192,17 @@ public class Node {
     public void printPathToChildNode(Node child){
         ArrayList<Node> path = findPathToChildNode(child);
         Collections.reverse(path);
-        System.out.println("Path to child node: ");
+        // System.out.println("Path to child node: ");
         for(Node move : path){
-            System.out.println("Press enter to check the next move:");
+            System.out.println("Press" + ANSI_GREEN + " ENTER" + ANSI_RESET +  " to check the next move:");
             try{
                 System.in.read();
+                System.out.println("Cost of move : " + move.getCost());
+                move.getCubeMatrix().printCubeMatrix();
             }  
             catch(Exception e){
                 System.out.println(e);
             }
-            System.out.println("Cost of move : " + move.getCost());
-            move.getCubeMatrix().printCubeMatrix();
         }
     }
     

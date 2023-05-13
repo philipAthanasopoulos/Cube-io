@@ -4,6 +4,8 @@ import java.util.Collections;
 public class Botaki {
     private CubeMatrix cubeMatrix;
     private double finalCost = 0;
+    private static final String ANSI_GREEN = "\u001B[32m";
+    private static final String ANSI_RESET = "\u001B[0m";
     
     public Botaki(){
         //TODO
@@ -51,9 +53,8 @@ public class Botaki {
             //move the cube
             newCubeMatrix.moveCube(cubeToMove , cubeToMoveTo.getXPos() , cubeToMoveTo.getYPos() );
             newNode.setCubeMatrix(newCubeMatrix);
-            // newNode.setMan(newCubeMatrix.getManhatamDistanceFromFinalPosition(cubeToMove));
             //calculate heuristic cost
-            newNode.setHeuristicCost(calculateHeuristicCost(cubeToMove, newCubeMatrix));
+            // newNode.setHeuristicCost(calculateHeuristicCost(cubeToMove, newCubeMatrix));
             newNode.setTotalCost(parent.getTotalCost() + newNode.getCost());
         }
     }
@@ -135,7 +136,7 @@ public class Botaki {
         while(cubeToSort <= matrix.getNonZeroCubes().size()){
             System.out.println("Sorting cube " + cubeToSort);
             //ask user to press enter to continue
-            System.out.println("Press enter to sort the next cube");
+            System.out.println("Press"+ ANSI_GREEN + " ENTER" + ANSI_RESET + " to sort the next cube");
             try{
                 System.in.read();
             }
@@ -242,101 +243,61 @@ public class Botaki {
         double costToFreeFinalPosition = 0;
         double totalCost = 0;
 
-        if(cubeMatrix.isMoveable(cube)) costToFreeCube = 0;
+       ArrayList<Cube> cubesThatBlock =new ArrayList<Cube>();
 
-        //calculate cost to free cube
-        else{
-            //find all cubes above the cube
-            ArrayList<Cube> cubesAbove = new ArrayList<Cube>();
-            Cube pivot = cubeMatrix.getAboveCube(cube);
-            while(pivot.getCubeNumber() != 0){
-                cubesAbove.add(pivot);
-                pivot = cubeMatrix.getAboveCube(pivot);
-            }
-            System.out.println("Cubes above cube " + cube.getCubeNumber() + " are " + cubesAbove);
-            //askk player to press enter to continue 
-            System.out.println("Press enter to continue");
-            try{
-                System.in.read();
-            }
-            catch(Exception e){
-                System.out.println(e);
+       //add cubes that block the cube to correct
+       //add all cubes above cube to correct
+       cubesThatBlock.addAll(cubeMatrix.getCubesAbove(cube));
+
+       //add all cubes that block final position
+       cubesThatBlock.addAll(cubeMatrix.getCubesThatBlockFinalPosition(cube));
+
+       //remove cubes that block one by one
+       while(true){
+            if(cubesThatBlock.size() == 0 ) break;
+            //find all movable cubes
+            ArrayList<Cube> movableCubes = new ArrayList<Cube>();
+            for(Cube cubeThatBlocks : cubesThatBlock){
+                if(cubeMatrix.isMoveable(cubeThatBlocks)){
+                    movableCubes.add(cubeThatBlocks);
+                }
             }
 
-            //get all free positions to move to and remove positions on same y axis as cube
-            ArrayList<Cube> freePositions = cubeMatrix.getFreePositionsToMoveTo();
-            ArrayList<Cube> positionsToKeep = new ArrayList<Cube>();
-            for(Cube freePosition : freePositions){
-                if(freePosition.getYPos() == cubeMatrix.getFinalPositionOfCube(cube).get(1)) positionsToKeep.add(freePosition);
+            //create all possible moves and choose the one with the least cost
+            ArrayList<Node> possibleMoves = new ArrayList<Node>();
+            for(Cube movableCube : movableCubes){
+                Node nodeOfCube = new Node(cubeMatrix);
+                calculateAllPossibleMovesForCube(cube, nodeOfCube);
+                possibleMoves.addAll(nodeOfCube.getChildren());
             }
-            freePositions.clear();
-            freePositions.addAll(positionsToKeep);
-
+            //choose move with smallest cost
+            Node bestMove = new Node(cubeMatrix);
+            double minCost = Double.MAX_VALUE;
+            for(Node move : possibleMoves){
+                if(move.getTotalCost() < minCost){
+                    minCost = move.getTotalCost();
+                }
+            }
             
-            //reverse cubesAbove list (to work from bottom to top)
-            Collections.reverse(cubesAbove);
-            for(Cube cubeAbove : cubesAbove){
-                //get a free position to move to
-                Cube freePosition = freePositions.get(0);
-                //move cube on that position
-                cubeMatrix.moveCube(cubeAbove, freePosition);
-                //add cost of move 
-                costToFreeCube += calculateCost(cubeAbove, freePosition);
-                //pop free position from list
-                freePositions.remove(0);
-            }
-        }
-
-        //calculate cost to free final position
-
-        //if position is free return 0 cost
-        Cube finalPosition = cubeMatrix.getCube(cubeMatrix.getFinalPositionOfCube(cube).get(0), cubeMatrix.getFinalPositionOfCube(cube).get(1));
-        if(cubeMatrix.positionIsFreeToMoveTo(finalPosition)) costToFreeFinalPosition = 0;
-
-
-        else{
-            //find all cubes on and above the final position
-            ArrayList<Cube> cubesAboveFinalPosition = new ArrayList<Cube>();
-            ArrayList<Integer> finalPositionCordinates = cubeMatrix.getFinalPositionOfCube(cube);
-            Cube pivot = cubeMatrix.getCube(finalPositionCordinates.get(0), finalPositionCordinates.get(1));
-            while(pivot.getCubeNumber() != 0){
-                cubesAboveFinalPosition.add(pivot);
-                pivot = cubeMatrix.getAboveCube(pivot);
+            for(Node move  : possibleMoves){
+                if(move.getCost() == minCost){
+                    bestMove = move; // move found
+                }
             }
 
-            //get all free positions to move to and remove positions on same y axis as cube
-            ArrayList<Cube> freePositions = cubeMatrix.getFreePositionsToMoveTo();
-            ArrayList<Cube> positionsToKeep = new ArrayList<Cube>();
-            for(Cube freePosition : freePositions){
-                if(freePosition.getYPos() == cube.getYPos()) positionsToKeep.add(freePosition);
-            }
-            freePositions.clear();
-            freePositions.addAll(positionsToKeep);
+            cubeMatrix = bestMove.getCubeMatrix();
+            totalCost += bestMove.getCost();
+            cubesThatBlock.remove(bestMove.getCubeMatrix().getCube(cube.getCubeNumber()));
+            
+       }
+       //move cube to correct position
+       ArrayList<Integer> finalCordinates = cubeMatrix.getFinalPositionOfCube(cube);
+       Cube finalPosition = cubeMatrix.getCube(finalCordinates.get(0) , finalCordinates.get(1));
+       cubeMatrix.moveCube(cube , finalPosition);
 
-            //reverse cubesAboveFinalPosition list (to work from bottom to top)
-            Collections.reverse(cubesAboveFinalPosition);
+       return totalCost;
 
-            for(Cube cubeAbove : cubesAboveFinalPosition){
-                //get a free position to move to
-                Cube freePosition = freePositions.get(0);
-                //move cube on that position
-                cubeMatrix.moveCube(cubeAbove, freePosition);
-                //add cost of move 
-                costToFreeFinalPosition += calculateCost(cubeAbove, freePosition);
-                //pop free position from list
-                freePositions.remove(0);
-            }
-
-        }
-
-        
-
-        //return sum of costs
-        totalCost = costToFreeCube + costToFreeFinalPosition;
-        Node result  = new Node(cubeMatrix.copy());
-        result.setTotalCost(totalCost);
-        System.out.println("Cost to free cube " + cube.getCubeNumber() + " is " + costToFreeCube);
-        return totalCost;
+       
 
     }
 
@@ -374,6 +335,6 @@ public class Botaki {
         Node result  = new Node(cubeManager.getCubeMatrix());
         // System.out.println(botaki.calculateHeuristicCost(result.getCubeMatrix().getCube(1) , result.getCubeMatrix()));
 
-        botaki.sortCubesWithAStar(result);        
+        botaki.sortCubesWithUCS(result);        
     }    
 }
