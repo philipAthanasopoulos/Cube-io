@@ -1,5 +1,8 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.PriorityQueue;
 
 public class Botaki {
     private CubeMatrix cubeMatrix;
@@ -39,9 +42,8 @@ public class Botaki {
 
         //create a new Node for each possible move
         for(Cube cubeToMoveTo : possibleMoves){
-            Node newNode = new Node();
+            Node newNode = new Node(parent);
             newNode.setCost(calculateCost(cube , cubeToMoveTo));
-            newNode.setParent(parent);
             parent.addChild(newNode);
 
             //create a new cubeMatrix for each possible move
@@ -54,7 +56,7 @@ public class Botaki {
             newCubeMatrix.moveCube(cubeToMove , cubeToMoveTo.getXPos() , cubeToMoveTo.getYPos() );
             newNode.setCubeMatrix(newCubeMatrix);
             //calculate heuristic cost
-            newNode.setHeuristicCost(calculateHeuristicCost(cubeToMove, newCubeMatrix));
+            newNode.setHeuristicCost(calculateHeuristicCost(newCubeMatrix));
             newNode.setTotalCost(parent.getTotalCost() + newNode.getCost());
         }
     }
@@ -115,7 +117,13 @@ public class Botaki {
             for(Node child : root.getDeepestChildren()){
                 if(child.getCubeMatrix().cubeIsInFinalPosition(numOfCubeToSort)){
                     //change roots cube matrix to the final cube matrix
-                    root.printPathToChildNode(child);
+                    //print all moves from history
+                    System.out.println("Cube " + numOfCubeToSort + " is in final position");
+                    System.out.println("Total cost is " + child.getTotalCost());
+                    System.out.println("Moves to sort cube " + numOfCubeToSort + " are: ");
+                    for(CubeMatrix move : child.getHistoryOfMoves()){
+                        move.printCubeMatrix();
+                    }
                     root.setCubeMatrix(child.getCubeMatrix());
                     //clear the children of the root
                     root.getChildren().clear();
@@ -237,78 +245,146 @@ public class Botaki {
 
 
     public double calculateHeuristicCost(Cube cube , CubeMatrix cubeMatrix){
-    //     //TODO
-    //     //Find cost to free cube and cost to free its final position
-    //     double costToFreeCube = 0;
-    //     double costToFreeFinalPosition = 0;
-    //     double totalCost = 0;
-
-    //    ArrayList<Cube> cubesThatBlock =new ArrayList<Cube>();
-
-    //    //add cubes that block the cube to correct
-    //    //add all cubes above cube to correct
-    //    cubesThatBlock.addAll(cubeMatrix.getCubesAbove(cube));
-
-    //    //add all cubes that block final position
-    //    cubesThatBlock.addAll(cubeMatrix.getCubesThatBlockFinalPosition(cube));
-
-    //    //remove cubes that block one by one
-    //    while(true){
-    //         if(cubesThatBlock.size() == 0 ) break;
-    //         //find all movable cubes
-    //         ArrayList<Cube> movableCubes = new ArrayList<Cube>();
-    //         for(Cube cubeThatBlocks : cubesThatBlock){
-    //             if(cubeMatrix.isMoveable(cubeThatBlocks)){
-    //                 movableCubes.add(cubeThatBlocks);
-    //             }
-    //         }
-
-    //         //create all possible moves and choose the one with the least cost
-    //         ArrayList<Node> possibleMoves = new ArrayList<Node>();
-    //         for(Cube movableCube : movableCubes){
-    //             Node nodeOfCube = new Node(cubeMatrix);
-    //             calculateAllPossibleMovesForCube(cube, nodeOfCube);
-    //             possibleMoves.addAll(nodeOfCube.getChildren());
-    //         }
-    //         //choose move with smallest cost
-    //         Node bestMove = new Node(cubeMatrix);
-    //         double minCost = Double.MAX_VALUE;
-    //         for(Node move : possibleMoves){
-    //             if(move.getTotalCost() < minCost){
-    //                 minCost = move.getTotalCost();
-    //             }
-    //         }
-            
-    //         for(Node move  : possibleMoves){
-    //             if(move.getCost() == minCost){
-    //                 bestMove = move; // move found
-    //             }
-    //         }
-
-    //         cubeMatrix = bestMove.getCubeMatrix();
-    //         totalCost += bestMove.getCost();
-    //         cubesThatBlock.remove(bestMove.getCubeMatrix().getCube(cube.getCubeNumber()));
-            
-    //    }
-    //    //move cube to correct position
-    //    ArrayList<Integer> finalCordinates = cubeMatrix.getFinalPositionOfCube(cube);
-    //    Cube finalPosition = cubeMatrix.getCube(finalCordinates.get(0) , finalCordinates.get(1));
-    //    cubeMatrix.moveCube(cube , finalPosition);
-
-    //    return totalCost;
-
-        int heuristicCost = 0;
+        double heuristicCost = 0;
         //heuristic cost is sum of blocking cubes , numOfCubesNotInFinalPosition and manhattan distance
         int numofCubesThatBlockFinalPosition = cubeMatrix.getCubesThatBlockFinalPosition(cube).size();
         int numofCubesThatBlockCubeToSort = cubeMatrix.getCubesAbove(cube).size();
         int manhattanDistance = cubeMatrix.getManhattanDistanceFromFinalPosition(cube);
         int numOfCubesNotInFinalPosition = 3*cubeMatrix.getNumOfCubesPerLine()  -  cubeMatrix.getNumOfCubesInFinalPosition();
+        int numOfBlockedCubes = cubeMatrix.getNumOfBlockedCubes();
 
-        heuristicCost = numofCubesThatBlockFinalPosition + numofCubesThatBlockCubeToSort ;
+        int correctlyStackedCubes = 0;
+        CubeLine bottomLine = cubeMatrix.getCubeLines().get(2);
+        for(Cube cubeToCheck : bottomLine.getCubes()){
+            //if cube is in correct position continue searching above it until you find a cube that is not in correct position
+            if(cubeMatrix.cubeIsInFinalPosition(cubeToCheck)){
+                correctlyStackedCubes++;
+                ArrayList<Cube> cubesAbove = cubeMatrix.getCubesAbove(cubeToCheck);
+                //reverse cubes above
+                Collections.reverse(cubesAbove);
+                for(Cube cubeAbove : cubesAbove){
+                    if(!cubeMatrix.cubeIsInFinalPosition(cubeAbove)){
+                        break;
+                    }
+                    else{
+                        correctlyStackedCubes++;
+                    }
+                }
+            }
+        }
+        int numOfCubesNotCorrectlyStacked = 3*cubeMatrix.getNumOfCubesPerLine() - correctlyStackedCubes;
+
+        heuristicCost = 0.5*numofCubesThatBlockFinalPosition + 0.5*numofCubesThatBlockCubeToSort + numOfCubesNotCorrectlyStacked;
+        return heuristicCost;
+    }
+
+    public double calculateHeuristicCost(CubeMatrix cubematrix){
+        int heuristicCost = 0;
+        //heuristic cost is sum of blocking cubes , numOfCubesNotInFinalPosition and manhattan distance
+        
+        int correctlyStackedCubes = 0;
+        CubeLine bottomLine = cubematrix.getCubeLines().get(2);
+        for(Cube cube : bottomLine.getCubes()){
+            //if cube is in correct position continue searching above it until you find a cube that is not in correct position
+            if(cubematrix.cubeIsInFinalPosition(cube)){
+                correctlyStackedCubes++;
+                ArrayList<Cube> cubesAbove = cubematrix.getCubesAbove(cube);
+                //reverse cubes above
+                // Collections.reverse(cubesAbove);
+                for(Cube cubeAbove : cubesAbove){
+                    if(!cubematrix.cubeIsInFinalPosition(cubeAbove)){
+                        break;
+                    }
+                    else{
+                        correctlyStackedCubes++;
+                    }
+                }
+            }
+        }
+
+        int numOfCubesThatBlockCubesNotInFinalPosition = 0;
+        for(Cube cube : cubematrix.getNonZeroCubes()){
+            if(!cubematrix.cubeIsInFinalPosition(cube)){
+                numOfCubesThatBlockCubesNotInFinalPosition += cubematrix.getCubesThatBlockFinalPosition(cube).size();
+            }
+        }
+
+        int numOfCubesThatBlockCubeNotInFinalPosition = 0;
+        for(Cube cube : cubematrix.getNonZeroCubes()){
+            if(!cubematrix.cubeIsInFinalPosition(cube)){
+                numOfCubesThatBlockCubeNotInFinalPosition += cubematrix.getCubesAbove(cube).size();
+            }
+        }
+
+
+        int sumOfAllManhattanDistances = 0;
+        for(Cube cube : cubematrix.getNonZeroCubes()){
+            sumOfAllManhattanDistances += cubematrix.getManhattanDistanceFromFinalPosition(cube);
+        }
+
+        int numOfCubesNotInFinalPosition = 3*cubematrix.getNumOfCubesPerLine()  -  cubematrix.getNumOfCubesInFinalPosition();
+            
+
+
+        heuristicCost =  3*cubematrix.getNumOfCubesPerLine() - correctlyStackedCubes + numOfCubesThatBlockCubesNotInFinalPosition  ;
         return heuristicCost*1.0;
 
-       
+    }
 
+    public void AStar2(Node root){
+        //priority queue of type node
+        PriorityQueue<Node> queue = new PriorityQueue<Node>(new Comparator<Node>(){
+            @Override
+            public int compare(Node node1 , Node node2){
+                if(node1.getTotalCost() + node1.getHeuristicCost() > node2.getTotalCost() + node2.getHeuristicCost()) return 1;
+                else if(node1.getTotalCost() + node1.getHeuristicCost() < node2.getTotalCost() + node2.getHeuristicCost()) return -1;
+                else return 0;
+            }
+        });
+
+        expandTreeWithBFS(root);
+
+        while(true){
+
+            if(root.getCubeMatrix().isInOrder()) break;
+
+            //find min cost of children
+            double minCost = Double.MAX_VALUE;
+            for(Node child : root.getDeepestChildren()){
+                if(child.getTotalCost() + child.getHeuristicCost() < minCost){
+                    minCost = child.getTotalCost() + child.getHeuristicCost();
+                }
+            }
+    
+            //add all nodes with min cost to queue
+            for(Node child : root.getDeepestChildren()){
+                if(child.getTotalCost() + child.getHeuristicCost() == minCost){
+                    queue.add(child);
+                }
+            }
+
+            root.removeAllChildrenThatAreNotTheDeepest();
+
+            //expand nodes with min cost add remove from queue
+            
+            Node currentNode = queue.poll();
+            //print matrix of current node
+            currentNode.getCubeMatrix().printCubeMatrix();
+            expandTreeWithBFS(currentNode);
+            for(Node child : currentNode.getDeepestChildren()){
+                queue.add(child);
+            }
+
+            for(Node newMove : queue){
+                if(newMove.getCubeMatrix().isInOrder()){
+                    System.out.println("All cubes are in order");
+                    newMove.printHistoryOfMoves();
+                    return;
+                }
+            }
+
+        }
+ 
     }
 
 
@@ -343,8 +419,9 @@ public class Botaki {
         
         cubeManager.printCubeLinesWithInvisibleCubes();
         Node result  = new Node(cubeManager.getCubeMatrix());
+        result.setParent(null);
         // System.out.println(botaki.calculateHeuristicCost(result.getCubeMatrix().getCube(1) , result.getCubeMatrix()));
 
-        botaki.sortCubesWithAStar(result);        
+        botaki.AStar2(result);        
     }    
 }

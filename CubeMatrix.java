@@ -287,6 +287,19 @@ public class CubeMatrix {
 
     }
 
+    public boolean cubeIsBlocked(Cube cube) {
+        //if cube is in final position it is not blocked
+        return (cubeIsInFinalPosition(cube) || getCubesAbove(cube).size() != 0 || cube.getCubeNumber() == 0) ? false : true;
+    }
+
+    public int getNumOfBlockedCubes() {
+        int numOfBlockedCubes = 0;
+        for(Cube cube : getCubes()){
+            if(cubeIsBlocked(cube)) numOfBlockedCubes++;
+        }
+        return numOfBlockedCubes;
+    }
+
 
 
     public static void main(String[] args) {

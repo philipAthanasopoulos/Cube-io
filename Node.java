@@ -33,6 +33,15 @@ public class Node {
     public Node(Node parent) {
         this.children = new ArrayList<Node>();
         this.parent = parent;
+        this.historyOfMoves = new ArrayList<CubeMatrix>();
+        ArrayList<CubeMatrix> movesToCopy = new ArrayList<CubeMatrix>();
+        if(parent.getHistoryOfMoves() != null){
+            for(CubeMatrix move : parent.getHistoryOfMoves()){
+                movesToCopy.add(move.copy());
+            }
+        }
+        movesToCopy.add(parent.getCubeMatrix().copy());
+        this.historyOfMoves.addAll(movesToCopy);
         this.cost = 0;
         this.totalCost = 0;
 
@@ -47,6 +56,9 @@ public class Node {
     public Node getParent() {
         return this.parent;
     }
+
+    
+
 
 
 
@@ -112,8 +124,6 @@ public class Node {
     }
 
     public void printHistoryOfMoves() {
-        //reverse the history of moves
-        Collections.reverse(this.historyOfMoves);
 
         for (CubeMatrix cubeMatrix : this.historyOfMoves) {
             cubeMatrix.printCubeMatrix();
@@ -205,6 +215,10 @@ public class Node {
             }
         }
     }
+
+    public void setParentToNull(){
+        this.parent = null;
+    }
     
     
 
@@ -232,6 +246,19 @@ public static void main(String[] args) {
     root.printTree();
 
    }
+
+public void removeAllChildrenThatAreNotTheDeepest() {
+    ArrayList<Node> deepestChildren = this.getDeepestChildren();
+    ArrayList<Node> childrenToRemove = new ArrayList<Node>();
+    for (Node child : this.children) {
+        if (!deepestChildren.contains(child)) {
+            childrenToRemove.add(child);
+        }
+    }
+    for (Node child : childrenToRemove) {
+        this.children.remove(child);
+    }
+}
 
 
 
