@@ -177,6 +177,11 @@ public class CubeMatrix {
         return true;
     }
 
+    public boolean isInOrder(CubeLine line){
+        if(line.isInOrder() && cubeIsInFinalPosition(line.getCubes().get(0))) return true;
+        return false;
+    }
+
     public CubeLine getCubeLine(int yNext) {
         return cubeLines.get(yNext);   
     }

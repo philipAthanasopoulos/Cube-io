@@ -42,6 +42,23 @@ public class Botaki20 {
             }
         }
 
+        //find moves in bottom line from k to 3k and only keep one
+        ArrayList<Cube> cubesToKeep = new ArrayList<Cube>();
+        boolean foundEmptyPosition = false;
+        for(Cube cubeToCheck : possibleMoves){
+            if(cubeToCheck.getXPos() > parentCubeMatrix.getNumOfCubesPerLine() - 1){
+                if(!foundEmptyPosition){
+                    cubesToKeep.add(cubeToCheck);
+                    foundEmptyPosition = true;
+                }
+            }
+            else{
+                cubesToKeep.add(cubeToCheck);
+            }
+        }
+
+        possibleMoves = cubesToKeep;
+
         //create a new Node for each possible move
         for(Cube cubeToMoveTo : possibleMoves){
             Node newNode = new Node(parent);
@@ -87,126 +104,159 @@ public class Botaki20 {
         return children;
     }
 
-    
-
-
-    
-     public double calculateHeuristicCost(CubeMatrix cubematrix) {
+    public double calculateHeuristicCost(CubeMatrix cubematrix){
+        //heuristic cost is sum of blocking cubes , numOfCubesNotInFinalPosition and manhattan distance
+        
         int correctlyStackedCubes = 0;
-        int numOfCubesThatBlockCubesNotInFinalPosition = 0;
-        int blocksNeededToSortNextLine = 0;
-        int numOfCubesNotInFinalPosition = 3 * cubematrix.getNumOfCubesPerLine() - cubematrix.getNumOfCubesInFinalPosition();
-    
-        // Initialize the finalPositions and manhattanDistances maps
-        HashMap<Cube, Boolean> finalPositions = new HashMap<>();
-        HashMap<Cube, Integer> manhattanDistances = new HashMap<>();
-    
-        // Cache results of cubeIsInFinalPosition and getManhattanDistanceFromFinalPosition calls
-        for (Cube cube : cubematrix.getCubes()) {
-            finalPositions.put(cube, cubematrix.cubeIsInFinalPosition(cube));
-            manhattanDistances.put(cube, cubematrix.getManhattanDistanceFromFinalPosition(cube));
-        }
-    
-        // Count the number of correctly stacked cubes
-        for (Cube cube : cubematrix.getCubes()) {
-            if (finalPositions.get(cube)) {
-                correctlyStackedCubes++;
-            }
-        }
-<<<<<<< HEAD
-    
-        // Count the number of cubes that block cubes not in the final position
-            // Count the number of cubes that block cubes not in the final position
-        for (Cube cube : cubematrix.getCubes()) {
-            if (!finalPositions.get(cube)) {
-                int column = cube.getXPos();
-                Cube highestCube = cubematrix.getHighestCubeInColumn(column);
-                    if (cube.getCubeNumber() < highestCube.getCubeNumber()) {
-                        numOfCubesThatBlockCubesNotInFinalPosition++;
-        }
-=======
-
-
-        int score = 0;
-        ArrayList<Cube> cubesToWork = new ArrayList<Cube>();
-        for(Cube cube : cubematrix.getCubeLine(2).getCubes()){
+        CubeLine bottomLine = cubematrix.getCubeLines().get(2);
+        for(Cube cube : bottomLine.getCubes()){
+            //if cube is in correct position continue searching above it until you find a cube that is not in correct position
             if(cubematrix.cubeIsInFinalPosition(cube)){
-                cubesToWork.add(cube);
-                score++;
-            }
-        }
-
-        for(Cube cube : cubesToWork){
-            ArrayList<Cube> cubesAbove = cubematrix.getCubesAbove(cube);
-            for(Cube cubeAbove : cubesAbove){
-                if(!cubematrix.cubeIsInFinalPosition(cubeAbove)) continue;
-                else{
-                    score++;
+                correctlyStackedCubes++;
+                ArrayList<Cube> cubesAbove = cubematrix.getCubesAbove(cube);
+                for(Cube cubeAbove : cubesAbove){
+                    if(!cubematrix.cubeIsInFinalPosition(cubeAbove)){
+                        continue;
+                    }
+                    else{
+                        correctlyStackedCubes++;
+                    }
                 }
             }
         }
 
-        
+        int notCorrectlyStackedCubes = 3*cubematrix.getNumOfCubesPerLine() - correctlyStackedCubes;
 
-        
-
-        
-
-        
-
-        double heuristicCost = blocksNeededToSortRows + numOfCubesThatBlockCubesNotInFinalPosition + 0.5*blocksNeededToSortNextLine ;
-        return heuristicCost;
-
->>>>>>> 13538af009f762ef205415f12e1faf48da76c41d
-    }
-}
-
-    
-        // Count the number of blocks needed to sort the next line
-        for (int lineIndex = 2; lineIndex >= 0; lineIndex--) {
-            CubeLine line = cubematrix.getCubeLine(lineIndex);
-            if (!line.isInOrder()) {
-                for (Cube cube : line.getCubes()) {
-                    if (finalPositions.get(cube)) {
-                     blocksNeededToSortNextLine++;
-                     }
-                 }
-        break;
+        int numOfCubesThatBlockCubesNotInFinalPosition = 0;
+        for(Cube cube : cubematrix.getNonZeroCubes()){
+            if(!cubematrix.cubeIsInFinalPosition(cube)){
+                numOfCubesThatBlockCubesNotInFinalPosition += cubeMatrix.getCubesAbove(cube).size();
             }
-    }
+        }
 
-    
-        double heuristicCost = 3 * cubematrix.getNumOfCubesPerLine() - correctlyStackedCubes + numOfCubesThatBlockCubesNotInFinalPosition
-                + numOfCubesNotInFinalPosition + blocksNeededToSortNextLine;
+
+        // int sumOfAllManhattanDistances = 0;
+        // for(Cube cube : cubematrix.getNonZeroCubes()){
+        //     sumOfAllManhattanDistances += cubematrix.getManhattanDistanceFromFinalPosition(cube);
+        // }
+
+        int numOfCubesNotInFinalPosition = 3*cubematrix.getNumOfCubesPerLine()  -  cubematrix.getNumOfCubesInFinalPosition();
+            
+
+        int blocksNeededToSortNextLine = 0;
+        for(int lineIndex = 2 ; lineIndex > -1 ; lineIndex--){
+            CubeLine line = cubematrix.getCubeLine(lineIndex);
+            if(line.isInOrder()) continue;
+            else{
+                for(Cube cube : line.getCubes()){
+                    if(cubematrix.cubeIsInFinalPosition(cube)) blocksNeededToSortNextLine++; 
+                }
+                break;
+            }
+        }
+
+        // double verticalManhattanDistances = 0;
+        // double horizontalManhattanDistances = 0;
+
+        // for(Cube cube : cubematrix.getNonZeroCubes()){
+        //     verticalManhattanDistances += Math.abs(cube.getYPos() - cubematrix.getFinalPositionOfCube(cube).get(1));
+        //     horizontalManhattanDistances += Math.abs(cube.getXPos() - cubematrix.getFinalPositionOfCube(cube).get(0));
+        // }
+        
+
+        
+        // double manhattanDistance = 1.125*verticalManhattanDistances + 0.75*horizontalManhattanDistances;
+
+
+        int numOfBlockedCubesNotINFinalPosition = 0;
+        for(Cube cube : cubematrix.getNonZeroCubes()){
+            if(!cubematrix.cubeIsInFinalPosition(cube) && cubematrix.cubeIsBlocked(cube)){
+                numOfBlockedCubesNotINFinalPosition++;
+            }
+                
+            
+        }
+
+        int cubesInWrongPositionBottomToTop = 0;
+        int weight = 1;
+        for(CubeLine line : cubematrix.getCubeLines()){
+            for(Cube cube : line.getCubes()){
+                if(!cubematrix.cubeIsInFinalPosition(cube)){
+                    cubesInWrongPositionBottomToTop += weight;
+                }
+            }
+            weight += 2;
+        }
+
+        int cubesInWrongPositionLeftToRight = 0;
+        weight = 1;
+        for(int xIndex = 0 ; xIndex < cubematrix.getNumOfCubesPerLine() ; xIndex++){
+            for(int yIndex = 0 ; yIndex < 3 ; yIndex++){
+                Cube cube = cubematrix.getCube(xIndex , yIndex);
+                if(!cubematrix.cubeIsInFinalPosition(cube) && cube.getCubeNumber() != 0){
+                    cubesInWrongPositionBottomToTop += weight;
+                }
+            }
+            weight += 2;
+        }
+
+        //find the verical distance of each cube from its final position
+        double verticalCosts = 0;
+        for(Cube cube : cubematrix.getNonZeroCubes()){
+            int verticalDistance = cube.getYPos() - cubematrix.getFinalPositionOfCube(cube).get(1);
+            if(verticalDistance < 0) verticalCosts += verticalDistance;
+            if(verticalDistance == 0) verticalCosts += 0.75;
+            if(verticalDistance > 0) verticalCosts += 0.5*verticalDistance;
+
+        }
+
+            
+        
+
+        
+
+        
+        double heuristicCost = notCorrectlyStackedCubes + numOfCubesThatBlockCubesNotInFinalPosition ;
         return heuristicCost;
     }
     
 
 
-    public Node UCS(Node root){
-        PriorityQueue<Node> queue = new PriorityQueue<>(Comparator.comparingDouble(node -> node.getTotalCost() + node.getHeuristicCost()));
+    public void UCS(Node root){
+        PriorityQueue<Node> queue = new PriorityQueue<>(Comparator.comparingDouble(node -> node.getTotalCost()));
 
 
         queue.add(root);
+        Node result = null;
         
-        while(true){
-            //check if cubes have been sorted
-            for(Node nodeInQueue : queue){
-                if( nodeInQueue.getCubeMatrix().isInOrder()){
-                    return nodeInQueue;
+        search :{
+            while(true){
+                //check if cubes have been sorted
+                for(Node nodeInQueue : queue){
+                    if( nodeInQueue.getCubeMatrix().isInOrder()){
+                        result = nodeInQueue;
+                        break search;
+                    }
                 }
+                //if not export the min value element from queue and expand it
+                ArrayList<Node> newNodesForQueue = expandNode(queue.poll());
+                queue.addAll(newNodesForQueue);
+    
             }
-            //if not export the min value element from queue and expand it
-            ArrayList<Node> newNodesForQueue = expandNode(queue.poll());
-            queue.addAll(newNodesForQueue);
 
         }
+
+        
+        result.printHistoryOfMoves();
+        result.getCubeMatrix().printCubeMatrix();   
+        System.out.println(ANSI_GREEN + "Total cost is :" + result.getTotalCost() + ANSI_RESET);
+
 
     }
 
 
 
-    public Node AStar(Node root){
+    public void AStar(Node root){
         //ask user to press ENTER
         System.out.println("Press enter to sort the cube matrix");
         try{
@@ -222,18 +272,29 @@ public class Botaki20 {
 
         //add root to queue
         queue.add(root);
+        Node result = null;
 
-        while(true){
-            //check if cubes have been sorted
-            for(Node nodeInQueue : queue){
-                if( nodeInQueue.getCubeMatrix().isInOrder()){
-                    return nodeInQueue;
+        search :{
+            while(true){
+                //check if cubes have been sorted
+                for(Node nodeInQueue : queue){
+                    if( nodeInQueue.getCubeMatrix().isInOrder()){
+                        result = nodeInQueue;
+                        break search;
+                    }
                 }
+                //if not export the min value element from queue and expand it
+                ArrayList<Node> newNodesForQueue = expandNode(queue.poll());
+                queue.addAll(newNodesForQueue);
+    
             }
-            //if not export the min value element from queue and expand it
-            ArrayList<Node> newNodesForQueue = expandNode(queue.poll());
-            queue.addAll(newNodesForQueue);
+
         }
+
+        
+        result.printHistoryOfMoves();
+        result.getCubeMatrix().printCubeMatrix();   
+        System.out.println(ANSI_GREEN + "Total cost is :" + result.getTotalCost() + ANSI_RESET);
 
 
     }
@@ -272,10 +333,7 @@ public class Botaki20 {
         Node root  = new Node(cubeManager.getCubeMatrix());
         root.setParent(null);
 
-        Node result = botaki.AStar(root);   
-        result.printHistoryOfMoves();
-        result.getCubeMatrix().printCubeMatrix();   
-        System.out.println(ANSI_GREEN + "Total cost is :" + result.getTotalCost() + ANSI_RESET);;  
+        botaki.AStar(root);
     }    
 }
 
