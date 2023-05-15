@@ -45,10 +45,12 @@ public class Botaki20 {
         //create a new Node for each possible move
         for(Cube cubeToMoveTo : possibleMoves){
             Node newNode = new Node(parent);
-            newNode.setCost(calculateCostOfMove(cube , cubeToMoveTo));
+            double costOfMove = calculateCostOfMove(cube , cubeToMoveTo);
+            newNode.setCost(costOfMove);
 
             //create a new cubeMatrix for each possible move
             CubeMatrix newCubeMatrix = parentCubeMatrix.copy();
+            newCubeMatrix.setCostOfMove(costOfMove);
             
             //get the cube that is to be moved
             Cube cubeToMove = newCubeMatrix.getCube(cube.getCubeNumber());
@@ -111,6 +113,7 @@ public class Botaki20 {
                 correctlyStackedCubes++;
             }
         }
+<<<<<<< HEAD
     
         // Count the number of cubes that block cubes not in the final position
             // Count the number of cubes that block cubes not in the final position
@@ -121,6 +124,40 @@ public class Botaki20 {
                     if (cube.getCubeNumber() < highestCube.getCubeNumber()) {
                         numOfCubesThatBlockCubesNotInFinalPosition++;
         }
+=======
+
+
+        int score = 0;
+        ArrayList<Cube> cubesToWork = new ArrayList<Cube>();
+        for(Cube cube : cubematrix.getCubeLine(2).getCubes()){
+            if(cubematrix.cubeIsInFinalPosition(cube)){
+                cubesToWork.add(cube);
+                score++;
+            }
+        }
+
+        for(Cube cube : cubesToWork){
+            ArrayList<Cube> cubesAbove = cubematrix.getCubesAbove(cube);
+            for(Cube cubeAbove : cubesAbove){
+                if(!cubematrix.cubeIsInFinalPosition(cubeAbove)) continue;
+                else{
+                    score++;
+                }
+            }
+        }
+
+        
+
+        
+
+        
+
+        
+
+        double heuristicCost = blocksNeededToSortRows + numOfCubesThatBlockCubesNotInFinalPosition + 0.5*blocksNeededToSortNextLine ;
+        return heuristicCost;
+
+>>>>>>> 13538af009f762ef205415f12e1faf48da76c41d
     }
 }
 

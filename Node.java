@@ -131,7 +131,7 @@ public class Node {
         }
 
         for (CubeMatrix cubeMatrix : this.historyOfMoves) {
-            System.out.println("Cost of move : " + cost);
+            System.out.println("Cost of move : " + cubeMatrix.getCostOfMove());
             cubeMatrix.printCubeMatrix();
         }
     }
