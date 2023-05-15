@@ -41,9 +41,13 @@ public class Table{
         cubeManager.requestCubeMatrix();
         cubeManager.printCubeMatrix();
 
-        Botaki botaki = new Botaki();
-        botaki.setCubeMatrix(cubeManager.getCubeMatrix());
-        botaki.sortCubesWithUCS(new Node(cubeManager.getCubeMatrix()));
+        Botaki20 botaki = new Botaki20();
+
+        Node result = botaki.AStar(new Node(cubeManager.getCubeMatrix()));
+
+        result.printHistoryOfMoves();
+        result.getCubeMatrix().printCubeMatrix();
+        
 
         
     }
