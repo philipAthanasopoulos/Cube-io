@@ -2,6 +2,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.PriorityQueue;
 
 public class Botaki20 {
@@ -87,68 +88,62 @@ public class Botaki20 {
     
 
 
-
-
-    public double calculateHeuristicCost(CubeMatrix cubematrix){
-        //heuristic cost is sum of blocking cubes , numOfCubesNotInFinalPosition and manhattan distance
-        
+    
+     public double calculateHeuristicCost(CubeMatrix cubematrix) {
         int correctlyStackedCubes = 0;
-        CubeLine bottomLine = cubematrix.getCubeLines().get(2);
-        for(Cube cube : bottomLine.getCubes()){
-            //if cube is in correct position continue searching above it until you find a cube that is not in correct position
-            if(cubematrix.cubeIsInFinalPosition(cube)){
-                correctlyStackedCubes++;
-                ArrayList<Cube> cubesAbove = cubematrix.getCubesAbove(cube);
-                for(Cube cubeAbove : cubesAbove){
-                    if(!cubematrix.cubeIsInFinalPosition(cubeAbove)){
-                        break;
-                    }
-                    else{
-                        correctlyStackedCubes++;
-                    }
-                }
-            }
-        }
-        int blocksNeededToSortRows = 3*cubematrix.getNumOfCubesPerLine() - correctlyStackedCubes;
-
         int numOfCubesThatBlockCubesNotInFinalPosition = 0;
-        for(Cube cube : cubematrix.getNonZeroCubes()){
-            if(!cubematrix.cubeIsInFinalPosition(cube)){
-                numOfCubesThatBlockCubesNotInFinalPosition += cubeMatrix.getCubesAbove(cube).size();
-            }
-        }
-
-
-        int sumOfAllManhattanDistances = 0;
-        for(Cube cube : cubematrix.getNonZeroCubes()){
-            sumOfAllManhattanDistances += cubematrix.getManhattanDistanceFromFinalPosition(cube);
-        }
-
-        int numOfCubesNotInFinalPosition = 3*cubematrix.getNumOfCubesPerLine()  -  cubematrix.getNumOfCubesInFinalPosition();
-            
-
         int blocksNeededToSortNextLine = 0;
-        for(int lineIndex = 2 ; lineIndex > -1 ; lineIndex--){
-            CubeLine line = cubematrix.getCubeLine(lineIndex);
-            if(line.isInOrder()) continue;
-            else{
-                for(Cube cube : line.getCubes()){
-                    if(cubematrix.cubeIsInFinalPosition(cube)) blocksNeededToSortNextLine++; 
-                }
-                break;
+        int numOfCubesNotInFinalPosition = 3 * cubematrix.getNumOfCubesPerLine() - cubematrix.getNumOfCubesInFinalPosition();
+    
+        // Initialize the finalPositions and manhattanDistances maps
+        HashMap<Cube, Boolean> finalPositions = new HashMap<>();
+        HashMap<Cube, Integer> manhattanDistances = new HashMap<>();
+    
+        // Cache results of cubeIsInFinalPosition and getManhattanDistanceFromFinalPosition calls
+        for (Cube cube : cubematrix.getCubes()) {
+            finalPositions.put(cube, cubematrix.cubeIsInFinalPosition(cube));
+            manhattanDistances.put(cube, cubematrix.getManhattanDistanceFromFinalPosition(cube));
+        }
+    
+        // Count the number of correctly stacked cubes
+        for (Cube cube : cubematrix.getCubes()) {
+            if (finalPositions.get(cube)) {
+                correctlyStackedCubes++;
             }
         }
-
-        
-
-        
-
-        
-
-        double heuristicCost =  blocksNeededToSortRows + numOfCubesThatBlockCubesNotInFinalPosition + blocksNeededToSortNextLine  ;
-        return heuristicCost;
-
+    
+        // Count the number of cubes that block cubes not in the final position
+            // Count the number of cubes that block cubes not in the final position
+        for (Cube cube : cubematrix.getCubes()) {
+            if (!finalPositions.get(cube)) {
+                int column = cube.getXPos();
+                Cube highestCube = cubematrix.getHighestCubeInColumn(column);
+                    if (cube.getCubeNumber() < highestCube.getCubeNumber()) {
+                        numOfCubesThatBlockCubesNotInFinalPosition++;
+        }
     }
+}
+
+    
+        // Count the number of blocks needed to sort the next line
+        for (int lineIndex = 2; lineIndex >= 0; lineIndex--) {
+            CubeLine line = cubematrix.getCubeLine(lineIndex);
+            if (!line.isInOrder()) {
+                for (Cube cube : line.getCubes()) {
+                    if (finalPositions.get(cube)) {
+                     blocksNeededToSortNextLine++;
+                     }
+                 }
+        break;
+            }
+    }
+
+    
+        double heuristicCost = 3 * cubematrix.getNumOfCubesPerLine() - correctlyStackedCubes + numOfCubesThatBlockCubesNotInFinalPosition
+                + numOfCubesNotInFinalPosition + blocksNeededToSortNextLine;
+        return heuristicCost;
+    }
+    
 
 
     public Node UCS(Node root){

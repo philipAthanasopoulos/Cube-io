@@ -334,8 +334,35 @@ public class CubeMatrix {
         }
         return result;
     }
+    public int getHeight(Cube cube) {
+         int Height = cube.getYPos();
+         return Height;
+    }
+    public ArrayList<Cube> getCubesPerColumn(int column){
+        ArrayList<Cube> result = new ArrayList<>();
+        for(int i=0; i< getNumOfCubesPerLine(); i++){
+           result.add(getCube(column, i));
+        }
+        return result;
+    }
+
+
+    public Cube getHighestCubeInColumn(int column) {
+        Cube highestCube = null;
+        for (Cube cube : getCubesPerColumn(column)) {
+            if (highestCube == null || getHeight(cube) > getHeight(highestCube)) {
+                highestCube = cube;
+            }
+        }
+        return highestCube;
+    }
 
 
 
 
-}
+    }
+
+
+
+
+

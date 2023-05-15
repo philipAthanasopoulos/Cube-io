@@ -34,23 +34,22 @@ public class Table{
 
     public static void main(String[] args) {
         
-        Table table = new Table();
-        table.printStartScreen();
+         Table table = new Table();
+         table.printStartScreen();
 
         CubeManager cubeManager = new CubeManager();
         cubeManager.requestCubeMatrix();
         cubeManager.printCubeMatrix();
 
         Botaki20 botaki = new Botaki20();
+        botaki.setCubeMatrix(cubeManager.getCubeMatrix());
+        botaki.getCubeMatrix();
+        Node result = botaki.AStar(new Node( botaki.getCubeMatrix()));
+        Node root  = new Node(cubeManager.getCubeMatrix());
+        root.setParent(null);
 
-        CubeMatrix cubeMatrix = cubeManager.getCubeMatrix();
-
-        Node result = botaki.AStar(new Node(cubeMatrix));
-
-        result.printHistoryOfMoves();
-        result.getCubeMatrix().printCubeMatrix();
-        
-
+         result.printHistoryOfMoves();
+         result.getCubeMatrix().printCubeMatrix();
         
     }
 

@@ -47,6 +47,8 @@ public class Cube {
     }
 
 
+
+
     //print top of square depending on number length
 
 
