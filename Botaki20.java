@@ -44,10 +44,12 @@ public class Botaki20 {
         //create a new Node for each possible move
         for(Cube cubeToMoveTo : possibleMoves){
             Node newNode = new Node(parent);
-            newNode.setCost(calculateCostOfMove(cube , cubeToMoveTo));
+            double costOfMove = calculateCostOfMove(cube , cubeToMoveTo);
+            newNode.setCost(costOfMove);
 
             //create a new cubeMatrix for each possible move
             CubeMatrix newCubeMatrix = parentCubeMatrix.copy();
+            newCubeMatrix.setCostOfMove(costOfMove);
             
             //get the cube that is to be moved
             Cube cubeToMove = newCubeMatrix.getCube(cube.getCubeNumber());
@@ -139,13 +141,35 @@ public class Botaki20 {
             }
         }
 
-        
+
+        int score = 0;
+        ArrayList<Cube> cubesToWork = new ArrayList<Cube>();
+        for(Cube cube : cubematrix.getCubeLine(2).getCubes()){
+            if(cubematrix.cubeIsInFinalPosition(cube)){
+                cubesToWork.add(cube);
+                score++;
+            }
+        }
+
+        for(Cube cube : cubesToWork){
+            ArrayList<Cube> cubesAbove = cubematrix.getCubesAbove(cube);
+            for(Cube cubeAbove : cubesAbove){
+                if(!cubematrix.cubeIsInFinalPosition(cubeAbove)) continue;
+                else{
+                    score++;
+                }
+            }
+        }
 
         
 
         
 
-        double heuristicCost =  blocksNeededToSortRows + numOfCubesThatBlockCubesNotInFinalPosition + blocksNeededToSortNextLine  ;
+        
+
+        
+
+        double heuristicCost = blocksNeededToSortRows + numOfCubesThatBlockCubesNotInFinalPosition + 0.5*blocksNeededToSortNextLine ;
         return heuristicCost;
 
     }
