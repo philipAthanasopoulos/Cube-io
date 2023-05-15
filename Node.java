@@ -108,6 +108,7 @@ public class Node {
 
 
     public ArrayList<CubeMatrix> getHistoryOfMoves() {
+        if(this.historyOfMoves == null) return new ArrayList<CubeMatrix>(0);
         return this.historyOfMoves;
     }
 
@@ -126,6 +127,7 @@ public class Node {
     public void printHistoryOfMoves() {
 
         for (CubeMatrix cubeMatrix : this.historyOfMoves) {
+            System.out.println("Cost of move : " + cost);
             cubeMatrix.printCubeMatrix();
         }
     }

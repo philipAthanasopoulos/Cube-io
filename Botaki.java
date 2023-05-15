@@ -361,7 +361,44 @@ public class Botaki {
             }
             
         }
+        System.out.println(root.getTotalCost());
  
+    }
+
+    public Node AStar3(Node root){
+        //priority queue of type node
+        PriorityQueue<Node> queue = new PriorityQueue<Node>(new Comparator<Node>(){
+            @Override
+            public int compare(Node node1 , Node node2){
+                if(node1.getTotalCost() + node1.getHeuristicCost() > node2.getTotalCost() + node2.getHeuristicCost()) return 1;
+                else if(node1.getTotalCost() + node1.getHeuristicCost() < node2.getTotalCost() + node2.getHeuristicCost()) return -1;
+                else return 0;
+            }
+        });
+
+        queue.add(root);
+
+        Node result;
+
+        
+        while(true){
+            //check if cubes have been sorted
+            for(Node nodeInQueue : queue){
+                if( nodeInQueue.getCubeMatrix().isInOrder()){
+                    result = nodeInQueue;
+                    break;
+                }
+            }
+
+            //if not expand the nodes with the least sum of totalCost and Heuristic cost
+
+            // export the min value element from queue and expand it
+            expandNode(queue.poll());
+            
+
+
+        }
+
     }
 
 
@@ -397,7 +434,6 @@ public class Botaki {
         cubeManager.printCubeLinesWithInvisibleCubes();
         Node result  = new Node(cubeManager.getCubeMatrix());
         result.setParent(null);
-        // System.out.println(botaki.calculateHeuristicCost(result.getCubeMatrix().getCube(1) , result.getCubeMatrix()));
 
         botaki.AStar2(result);        
     }    
