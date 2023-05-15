@@ -61,6 +61,8 @@ public class Botaki20 {
 
             //finally add to children array list
             children.add(newNode);
+            //print for DEBUG
+            newNode.getCubeMatrix().printCubeMatrix();
             
         }
         //delete parent
@@ -97,8 +99,6 @@ public class Botaki20 {
             if(cubematrix.cubeIsInFinalPosition(cube)){
                 correctlyStackedCubes++;
                 ArrayList<Cube> cubesAbove = cubematrix.getCubesAbove(cube);
-                //reverse cubes above
-                Collections.reverse(cubesAbove);
                 for(Cube cubeAbove : cubesAbove){
                     if(!cubematrix.cubeIsInFinalPosition(cubeAbove)){
                         break;
@@ -113,7 +113,7 @@ public class Botaki20 {
         int numOfCubesThatBlockCubesNotInFinalPosition = 0;
         for(Cube cube : cubematrix.getNonZeroCubes()){
             if(!cubematrix.cubeIsInFinalPosition(cube)){
-                numOfCubesThatBlockCubesNotInFinalPosition += cubematrix.getCubesThatBlockFinalPosition(cube).size();
+                numOfCubesThatBlockCubesNotInFinalPosition += cubeMatrix.getCubesAbove(cube).size();
             }
         }
 
@@ -126,8 +126,25 @@ public class Botaki20 {
         int numOfCubesNotInFinalPosition = 3*cubematrix.getNumOfCubesPerLine()  -  cubematrix.getNumOfCubesInFinalPosition();
             
 
+        int blocksNeededToSortNextLine = 0;
+        for(int lineIndex = 2 ; lineIndex > -1 ; lineIndex--){
+            CubeLine line = cubematrix.getCubeLine(lineIndex);
+            if(line.isInOrder()) continue;
+            else{
+                for(Cube cube : line.getCubes()){
+                    if(cubematrix.cubeIsInFinalPosition(cube)) blocksNeededToSortNextLine++; 
+                }
+                break;
+            }
+        }
 
-        double heuristicCost =  3*cubematrix.getNumOfCubesPerLine() - correctlyStackedCubes ;
+        
+
+        
+
+        
+
+        double heuristicCost =  (3*cubematrix.getNumOfCubesPerLine() - correctlyStackedCubes) + numOfCubesThatBlockCubesNotInFinalPosition + blocksNeededToSortNextLine  ;
         return heuristicCost;
 
     }

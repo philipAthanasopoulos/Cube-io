@@ -125,6 +125,10 @@ public class Node {
     }
 
     public void printHistoryOfMoves() {
+        if(this.historyOfMoves == null) {
+            System.out.println("Cubes are sorted");
+            return;
+        }
 
         for (CubeMatrix cubeMatrix : this.historyOfMoves) {
             System.out.println("Cost of move : " + cost);
