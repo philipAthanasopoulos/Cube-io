@@ -25,7 +25,7 @@ public class Node {
         this.children = new ArrayList<Node>();
         this.parent = null;
         this.cost = 0;
-        this.cubeMatrix = cubeMatrix;
+        this.cubeMatrix = cubeMatrix.copy();
         this.totalCost = 0;
 
     }

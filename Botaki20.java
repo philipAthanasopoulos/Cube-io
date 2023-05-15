@@ -62,7 +62,7 @@ public class Botaki20 {
             //finally add to children array list
             children.add(newNode);
             //print for DEBUG
-            newNode.getCubeMatrix().printCubeMatrix();
+            // newNode.getCubeMatrix().printCubeMatrix();
             
         }
         //delete parent
@@ -109,6 +109,7 @@ public class Botaki20 {
                 }
             }
         }
+        int blocksNeededToSortRows = 3*cubematrix.getNumOfCubesPerLine() - correctlyStackedCubes;
 
         int numOfCubesThatBlockCubesNotInFinalPosition = 0;
         for(Cube cube : cubematrix.getNonZeroCubes()){
@@ -144,7 +145,7 @@ public class Botaki20 {
 
         
 
-        double heuristicCost =  (3*cubematrix.getNumOfCubesPerLine() - correctlyStackedCubes) + numOfCubesThatBlockCubesNotInFinalPosition + blocksNeededToSortNextLine  ;
+        double heuristicCost =  blocksNeededToSortRows + numOfCubesThatBlockCubesNotInFinalPosition + blocksNeededToSortNextLine  ;
         return heuristicCost;
 
     }
@@ -174,6 +175,15 @@ public class Botaki20 {
 
 
     public Node AStar(Node root){
+        //ask user to press ENTER
+        System.out.println("Press enter to sort the cube matrix");
+        try{
+            System.in.read();
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+
         //priority queue of type node
         PriorityQueue<Node> queue = new PriorityQueue<>(Comparator.comparingDouble(node -> node.getTotalCost() + node.getHeuristicCost()));
 
