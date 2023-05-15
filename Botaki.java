@@ -333,22 +333,20 @@ public class Botaki {
 
     public void AStar2(Node root){
         //priority queue of type node
-        PriorityQueue<Node> queue = new PriorityQueue<Node>(new Comparator<Node>(){
-            @Override
-            public int compare(Node node1 , Node node2){
-                if(node1.getTotalCost() + node1.getHeuristicCost() > node2.getTotalCost() + node2.getHeuristicCost()) return 1;
-                else if(node1.getTotalCost() + node1.getHeuristicCost() < node2.getTotalCost() + node2.getHeuristicCost()) return -1;
-                else return 0;
-            }
-        });
+        PriorityQueue<Node> queue = new PriorityQueue<>(Comparator.comparingDouble(node -> node.getTotalCost() + node.getHeuristicCost()));
+        queue.add(root);
 
-        expandTreeWithBFS(root);
 
-        while(true){
-
+       
+        while (true) {
             if(root.getCubeMatrix().isInOrder()) break;
-
-            //find min cost of children
+            Node currentNode = queue.poll();
+    
+            if (currentNode.getCubeMatrix().isInOrder()) {
+                System.out.println("All cubes are in order");
+                currentNode.printHistoryOfMoves();
+                return;
+            }
             double minCost = Double.MAX_VALUE;
             for(Node child : root.getDeepestChildren()){
                 if(child.getTotalCost() + child.getHeuristicCost() < minCost){
@@ -356,33 +354,12 @@ public class Botaki {
                 }
             }
     
-            //add all nodes with min cost to queue
-            for(Node child : root.getDeepestChildren()){
-                if(child.getTotalCost() + child.getHeuristicCost() == minCost){
-                    queue.add(child);
-                }
-            }
-
-            root.removeAllChildrenThatAreNotTheDeepest();
-
-            //expand nodes with min cost add remove from queue
-            
-            Node currentNode = queue.poll();
-            //print matrix of current node
-            currentNode.getCubeMatrix().printCubeMatrix();
             expandTreeWithBFS(currentNode);
-            for(Node child : currentNode.getDeepestChildren()){
+    
+            for (Node child : currentNode.getDeepestChildren()) {
                 queue.add(child);
             }
-
-            for(Node newMove : queue){
-                if(newMove.getCubeMatrix().isInOrder()){
-                    System.out.println("All cubes are in order");
-                    newMove.printHistoryOfMoves();
-                    return;
-                }
-            }
-
+            
         }
  
     }
