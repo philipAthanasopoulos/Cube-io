@@ -334,7 +334,7 @@ public class Botaki20 {
         Node root  = new Node(cubeManager.getCubeMatrix());
         root.setParent(null);
 
-        botaki.AStar(root);
+        botaki.UCS(root);
     }    
 }
 
