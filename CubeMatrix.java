@@ -6,16 +6,22 @@ public class CubeMatrix {
 
     private ArrayList<CubeLine> cubeLines;
     private int numOfCubesPerLine;
+    private double costOfMove;
 
 
     public CubeMatrix(int numOfCubesPerLine) {
         this.cubeLines = new ArrayList<CubeLine>();
         this.numOfCubesPerLine = numOfCubesPerLine;
-        int start = 1;
+        ArrayList<Integer> availableNumbers = new ArrayList<Integer>();
+        //add numbers from 1 to 3*k and shuffle them
+        for(int i = 1 ; i <= 3*numOfCubesPerLine ; i++){
+            availableNumbers.add(i);
+        }
+        Collections.shuffle(availableNumbers);
         //create 3 CubeLines from 1 to 3*numOfCubesPerLine
-        CubeLine cubeLine1 = new CubeLine(start , numOfCubesPerLine , numOfCubesPerLine);
-        CubeLine cubeLine2 = new CubeLine(start + numOfCubesPerLine , numOfCubesPerLine , numOfCubesPerLine);
-        CubeLine cubeLine3 = new CubeLine(start + 2*numOfCubesPerLine , numOfCubesPerLine , numOfCubesPerLine);
+        CubeLine cubeLine1 = new CubeLine(availableNumbers , numOfCubesPerLine , numOfCubesPerLine);
+        CubeLine cubeLine2 = new CubeLine(availableNumbers , numOfCubesPerLine , numOfCubesPerLine);
+        CubeLine cubeLine3 = new CubeLine(availableNumbers , numOfCubesPerLine , numOfCubesPerLine);
 
         //add the 3 CubeLines to the CubeMatrix
         cubeLines.add(cubeLine1);
@@ -27,6 +33,7 @@ public class CubeMatrix {
         for(int i = 0 ; i < 3*numOfCubesPerLine ; i++){
             cubeLines.get(2).getCubes().add(new Cube(0));
         }
+
 
         setPositionsForAllCubes();
     }
@@ -176,6 +183,11 @@ public class CubeMatrix {
         return true;
     }
 
+    public boolean isInOrder(CubeLine line){
+        if(line.isInOrder() && cubeIsInFinalPosition(line.getCubes().get(0))) return true;
+        return false;
+    }
+
     public CubeLine getCubeLine(int yNext) {
         return cubeLines.get(yNext);   
     }
@@ -191,6 +203,16 @@ public class CubeMatrix {
         this.numOfCubesPerLine = numOfCubesPerLine;
     }
 
+
+    public double getCostOfMove() {
+        return this.costOfMove;
+    }
+
+    public void setCostOfMove(double costOfMove) {
+        this.costOfMove = costOfMove;
+    }
+
+
     
 
     public void printCubeMatrix() {
@@ -198,7 +220,12 @@ public class CubeMatrix {
         for(CubeLine cubeLine : cubeLines){
             cubeLine.printCubeLine();
         }
-        System.out.println("================================================");
+        
+        //print ground
+        for(int i = 0 ; i < 3*numOfCubesPerLine ; i++){
+            System.out.print("=====");
+        }
+        System.out.println("");
 
     }
 
@@ -206,6 +233,7 @@ public class CubeMatrix {
 
     public CubeMatrix copy() {
         CubeMatrix copy = new CubeMatrix();
+        copy.setCostOfMove(this.costOfMove);
         copy.setNumOfCubesPerLine(this.numOfCubesPerLine);
         for(CubeLine cubeLine : cubeLines){
             copy.getCubeLines().add(cubeLine.copy());
@@ -334,8 +362,35 @@ public class CubeMatrix {
         }
         return result;
     }
+    public int getHeight(Cube cube) {
+         int Height = cube.getYPos();
+         return Height;
+    }
+    public ArrayList<Cube> getCubesPerColumn(int column){
+        ArrayList<Cube> result = new ArrayList<>();
+        for(int i=0; i < getNumOfCubesPerLine(); i++){
+           result.add(getCube(column, i));
+        }
+        return result;
+    }
+
+
+    public Cube getHighestCubeInColumn(int column) {
+        Cube highestCube = null;
+        for (Cube cube : getCubesPerColumn(column)) {
+            if (highestCube == null || getHeight(cube) > getHeight(highestCube)) {
+                highestCube = cube;
+            }
+        }
+        return highestCube;
+    }
 
 
 
 
-}
+    }
+
+
+
+
+

@@ -34,17 +34,20 @@ public class Table{
 
     public static void main(String[] args) {
         
-        Table table = new Table();
-        table.printStartScreen();
+         Table table = new Table();
+         table.printStartScreen();
 
         CubeManager cubeManager = new CubeManager();
         cubeManager.requestCubeMatrix();
         cubeManager.printCubeMatrix();
 
-        Botaki botaki = new Botaki();
+        Botaki20 botaki = new Botaki20();
         botaki.setCubeMatrix(cubeManager.getCubeMatrix());
-        botaki.sortCubesWithUCS(new Node(cubeManager.getCubeMatrix()));
-
+        Node root = new Node(cubeManager.getCubeMatrix());
+        botaki.AStar(root);
+        // root = new Node(cubeManager.getCubeMatrix());
+        // botaki.AStar(root);
+        
         
     }
 

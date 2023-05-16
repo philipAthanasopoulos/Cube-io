@@ -27,6 +27,28 @@ public class CubeLine {
         }
     }
 
+    public CubeLine(ArrayList<Integer> availableNumbers , int numOfCubesPerLine , int size) {
+
+
+        this.cubes = new ArrayList<Cube>();
+        
+        for(int i = 0 ; i < numOfCubesPerLine ; i++){
+            //pick the last number from the available numbers
+            int number = availableNumbers.get(availableNumbers.size() - 1);
+            this.cubes.add(new Cube(number));
+            //remove number from available numbers
+            availableNumbers.remove(availableNumbers.size() - 1);
+        }
+
+        //shuffle the Cubes
+        Collections.shuffle(this.cubes);
+
+        //initialize the rest as invisible cubes
+        for(int i = numOfCubesPerLine ; i < size ; i++){
+            this.cubes.add(new Cube(0));
+        }
+    }
+
 
     public CubeLine() {
     }
@@ -48,6 +70,8 @@ public class CubeLine {
 
         final String ANSI_YELLOW = "\u001B[33m";
         final String ANSI_RESET = "\u001B[0m";
+        final String ANSI_BRIGHT_GREEN = "\u001B[92m";
+        final String ANSI_BOLD = "\u001B[3m";
 
         
 
@@ -58,7 +82,10 @@ public class CubeLine {
         System.out.println();
         //print middle parts
         for(Cube cube : cubes){
-             System.out.print("│ " + ANSI_YELLOW +  cube.getCubeNumber() + ANSI_RESET + " │");
+            int lengthOfNumber = String.valueOf(cube.getCubeNumber()).length();
+             
+            if(lengthOfNumber == 1)System.out.print("│ " + ANSI_BRIGHT_GREEN + ANSI_BOLD + cube.getCubeNumber() + ANSI_RESET + " │");
+            else  if(lengthOfNumber == 2)System.out.print("│ " + ANSI_BRIGHT_GREEN + ANSI_BOLD + cube.getCubeNumber() + ANSI_RESET + "│");
         }
         System.out.println();
 
@@ -77,8 +104,9 @@ public class CubeLine {
         //ansi yellow color
         final String ANSI_YELLOW = "\u001B[33m";
         final String ANSI_RESET = "\u001B[0m";
-        // ansi bold code
+        final String ANSI_BRIGHT_GREEN = "\u001B[92m";
         final String ANSI_BOLD = "\u001B[3m";
+        
         
     
 
@@ -91,9 +119,12 @@ public class CubeLine {
 
         //print middle parts
         for(Cube cube : cubes){
+            int lengthOfNumber = String.valueOf(cube.getCubeNumber()).length();
+            
              if(cube.getCubeNumber() == 0) System.out.print("     ");
 
-             else System.out.print("│ " + ANSI_YELLOW + ANSI_BOLD + cube.getCubeNumber() + ANSI_RESET + " │");
+             else if(lengthOfNumber == 1)System.out.print("│ " + ANSI_BRIGHT_GREEN + ANSI_BOLD + cube.getCubeNumber() + ANSI_RESET + " │");
+             else  if(lengthOfNumber == 2)System.out.print("│ " + ANSI_BRIGHT_GREEN + ANSI_BOLD + cube.getCubeNumber() + ANSI_RESET + "│");
         }
         System.out.println();
 
@@ -109,6 +140,43 @@ public class CubeLine {
 
     }
 
+    public void print3DCubeLine(){
+        //ansi yellow color
+        final String ANSI_YELLOW = "\u001B[33m";
+        final String ANSI_RESET = "\u001B[0m";
+        final String ANSI_BRIGHT_GREEN = "\u001B[92m";
+        final String ANSI_BOLD = "\u001B[3m";
+        
+        
+        for (Cube cube : cubes) {
+            if(cube.getCubeNumber() == 0) System.out.print("     ");
+            else System.out.print(" .─── ");
+        }
+
+        //print top line
+        for (Cube cube : cubes) {
+            if(cube.getCubeNumber() == 0) System.out.print("     ");
+            else System.out.print("┌───┐ ┐");
+        }
+        System.out.println();
+
+        //print middle parts
+        for(Cube cube : cubes){
+             if(cube.getCubeNumber() == 0) System.out.print("     ");
+
+             else System.out.print("│ " + ANSI_BRIGHT_GREEN + ANSI_BOLD + cube.getCubeNumber() + ANSI_RESET + " │|");
+        }
+
+        System.out.println();
+        //print bottom line
+        for (Cube cube : cubes) {
+            if(cube.getCubeNumber() == 0) System.out.print("     ");
+
+             else System.out.print("└───┘ ");
+        }
+        System.out.println();
+    }
+
     public void moveCube(int i, int j) {
         Cube temp = this.cubes.get(i);
         this.cubes.set(i, this.cubes.get(j));
@@ -120,7 +188,7 @@ public class CubeLine {
     }
     public static void main(String[] args) {
         CubeLine cubeLine = new CubeLine(1,3 ,5);
-        cubeLine.printCubeLine();
+        cubeLine.print3DCubeLine();
         //print cubeline size
         System.out.println(cubeLine.getCubes().size());
 
