@@ -67,7 +67,7 @@ public class Botaki20 {
 
             //create a new cubeMatrix for each possible move
             CubeMatrix newCubeMatrix = parentCubeMatrix.copy();
-            newCubeMatrix.setCostOfMove(costOfMove);
+            parentCubeMatrix.setCostOfMove(costOfMove);
             
             //get the cube that is to be moved
             Cube cubeToMove = newCubeMatrix.getCube(cube.getCubeNumber());

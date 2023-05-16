@@ -6,7 +6,7 @@ public class CubeMatrix {
 
     private ArrayList<CubeLine> cubeLines;
     private int numOfCubesPerLine;
-    private double costOfMove = 0;
+    private double costOfMove = 0.0;
 
 
     public CubeMatrix(int numOfCubesPerLine) {
