@@ -6,7 +6,7 @@ public class CubeMatrix {
 
     private ArrayList<CubeLine> cubeLines;
     private int numOfCubesPerLine;
-    private double costOfMove = 0.0;
+    private double costOfMove;
 
 
     public CubeMatrix(int numOfCubesPerLine) {
@@ -233,6 +233,7 @@ public class CubeMatrix {
 
     public CubeMatrix copy() {
         CubeMatrix copy = new CubeMatrix();
+        copy.setCostOfMove(this.costOfMove);
         copy.setNumOfCubesPerLine(this.numOfCubesPerLine);
         for(CubeLine cubeLine : cubeLines){
             copy.getCubeLines().add(cubeLine.copy());
