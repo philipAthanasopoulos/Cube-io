@@ -41,10 +41,14 @@ public class Table{
         cubeManager.requestCubeMatrix();
         cubeManager.printCubeMatrix();
 
-        Botaki20 botaki = new Botaki20();
-        botaki.setCubeMatrix(cubeManager.getCubeMatrix());
+        Botaki20 botakiForAStar = new Botaki20();
+        //Botaki20 botakiForUCS = new Botaki20();
+        botakiForAStar.setCubeMatrix(cubeManager.getCubeMatrix());
+        //botakiForUCS.setCubeMatrix(cubeManager.getCubeMatrix());
         Node root = new Node(cubeManager.getCubeMatrix());
-        botaki.AStar(root);
+        botakiForAStar.AStar(root);
+        //System.out.println("----------------------");
+        //botakiForUCS.UCS(root);
         // root = new Node(cubeManager.getCubeMatrix());
         // botaki.AStar(root);
         
