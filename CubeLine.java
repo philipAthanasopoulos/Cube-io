@@ -27,6 +27,28 @@ public class CubeLine {
         }
     }
 
+    public CubeLine(ArrayList<Integer> availableNumbers , int numOfCubesPerLine , int size) {
+
+
+        this.cubes = new ArrayList<Cube>();
+        
+        for(int i = 0 ; i < numOfCubesPerLine ; i++){
+            //pick the last number from the available numbers
+            int number = availableNumbers.get(availableNumbers.size() - 1);
+            this.cubes.add(new Cube(number));
+            //remove number from available numbers
+            availableNumbers.remove(availableNumbers.size() - 1);
+        }
+
+        //shuffle the Cubes
+        Collections.shuffle(this.cubes);
+
+        //initialize the rest as invisible cubes
+        for(int i = numOfCubesPerLine ; i < size ; i++){
+            this.cubes.add(new Cube(0));
+        }
+    }
+
 
     public CubeLine() {
     }
@@ -48,6 +70,7 @@ public class CubeLine {
 
         final String ANSI_YELLOW = "\u001B[33m";
         final String ANSI_RESET = "\u001B[0m";
+        final String ANSI_BRIGHT_GREEN = "\u001B[92m";
 
         
 
@@ -58,7 +81,7 @@ public class CubeLine {
         System.out.println();
         //print middle parts
         for(Cube cube : cubes){
-             System.out.print("│ " + ANSI_YELLOW +  cube.getCubeNumber() + ANSI_RESET + " │");
+             System.out.print("│ " + ANSI_BRIGHT_GREEN +  cube.getCubeNumber() + ANSI_RESET + " │");
         }
         System.out.println();
 
@@ -77,8 +100,9 @@ public class CubeLine {
         //ansi yellow color
         final String ANSI_YELLOW = "\u001B[33m";
         final String ANSI_RESET = "\u001B[0m";
-        // ansi bold code
+        final String ANSI_BRIGHT_GREEN = "\u001B[92m";
         final String ANSI_BOLD = "\u001B[3m";
+        
         
     
 
@@ -93,7 +117,7 @@ public class CubeLine {
         for(Cube cube : cubes){
              if(cube.getCubeNumber() == 0) System.out.print("     ");
 
-             else System.out.print("│ " + ANSI_YELLOW + ANSI_BOLD + cube.getCubeNumber() + ANSI_RESET + " │");
+             else System.out.print("│ " + ANSI_BRIGHT_GREEN + ANSI_BOLD + cube.getCubeNumber() + ANSI_RESET + " │");
         }
         System.out.println();
 

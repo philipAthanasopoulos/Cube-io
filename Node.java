@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Scanner;
 
 public class Node {
     
@@ -130,10 +131,20 @@ public class Node {
             return;
         }
 
+        Scanner scanner = new Scanner(System.in);
         for (CubeMatrix cubeMatrix : this.historyOfMoves) {
-            System.out.println("Cost of move : " + cubeMatrix.getCostOfMove());
-            cubeMatrix.printCubeMatrix();
+            //ask user to press enter to check the next move
+            System.out.println("Press" + ANSI_GREEN + " ENTER" + ANSI_RESET +  " to check the next move:");
+            try {
+                scanner.nextLine();
+                cubeMatrix.printCubeMatrix();
+                System.out.println("Cost of move : " + cubeMatrix.getCostOfMove());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            
         }
+        scanner.close();
     }
 
 
@@ -206,19 +217,33 @@ public class Node {
     }
 
     public void printPathToChildNode(Node child){
-        ArrayList<Node> path = findPathToChildNode(child);
-        Collections.reverse(path);
-        // System.out.println("Path to child node: ");
-        for(Node move : path){
+        // ArrayList<Node> path = findPathToChildNode(child);
+        // Collections.reverse(path);
+        // // System.out.println("Path to child node: ");
+        // for(Node move : path){
+        //     System.out.println("Press" + ANSI_GREEN + " ENTER" + ANSI_RESET +  " to check the next move:");
+        //     try{
+        //         System.in.read();
+        //         System.out.println("Cost of move : " + move.getCost());
+        //         move.getCubeMatrix().printCubeMatrix();
+        //     }  
+        //     catch(Exception e){
+        //         System.out.println(e);
+        //     }
+        // }
+
+        for(CubeMatrix move : getHistoryOfMoves()){
+            //ask user to type y to check next move
             System.out.println("Press" + ANSI_GREEN + " ENTER" + ANSI_RESET +  " to check the next move:");
             try{
                 System.in.read();
-                System.out.println("Cost of move : " + move.getCost());
-                move.getCubeMatrix().printCubeMatrix();
             }  
             catch(Exception e){
                 System.out.println(e);
             }
+            
+            System.out.println("Cost of move :" + move.getCostOfMove());
+            move.printCubeMatrix();
         }
     }
 

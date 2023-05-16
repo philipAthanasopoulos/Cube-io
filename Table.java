@@ -43,13 +43,8 @@ public class Table{
 
         Botaki20 botaki = new Botaki20();
         botaki.setCubeMatrix(cubeManager.getCubeMatrix());
-        botaki.getCubeMatrix();
-        Node result = botaki.AStar(new Node( botaki.getCubeMatrix()));
-        Node root  = new Node(cubeManager.getCubeMatrix());
-        root.setParent(null);
-
-         result.printHistoryOfMoves();
-         result.getCubeMatrix().printCubeMatrix();
+        botaki.AStar(new Node(botaki.getCubeMatrix()));
+        
         
     }
 
