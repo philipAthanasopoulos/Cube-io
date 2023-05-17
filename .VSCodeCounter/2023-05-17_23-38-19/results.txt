@@ -1,0 +1,40 @@
+Date : 2023-05-17 23:38:19
+Directory : c:\Users\Philip\Desktop\UOI\AI\ask1
+Total : 15 files,  1746 codes, 65 comments, 342 blanks, all 2153 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| Java     |         14 |      1,459 |         65 |        342 |      1,866 |
+| XML      |          1 |        287 |          0 |          0 |        287 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++-------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                  | files      | code       | comment    | blank      | total      |
++-------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                     |         15 |      1,746 |         65 |        342 |      2,153 |
++-------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                              | language | code       | comment    | blank      | total      |
++-------------------------------------------------------+----------+------------+------------+------------+------------+
+| c:\Users\Philip\Desktop\UOI\AI\ask1\Botaki.class      | Java     |        129 |          0 |          0 |        129 |
+| c:\Users\Philip\Desktop\UOI\AI\ask1\Botaki20.java     | Java     |        170 |         21 |         72 |        263 |
+| c:\Users\Philip\Desktop\UOI\AI\ask1\Cube.class        | Java     |         20 |          0 |          0 |         20 |
+| c:\Users\Philip\Desktop\UOI\AI\ask1\Cube.java         | Java     |         37 |          0 |         14 |         51 |
+| c:\Users\Philip\Desktop\UOI\AI\ask1\CubeLine.class    | Java     |         73 |          0 |          0 |         73 |
+| c:\Users\Philip\Desktop\UOI\AI\ask1\CubeLine.java     | Java     |        130 |         18 |         61 |        209 |
+| c:\Users\Philip\Desktop\UOI\AI\ask1\CubeManager.class | Java     |         74 |          0 |          0 |         74 |
+| c:\Users\Philip\Desktop\UOI\AI\ask1\CubeManager.java  | Java     |        114 |         12 |         35 |        161 |
+| c:\Users\Philip\Desktop\UOI\AI\ask1\CubeMatrix.class  | Java     |        118 |          0 |          0 |        118 |
+| c:\Users\Philip\Desktop\UOI\AI\ask1\CubeMatrix.java   | Java     |        294 |          9 |         95 |        398 |
+| c:\Users\Philip\Desktop\UOI\AI\ask1\Node.class        | Java     |         75 |          0 |          0 |         75 |
+| c:\Users\Philip\Desktop\UOI\AI\ask1\Node.java         | Java     |        159 |          3 |         47 |        209 |
+| c:\Users\Philip\Desktop\UOI\AI\ask1\Table.class       | Java     |         29 |          0 |          0 |         29 |
+| c:\Users\Philip\Desktop\UOI\AI\ask1\Table.java        | Java     |         37 |          2 |         18 |         57 |
+| c:\Users\Philip\Desktop\UOI\AI\ask1\ask1.drawio.svg   | XML      |        287 |          0 |          0 |        287 |
+| Total                                                 |          |      1,746 |         65 |        342 |      2,153 |
++-------------------------------------------------------+----------+------------+------------+------------+------------+

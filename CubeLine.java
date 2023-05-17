@@ -64,11 +64,8 @@ public class CubeLine {
     }
 
    
-
-
     public void printCubeLineWithInvisibleCubes() {
 
-        final String ANSI_YELLOW = "\u001B[33m";
         final String ANSI_RESET = "\u001B[0m";
         final String ANSI_BRIGHT_GREEN = "\u001B[92m";
         final String ANSI_BOLD = "\u001B[3m";
@@ -102,7 +99,6 @@ public class CubeLine {
 
     public void printCubeLine(){
         //ansi yellow color
-        final String ANSI_YELLOW = "\u001B[33m";
         final String ANSI_RESET = "\u001B[0m";
         final String ANSI_BRIGHT_GREEN = "\u001B[92m";
         final String ANSI_BOLD = "\u001B[3m";
@@ -120,6 +116,7 @@ public class CubeLine {
         //print middle parts
         for(Cube cube : cubes){
             int lengthOfNumber = String.valueOf(cube.getCubeNumber()).length();
+            
             
              if(cube.getCubeNumber() == 0) System.out.print("     ");
 
@@ -142,7 +139,6 @@ public class CubeLine {
 
     public void print3DCubeLine(){
         //ansi yellow color
-        final String ANSI_YELLOW = "\u001B[33m";
         final String ANSI_RESET = "\u001B[0m";
         final String ANSI_BRIGHT_GREEN = "\u001B[92m";
         final String ANSI_BOLD = "\u001B[3m";
@@ -193,8 +189,6 @@ public class CubeLine {
         System.out.println(cubeLine.getCubes().size());
 
     }
-
-
 
     public CubeLine copy() {
         CubeLine copy = new CubeLine();
