@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Collections;
+
 public class Table{
     //asnsi reset color code
     static  final String ANSI_RESET = "\u001B[0m";
@@ -42,17 +45,13 @@ public class Table{
         cubeManager.printCubeMatrix();
 
         Botaki20 botakiForAStar = new Botaki20();
-        //Botaki20 botakiForUCS = new Botaki20();
         botakiForAStar.setCubeMatrix(cubeManager.getCubeMatrix());
-        //botakiForUCS.setCubeMatrix(cubeManager.getCubeMatrix());
         Node root = new Node(cubeManager.getCubeMatrix());
+        System.out.println("A* : ");
         botakiForAStar.AStar(root);
-        //System.out.println("----------------------");
-        //botakiForUCS.UCS(root);
-        // root = new Node(cubeManager.getCubeMatrix());
-        // botaki.AStar(root);
-        
-        
+        System.out.println("UCS : ");
+        botakiForAStar.UCS(root);
+  
     }
 
 }

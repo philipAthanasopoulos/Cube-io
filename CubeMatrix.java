@@ -193,6 +193,7 @@ public class CubeMatrix {
     }
     public void setCubeLines(ArrayList<CubeLine> cubeLines) {
         this.cubeLines = cubeLines;
+        setPositionsForAllCubes();
     }
 
     public int getNumOfCubesPerLine() {

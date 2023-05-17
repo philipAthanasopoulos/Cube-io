@@ -205,6 +205,10 @@ public class CubeLine {
         return copy;
     }
 
+    public void setCubes(ArrayList<Cube> cubes) {
+        this.cubes = cubes;
+    }
+
 
  
 }

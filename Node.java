@@ -9,7 +9,6 @@ public class Node {
     private double cost;
     private double totalCost;
     private CubeMatrix cubeMatrix;
-    private ArrayList<CubeMatrix> historyOfMoves;
     private double heuristicCost;
 
     private static final String ANSI_GREEN = "\u001B[32m";
@@ -34,15 +33,6 @@ public class Node {
     public Node(Node parent) {
         this.children = new ArrayList<Node>();
         this.parent = parent;
-        this.historyOfMoves = new ArrayList<CubeMatrix>();
-        ArrayList<CubeMatrix> movesToCopy = new ArrayList<CubeMatrix>();
-        if(parent.getHistoryOfMoves() != null){
-            for(CubeMatrix move : parent.getHistoryOfMoves()){
-                movesToCopy.add(move.copy());
-            }
-        }
-        movesToCopy.add(parent.getCubeMatrix().copy());
-        this.historyOfMoves.addAll(movesToCopy);
         this.cost = 0;
         this.totalCost = 0;
 
@@ -107,58 +97,7 @@ public class Node {
         this.cubeMatrix.setPositionsForAllCubes();
     }
 
-
-    public ArrayList<CubeMatrix> getHistoryOfMoves() {
-        if(this.historyOfMoves == null) return new ArrayList<CubeMatrix>(0);
-        return this.historyOfMoves;
-    }
-
-    public void setHistoryOfMoves(ArrayList<CubeMatrix> historyOfMoves) {
-        this.historyOfMoves = historyOfMoves;
-    }
-
-    public void addMoveToHistory(CubeMatrix cubeMatrix) {
-        this.historyOfMoves.add(cubeMatrix);
-    }
-
-    public void removeMoveFromHistory(CubeMatrix cubeMatrix) {
-        this.historyOfMoves.remove(cubeMatrix);
-    }
-
-    public void printHistoryOfMoves() {
-        if(this.historyOfMoves == null) {
-            System.out.println("Cubes are sorted");
-            return;
-        }
-
-        Scanner scanner = new Scanner(System.in);
-        for (CubeMatrix cubeMatrix : this.historyOfMoves) {
-            //ask user to press enter to check the next move
-            System.out.println("Press" + ANSI_GREEN + " ENTER" + ANSI_RESET +  " to check the next move:");
-            try {
-                scanner.nextLine();
-                cubeMatrix.printCubeMatrix();
-                System.out.println("Cost of move : " + cubeMatrix.getCostOfMove());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            
-        }
-        scanner.close();
-    }
-
-
-    public void cleanTree() {
-        //set all children to null except the deepest ones
-        ArrayList<Node> deepestChildren = this.getDeepestChildren();
-        for (Node child : this.children) {
-            if (!deepestChildren.contains(child)) {
-                child = null;
-            }
-            
-        }
-
-    }
+   
 
 
 
@@ -181,6 +120,30 @@ public class Node {
             }
         }
         return deepestChildren;
+    }
+
+    public void printPathFromRoot(){
+        ArrayList<Node> path = new ArrayList<Node>();
+        //backtrack from child to parent
+        Node node = this;
+        while(node.getParent() != null){
+            path.add(node);
+            node = node.getParent();
+        }
+        Collections.reverse(path);
+        // System.out.println("Path to child node: ");
+        for(Node move : path){
+            System.out.println("Press" + ANSI_GREEN + " ENTER" + ANSI_RESET +  " to check the next move:");
+            try{
+                Scanner scanner = new Scanner(System.in);
+                scanner.nextLine();
+                System.out.println("Cost of move : " + move.getCost());
+                move.getCubeMatrix().printCubeMatrix();
+            }  
+            catch(Exception e){
+                System.out.println(e);
+            }
+        }
     }
 
     
@@ -216,36 +179,9 @@ public class Node {
         return path;
     }
 
-    public void printPathToChildNode(Node child){
-        // ArrayList<Node> path = findPathToChildNode(child);
-        // Collections.reverse(path);
-        // // System.out.println("Path to child node: ");
-        // for(Node move : path){
-        //     System.out.println("Press" + ANSI_GREEN + " ENTER" + ANSI_RESET +  " to check the next move:");
-        //     try{
-        //         System.in.read();
-        //         System.out.println("Cost of move : " + move.getCost());
-        //         move.getCubeMatrix().printCubeMatrix();
-        //     }  
-        //     catch(Exception e){
-        //         System.out.println(e);
-        //     }
-        // }
+    
 
-        for(CubeMatrix move : getHistoryOfMoves()){
-            //ask user to type y to check next move
-            System.out.println("Press" + ANSI_GREEN + " ENTER" + ANSI_RESET +  " to check the next move:");
-            try{
-                System.in.read();
-            }  
-            catch(Exception e){
-                System.out.println(e);
-            }
-            
-            System.out.println("Cost of move :" + move.getCostOfMove());
-            move.printCubeMatrix();
-        }
-    }
+        
 
     public void setParentToNull(){
         this.parent = null;

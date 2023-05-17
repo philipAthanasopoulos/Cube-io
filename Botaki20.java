@@ -86,8 +86,7 @@ public class Botaki20 {
             // newNode.getCubeMatrix().printCubeMatrix();
             
         }
-        //delete parent
-        parent = null;
+        
 
         return children;
     }
@@ -136,81 +135,13 @@ public class Botaki20 {
         }
 
 
-        // int sumOfAllManhattanDistances = 0;
-        // for(Cube cube : cubematrix.getNonZeroCubes()){
-        //     sumOfAllManhattanDistances += cubematrix.getManhattanDistanceFromFinalPosition(cube);
-        // }
-
-        int numOfCubesNotInFinalPosition = 3*cubematrix.getNumOfCubesPerLine()  -  cubematrix.getNumOfCubesInFinalPosition();
-            
-
-        int blocksNeededToSortNextLine = 0;
-        for(int lineIndex = 2 ; lineIndex > -1 ; lineIndex--){
-            CubeLine line = cubematrix.getCubeLine(lineIndex);
-            if(line.isInOrder()) continue;
-            else{
-                for(Cube cube : line.getCubes()){
-                    if(cubematrix.cubeIsInFinalPosition(cube)) blocksNeededToSortNextLine++; 
-                }
-                break;
-            }
-        }
-
-        // double verticalManhattanDistances = 0;
-        // double horizontalManhattanDistances = 0;
-
-        // for(Cube cube : cubematrix.getNonZeroCubes()){
-        //     verticalManhattanDistances += Math.abs(cube.getYPos() - cubematrix.getFinalPositionOfCube(cube).get(1));
-        //     horizontalManhattanDistances += Math.abs(cube.getXPos() - cubematrix.getFinalPositionOfCube(cube).get(0));
-        // }
-        
-
-        
-        // double manhattanDistance = 1.125*verticalManhattanDistances + 0.75*horizontalManhattanDistances;
-
-
         int numOfBlockedCubesNotINFinalPosition = 0;
         for(Cube cube : cubematrix.getNonZeroCubes()){
             if(!cubematrix.cubeIsInFinalPosition(cube) && cubematrix.cubeIsBlocked(cube)){
                 numOfBlockedCubesNotINFinalPosition++;
             }
-                
-            
         }
-
-        int cubesInWrongPositionBottomToTop = 0;
-        int weight = 1;
-        for(CubeLine line : cubematrix.getCubeLines()){
-            for(Cube cube : line.getCubes()){
-                if(!cubematrix.cubeIsInFinalPosition(cube)){
-                    cubesInWrongPositionBottomToTop += weight;
-                }
-            }
-            weight += 2;
-        }
-
-        int cubesInWrongPositionLeftToRight = 0;
-        weight = 1;
-        for(int xIndex = 0 ; xIndex < cubematrix.getNumOfCubesPerLine() ; xIndex++){
-            for(int yIndex = 0 ; yIndex < 3 ; yIndex++){
-                Cube cube = cubematrix.getCube(xIndex , yIndex);
-                if(!cubematrix.cubeIsInFinalPosition(cube) && cube.getCubeNumber() != 0){
-                    cubesInWrongPositionBottomToTop += weight;
-                }
-            }
-            weight += 2;
-        }
-
-        //find the verical distance of each cube from its final position
-        double verticalCosts = 0;
-        for(Cube cube : cubematrix.getNonZeroCubes()){
-            int verticalDistance = cube.getYPos() - cubematrix.getFinalPositionOfCube(cube).get(1);
-            if(verticalDistance < 0) verticalCosts += verticalDistance;
-            if(verticalDistance == 0) verticalCosts += 0.75;
-            if(verticalDistance > 0) verticalCosts += 0.5*verticalDistance;
-
-        }
-
+      
             
         
 
@@ -227,30 +158,43 @@ public class Botaki20 {
         PriorityQueue<Node> queue = new PriorityQueue<>(Comparator.comparingDouble(node -> node.getTotalCost()));
 
 
+        int numberOfNodesExpanded = 0;
+
+
         queue.add(root);
         Node result = null;
         
         search :{
             while(true){
-                //check if cubes have been sorted
-                for(Node nodeInQueue : queue){
-                    if( nodeInQueue.getCubeMatrix().isInOrder()){
-                        result = nodeInQueue;
-                        break search;
-                    }
+               
+                // System.out.println("Number of nodes expanded : " + numberOfNodesExpanded + "\r");
+                System.out.print("Current total cost : " + queue.peek().getTotalCost()  + "\r");
+                
+                
+                if(queue.peek().getCubeMatrix().isInOrder()){
+                    result = queue.peek();
+                    break search;
                 }
                 //if not export the min value element from queue and expand it
-                ArrayList<Node> newNodesForQueue = expandNode(queue.poll());
-                queue.addAll(newNodesForQueue);
+                else{
+                    ArrayList<Node> newNodesForQueue = expandNode(queue.poll());
+                    queue.addAll(newNodesForQueue);
+                    numberOfNodesExpanded ++;
+                    newNodesForQueue.clear();
+
+                }
     
             }
 
         }
 
         
-        result.printHistoryOfMoves();
-        result.getCubeMatrix().printCubeMatrix();   
+        // result.printHistoryOfMoves();
+        // result.getCubeMatrix().printCubeMatrix();   
+        result.printPathFromRoot();
         System.out.println(ANSI_GREEN + "Total cost is :" + result.getTotalCost() + ANSI_RESET);
+        System.out.println("Number of nodes expanded : " + numberOfNodesExpanded);
+
 
 
     }
@@ -258,6 +202,10 @@ public class Botaki20 {
 
 
     public void AStar(Node root){
+
+        PriorityQueue<Node> queue = new PriorityQueue<>(Comparator.comparingDouble(node -> node.getTotalCost() + node.getHeuristicCost()));
+        int numberOfNodesExpanded = 0;
+
         //ask user to press ENTER
         System.out.println("Press enter to sort the cube matrix");
         try{
@@ -268,7 +216,6 @@ public class Botaki20 {
         }
 
         //priority queue of type node
-        PriorityQueue<Node> queue = new PriorityQueue<>(Comparator.comparingDouble(node -> node.getTotalCost() + node.getHeuristicCost()));
 
 
         //add root to queue
@@ -277,25 +224,31 @@ public class Botaki20 {
 
         search :{
             while(true){
-                //check if cubes have been sorted
-                for(Node nodeInQueue : queue){
-                    if( nodeInQueue.getCubeMatrix().isInOrder()){
-                        result = nodeInQueue;
-                        break search;
-                    }
+                
+                System.out.print("Number of nodes expanded : " + numberOfNodesExpanded + "\r");
+                
+                if(queue.peek().getCubeMatrix().isInOrder()){
+                    result = queue.peek();
+                    break search;
                 }
-                //if not export the min value element from queue and expand it
-                ArrayList<Node> newNodesForQueue = expandNode(queue.poll());
-                queue.addAll(newNodesForQueue);
+                else{
+                    ArrayList<Node> newNodesForQueue = expandNode(queue.poll());
+                    queue.addAll(newNodesForQueue);
+                    numberOfNodesExpanded ++;
+                    newNodesForQueue.clear();
+
+                }
     
             }
 
         }
 
         
-        result.printHistoryOfMoves();
-        result.getCubeMatrix().printCubeMatrix();   
+        // result.printHistoryOfMoves();
+        // result.getCubeMatrix().printCubeMatrix();   
+        result.printPathFromRoot();
         System.out.println(ANSI_GREEN + "Total cost is :" + result.getTotalCost() + ANSI_RESET);
+        System.out.println("Number of nodes expanded : " + numberOfNodesExpanded);
 
 
     }
