@@ -27,12 +27,36 @@ public class CubeManager {
             int numOfCubesPerLine = input.nextInt();
             if(numOfCubesPerLine < 1) throw new NullPointerException();
             createCubeMatrix(numOfCubesPerLine);
+
+            //ask player if he wants to customize the cube matrix
+            System.out.println("Do you want to customize the cube matrix ? (y/n)");
+            String answer = input.next();
+            if(answer.equals("n")) return;
+
+
+            // if "y" ask values for each line and each cube
+            //ask for each line
+            for(int i = 0 ; i < 3 ; i++){
+                //ask for each cube
+                for(int j = 0 ; j < cubeMatrix.getNumOfCubesPerLine() ; j++){
+                    try {
+                        System.out.println("Enter the value of cube " + (j+1) + " of line " + (i+1) + " : ");
+                        int cubeValue = input.nextInt();
+                        if(cubeValue < 0) throw new NullPointerException();
+                        cubeMatrix.getCubeLines().get(2-i).getCubes().get(j).setCubeNumber(cubeValue);
+                    } catch (NullPointerException | NumberFormatException | InputMismatchException e ) {
+                    }
+                }
+        }
+
         } catch (NullPointerException | NumberFormatException | InputMismatchException e ) {
             // TODO: handle exception
             System.out.println(ANSI_RED + "You typed an invalid character. Please try again." + ANSI_RESET);
             requestCubeMatrix();
         }
     }
+
+  
 
     public void moveCube(Cube cube , int xNext , int yNext){
         if(cubeMatrix.isMoveable(cube) && cubeMatrix.positionIsFree(xNext, yNext)){
