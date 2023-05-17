@@ -46,12 +46,5 @@ public class Cube {
         return newCube;
     }
 
-
-
-
-    //print top of square depending on number length
-
-
-
     
 }

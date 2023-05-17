@@ -1,0 +1,41 @@
+Date : 2023-05-17 23:38:19
+Directory : c:\Users\Philip\Desktop\UOI\AI\ask1
+Total : 17 files,  688 codes, -34 comments, 69 blanks, all 723 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| Java     |         17 |        688 |        -34 |         69 |        723 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++--------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                         | files      | code       | comment    | blank      | total      |
++--------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                            |         17 |        688 |        -34 |         69 |        723 |
++--------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++--------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                     | language | code       | comment    | blank      | total      |
++--------------------------------------------------------------+----------+------------+------------+------------+------------+
+| c:\Users\Philip\Desktop\UOI\AI\ask1\Botaki.class             | Java     |        124 |          0 |          0 |        124 |
+| c:\Users\Philip\Desktop\UOI\AI\ask1\Botaki.java              | Java     |        -86 |        -31 |        -47 |       -164 |
+| c:\Users\Philip\Desktop\UOI\AI\ask1\Botaki20.java            | Java     |        170 |         21 |         72 |        263 |
+| c:\Users\Philip\Desktop\UOI\AI\ask1\Cube.class               | Java     |          3 |          0 |          0 |          3 |
+| c:\Users\Philip\Desktop\UOI\AI\ask1\Cube.java                | Java     |          3 |         -1 |         -4 |         -2 |
+| c:\Users\Philip\Desktop\UOI\AI\ask1\CubeLine.class           | Java     |         37 |          0 |         -1 |         36 |
+| c:\Users\Philip\Desktop\UOI\AI\ask1\CubeLine.java            | Java     |         49 |        -25 |         16 |         40 |
+| c:\Users\Philip\Desktop\UOI\AI\ask1\CubeManager.class        | Java     |         31 |          0 |          0 |         31 |
+| c:\Users\Philip\Desktop\UOI\AI\ask1\CubeManager.java         | Java     |         14 |          4 |          7 |         25 |
+| c:\Users\Philip\Desktop\UOI\AI\ask1\CubeMatrix.class         | Java     |         68 |          0 |         -1 |         67 |
+| c:\Users\Philip\Desktop\UOI\AI\ask1\CubeMatrix.java          | Java     |        146 |          3 |         45 |        194 |
+| c:\Users\Philip\Desktop\UOI\AI\ask1\FixedSizeArrayList.class | Java     |        -14 |          0 |          0 |        -14 |
+| c:\Users\Philip\Desktop\UOI\AI\ask1\FixedSizeArrayList.java  | Java     |        -20 |          0 |         -6 |        -26 |
+| c:\Users\Philip\Desktop\UOI\AI\ask1\Node.class               | Java     |         75 |          0 |          0 |         75 |
+| c:\Users\Philip\Desktop\UOI\AI\ask1\Node.java                | Java     |         66 |          2 |         -9 |         59 |
+| c:\Users\Philip\Desktop\UOI\AI\ask1\Table.class              | Java     |         16 |          0 |          0 |         16 |
+| c:\Users\Philip\Desktop\UOI\AI\ask1\Table.java               | Java     |          6 |         -7 |         -3 |         -4 |
+| Total                                                        |          |        688 |        -34 |         69 |        723 |
++--------------------------------------------------------------+----------+------------+------------+------------+------------+

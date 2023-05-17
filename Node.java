@@ -27,7 +27,6 @@ public class Node {
         this.cost = 0;
         this.cubeMatrix = cubeMatrix.copy();
         this.totalCost = 0;
-
     }
 
     public Node(Node parent) {
@@ -35,23 +34,15 @@ public class Node {
         this.parent = parent;
         this.cost = 0;
         this.totalCost = 0;
-
     }
-
 
     public ArrayList<Node> getChildren() {
         return this.children;
     }
 
-
     public Node getParent() {
         return this.parent;
     }
-
-    
-
-
-
 
     public double getHeuristicCost() {
         return this.heuristicCost;
@@ -61,9 +52,6 @@ public class Node {
         this.heuristicCost = heuristicCost;
     }
     
-
-
-
     public double getCost() {
         return this.cost;
     }
@@ -80,10 +68,10 @@ public class Node {
         this.children.remove(child);
     }
 
-
     public void setChildren(ArrayList<Node> children) {
         this.children = children;
     }
+
     public void setParent(Node parent) {
         this.parent = parent;
     }
@@ -96,11 +84,6 @@ public class Node {
         this.cubeMatrix = cubeMatrix;
         this.cubeMatrix.setPositionsForAllCubes();
     }
-
-   
-
-
-
 
     public double getTotalCost() {
         return this.totalCost;
@@ -147,11 +130,6 @@ public class Node {
     }
 
     
-
-
-
-
-
     public void printTree() {
         printTreeHelper(this, "", true);
     }
@@ -178,10 +156,6 @@ public class Node {
         }
         return path;
     }
-
-    
-
-        
 
     public void setParentToNull(){
         this.parent = null;

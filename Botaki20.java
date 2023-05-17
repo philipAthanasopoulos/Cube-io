@@ -1,8 +1,5 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.PriorityQueue;
 
 public class Botaki20 {
@@ -12,9 +9,8 @@ public class Botaki20 {
     private static final String ANSI_RESET = "\u001B[0m";
     
     public Botaki20(){
-        //TODO
+        
     }
-    
     
     public double calculateCostOfMove(Cube cube , Cube target) {
         double cost = 0;
@@ -134,21 +130,7 @@ public class Botaki20 {
             }
         }
 
-
-        int numOfBlockedCubesNotINFinalPosition = 0;
-        for(Cube cube : cubematrix.getNonZeroCubes()){
-            if(!cubematrix.cubeIsInFinalPosition(cube) && cubematrix.cubeIsBlocked(cube)){
-                numOfBlockedCubesNotINFinalPosition++;
-            }
-        }
-      
-            
-        
-
-        
-
-        
-        double heuristicCost = notCorrectlyStackedCubes + numOfCubesThatBlockCubesNotInFinalPosition ;
+        double heuristicCost = 2*notCorrectlyStackedCubes + 2*numOfCubesThatBlockCubesNotInFinalPosition ;
         return heuristicCost;
     }
     
@@ -170,7 +152,6 @@ public class Botaki20 {
                 // System.out.println("Number of nodes expanded : " + numberOfNodesExpanded + "\r");
                 System.out.print("Current total cost : " + queue.peek().getTotalCost()  + "\r");
                 
-                
                 if(queue.peek().getCubeMatrix().isInOrder()){
                     result = queue.peek();
                     break search;
@@ -187,15 +168,10 @@ public class Botaki20 {
             }
 
         }
-
-        
-        // result.printHistoryOfMoves();
-        // result.getCubeMatrix().printCubeMatrix();   
+  
         result.printPathFromRoot();
         System.out.println(ANSI_GREEN + "Total cost is :" + result.getTotalCost() + ANSI_RESET);
         System.out.println("Number of nodes expanded : " + numberOfNodesExpanded);
-
-
 
     }
 
@@ -214,9 +190,6 @@ public class Botaki20 {
         catch(Exception e){
             System.out.println(e);
         }
-
-        //priority queue of type node
-
 
         //add root to queue
         queue.add(root);
@@ -243,13 +216,9 @@ public class Botaki20 {
 
         }
 
-        
-        // result.printHistoryOfMoves();
-        // result.getCubeMatrix().printCubeMatrix();   
         result.printPathFromRoot();
         System.out.println(ANSI_GREEN + "Total cost is :" + result.getTotalCost() + ANSI_RESET);
         System.out.println("Number of nodes expanded : " + numberOfNodesExpanded);
-
 
     }
 
