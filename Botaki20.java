@@ -89,20 +89,16 @@ public class Botaki20 {
 
 
     public ArrayList<Node> expandNode(Node parent){
-        //TODO
         ArrayList<Node> children = new ArrayList<Node>();
-
         CubeMatrix matrix = parent.getCubeMatrix();
+
         for(Cube cube : matrix.getCubes()){
             if(matrix.isMoveable(cube) && cube.getCubeNumber() != 0) children.addAll(calculateAllPossibleMovesForCube(cube, parent));
         }  
-
         return children;
     }
 
     public double calculateHeuristicCost(CubeMatrix cubematrix){
-        //heuristic cost is sum of blocking cubes , numOfCubesNotInFinalPosition and manhattan distance
-        
         int correctlyStackedCubes = 0;
         CubeLine bottomLine = cubematrix.getCubeLines().get(2);
         for(Cube cube : bottomLine.getCubes()){
@@ -120,7 +116,6 @@ public class Botaki20 {
                 }
             }
         }
-
         int notCorrectlyStackedCubes = 3*cubematrix.getNumOfCubesPerLine() - correctlyStackedCubes;
 
         int numOfCubesThatBlockCubesNotInFinalPosition = 0;
@@ -130,7 +125,7 @@ public class Botaki20 {
             }
         }
 
-        double heuristicCost = 2*notCorrectlyStackedCubes + 2*numOfCubesThatBlockCubesNotInFinalPosition ;
+        double heuristicCost = 2*notCorrectlyStackedCubes + 1*numOfCubesThatBlockCubesNotInFinalPosition ;
         return heuristicCost;
     }
     
@@ -138,20 +133,14 @@ public class Botaki20 {
 
     public void UCS(Node root){
         PriorityQueue<Node> queue = new PriorityQueue<>(Comparator.comparingDouble(node -> node.getTotalCost()));
-
-
         int numberOfNodesExpanded = 0;
-
-
         queue.add(root);
         Node result = null;
-        
         search :{
             while(true){
-               
                 // System.out.println("Number of nodes expanded : " + numberOfNodesExpanded + "\r");
                 System.out.print("Current total cost : " + queue.peek().getTotalCost()  + "\r");
-                
+                //if the node with the smallest cost is in order then we have found the solution
                 if(queue.peek().getCubeMatrix().isInOrder()){
                     result = queue.peek();
                     break search;
@@ -162,26 +151,19 @@ public class Botaki20 {
                     queue.addAll(newNodesForQueue);
                     numberOfNodesExpanded ++;
                     newNodesForQueue.clear();
-
                 }
-    
             }
-
         }
-  
         result.printPathFromRoot();
         System.out.println(ANSI_GREEN + "Total cost is :" + result.getTotalCost() + ANSI_RESET);
         System.out.println("Number of nodes expanded : " + numberOfNodesExpanded);
-
     }
 
 
 
     public void AStar(Node root){
-
         PriorityQueue<Node> queue = new PriorityQueue<>(Comparator.comparingDouble(node -> node.getTotalCost() + node.getHeuristicCost()));
         int numberOfNodesExpanded = 0;
-
         //ask user to press ENTER
         System.out.println("Press enter to sort the cube matrix");
         try{
@@ -190,16 +172,12 @@ public class Botaki20 {
         catch(Exception e){
             System.out.println(e);
         }
-
         //add root to queue
         queue.add(root);
         Node result = null;
-
         search :{
-            while(true){
-                
+            while(true){  
                 System.out.print("Number of nodes expanded : " + numberOfNodesExpanded + "\r");
-                
                 if(queue.peek().getCubeMatrix().isInOrder()){
                     result = queue.peek();
                     break search;
@@ -209,17 +187,12 @@ public class Botaki20 {
                     queue.addAll(newNodesForQueue);
                     numberOfNodesExpanded ++;
                     newNodesForQueue.clear();
-
                 }
-    
             }
-
         }
-
         result.printPathFromRoot();
         System.out.println(ANSI_GREEN + "Total cost is :" + result.getTotalCost() + ANSI_RESET);
         System.out.println("Number of nodes expanded : " + numberOfNodesExpanded);
-
     }
 
 
