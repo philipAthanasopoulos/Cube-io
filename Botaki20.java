@@ -125,7 +125,7 @@ public class Botaki20 {
             }
         }
 
-        double heuristicCost = 2*notCorrectlyStackedCubes + 2*numOfCubesThatBlockCubesNotInFinalPosition ;
+        double heuristicCost = 2*notCorrectlyStackedCubes + 1*numOfCubesThatBlockCubesNotInFinalPosition ;
         return heuristicCost;
     }
     
